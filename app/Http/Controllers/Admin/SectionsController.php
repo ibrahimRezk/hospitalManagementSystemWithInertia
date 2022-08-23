@@ -29,7 +29,7 @@ class SectionsController extends Controller
 
     public function index(Request $request)
     {
-        $users = Section::query()
+        $sections = Section::query()
             ->select([
                 'id',
                 // 'name',
@@ -69,7 +69,7 @@ class SectionsController extends Controller
 
         return Inertia::render('Section/Index', [
             'title' => 'Sections',
-            'items' => SectionResource::collection($users),
+            'items' => SectionResource::collection($sections),
             'headers' => [
                 [
                     'label' => 'Name',
@@ -106,15 +106,15 @@ class SectionsController extends Controller
     {
         return Inertia::render('Section/Create', [
             'edit' => false,
-            'title' => 'Add User',
+            'title' => 'Add section',
             'routeResourceName' => $this->routeResourceName,
-            'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
         ]);
     }
 
     public function store(UsersRequest $request)
     {
-        $data = $request->safe()->only(['email', 'password']);
+        $data = $request->safe()->only(['name', 'password']);
 
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;
@@ -133,7 +133,7 @@ class SectionsController extends Controller
             'title' => 'Edit User',
             'item' => new UserResource($user),
             'routeResourceName' => $this->routeResourceName,
-            'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
         ]);
     }
 

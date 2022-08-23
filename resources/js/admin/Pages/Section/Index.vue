@@ -41,7 +41,7 @@ const props = defineProps({
         required: true,
     },
     can: Object,
-    roles: Array,
+    // roles: Array,
 });
 
 const {
@@ -71,7 +71,7 @@ const { filters, isLoading, isFilled } = useFilters({
             </h2>
         </template>
         <Container>
-            <!-- <AddNew :show="isFilled">
+            <AddNew :show="isFilled">
                 <Button
                     v-if="can.create"
                     :href="route(`admin.${routeResourceName}.create`)"
@@ -79,9 +79,9 @@ const { filters, isLoading, isFilled } = useFilters({
                 >
 
                 <template #filters>
-                    <Filters v-model="filters" :roles="roles" />
+                    <Filters v-model="filters" />
                 </template>
-            </AddNew> -->
+            </AddNew>
 
             <Card class="mt-4" :is-loading="isLoading" no-padding>
                 <Table :headers="headers" :items="items">

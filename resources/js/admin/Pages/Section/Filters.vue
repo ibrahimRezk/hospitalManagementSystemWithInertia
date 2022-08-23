@@ -37,12 +37,12 @@ watch(
         <form class="grid grid-cols-4 gap-8"> 
             <InputGroup label="Name"
                         v-model="filters.name" />
-            <InputGroup label="Email"
+            <!-- <InputGroup label="Email"
                         v-model="filters.email"
-                        type="email" />
-            <SelectGroup label="Role"
+                        type="email" /> -->
+            <!-- <SelectGroup label="Role"
                          v-model="filters.roleId"
-                         :items="roles" />
+                         :items="roles" /> -->
         </form>
     </Card>
 </template>

@@ -23,10 +23,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    roles: {
-        type: Array,
-        required: true, 
-    },
+    // roles: {
+    //     type: Array,
+    //     required: true, 
+    // },
 });
 
 const form = useForm({
@@ -64,7 +64,7 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-2 gap-6 mb-6">
                         <InputGroup
                             label="Name ar"
                             v-model="form.name_ar"
@@ -72,45 +72,28 @@ const submit = () => {
                             required
                         />
                         <InputGroup
-                            label="Name"
+                            label="Name en"
                             v-model="form.name_en"
                             :error-message="form.errors.name"
                             required
                         />
+                        </div>
+                    <div class="grid grid-cols-1 gap-6">
 
                         <InputGroup
-                            type="email"
-                            label="Email"
-                            v-model="form.email"
-                            :error-message="form.errors.email"
+                            label="description ar"
+                            v-model="form.description_ar"
+                            :error-message="form.errors.description_ar"
+                            required
+                        />
+                        <InputGroup
+                            label="description en"
+                            v-model="form.description_en"
+                            :error-message="form.errors.description_en"
                             required
                         />
 
-                        <InputGroup
-                            type="password"
-                            label="Password"
-                            v-model="form.password"
-                            :error-message="form.errors.password"
-                            :required="!edit"
-                        />
-
-                        <InputGroup
-                            type="password"
-                            label="Confirm Password"
-                            v-model="form.passwordConfirmation"
-                            :error-message="form.errors.passwordConfirmation"
-                            :required="!edit"
-                        />
-
-                        <SelectGroup
-                            label="Role"
-                            v-model="form.roleId"
-                            :items="roles"
-                            :error-message="form.errors.roleId"
-                            required
-                        />
-                    </div>
-
+</div>
                     <div class="mt-4">
                         <Button :disabled="form.processing">
                             {{ form.processing ? "Saving..." : "Save" }}

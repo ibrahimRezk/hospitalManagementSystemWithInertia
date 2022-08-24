@@ -18,6 +18,8 @@ class SectionResource extends JsonResource
 
         return [
             'id' => $this->id, 
+
+            
              // name on curren locale -> use in index
             'name' => $this->when($this->name, $this->name),
              // name in specific lang -> use in create and update          -- don't forget to modify items in index.vue and create.vue
@@ -25,11 +27,11 @@ class SectionResource extends JsonResource
             // 'name_ar' => $this->whenNotNull($this->translate('en')->name), // delete this if database has arabic content and activate above one this will keep showing name_ar and name_en both in english if not changed to ar but if database has no arabic data it will return error in index becase name ar is null
             'name_en' => $this->whenNotNull($this->translate('en')->name),
 
-            'description' => $this->when($this->name, $this->description),
 
-            'description_ar' => $this->whenNotNull($this->translate('ar')->description), // this with return null if database doesn't hav data in arabic
-            // 'name_ar' => $this->whenNotNull($this->translate('en')->name), // delete this if database has arabic content and activate above one this will keep showing name_ar and name_en both in english if not changed to ar but if database has no arabic data it will return error in index becase name ar is null
+            'description' => $this->when($this->name, $this->description),
+            'description_ar' => $this->whenNotNull($this->translate('ar')->description), 
             'description_en' => $this->whenNotNull($this->translate('en')->description),
+
 
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();

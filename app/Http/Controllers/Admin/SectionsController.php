@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SectionsRequest;
 use App\Http\Requests\Admin\UsersRequest;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\SectionResource;
@@ -32,30 +33,18 @@ class SectionsController extends Controller
         $sections = Section::query()
             ->select([
                 'id',
-                // 'name',
-                // 'description',
-                // 'email',
+                // name will come from section resource
                 'created_at', 
             ])
            
-            // ->with(['roles:roles.id,roles.name'])
 
-             /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
-             ->whereHas('translations' , fn ($query) => 
+/////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
+            ->whereHas('translations' , fn ($query) => 
 
-             $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
-             )
-
+            $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+            )
  ////////////////////////////////////////////////////////////////////////////////////
 
-
-            // ->when( 
-            //     $request->roleId,
-            //     fn (Builder $builder, $roleId) => $builder->whereHas(
-            //         'roles',
-            //         fn (Builder $builder) => $builder->where('roles.id', $roleId)
-            //     )
-            // )
             
             ->when( 
                 $request->sectionId,
@@ -75,10 +64,6 @@ class SectionsController extends Controller
                     'label' => 'Name',
                     'name' => 'name',
                 ],
-                // [
-                //     'label' => 'Email',
-                //     'name' => 'headers',
-                // ],
                 [
                     'label' => 'Description',
                     'name' => 'description',
@@ -94,8 +79,6 @@ class SectionsController extends Controller
             ],
             'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
-            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
-            // 'roles' => RoleResource::collection(Role::get(['id'])),
             'can' => [
                 'create' => $request->user()->can('create section'),
             ],
@@ -108,52 +91,41 @@ class SectionsController extends Controller
             'edit' => false,
             'title' => 'Add section',
             'routeResourceName' => $this->routeResourceName,
-            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
         ]);
     }
 
-    public function store(UsersRequest $request)
+    public function store(SectionsRequest $request)
     {
-        $data = $request->safe()->only(['name', 'password']);
+        
 
-        $data["ar"]["name"] = $request->name_ar;
-        $data["en"]["name"] = $request->name_en;
-        $user = User::create($data);
-        $user->assignRole($request->roleId);
+        Section::create($request->saveData());
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
 
-    public function edit(User $user)
+    public function edit(Section $section)
     {
-        $user->load(['roles:roles.id']);
 
         return Inertia::render('Section/Create', [ 
             'edit' => true,
             'title' => 'Edit User',
-            'item' => new UserResource($user),
+            'item' => new SectionResource($section),
             'routeResourceName' => $this->routeResourceName,
-            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
         ]);
     }
 
-    public function update(UsersRequest $request, User $user)
+    public function update(SectionsRequest $request , Section $section)
     {
-        // review samir gamal method to make password nullable on update and update userRequest file
-        $data = $request->safe()->only(['email', 'password']);
         
-        $data["ar"]['name'] = $request->name_ar;
-        $data["en"]['name'] = $request->name_en;
-        $user->update($data);
+        $section->update($request->saveData());
 
-        $user->syncRoles($request->roleId);
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
     }
 
-    public function destroy(User $user)
+    public function destroy(Section $section)
     {
-        $user->delete();
+        $section->delete();
 
         return back()->with('success', 'User deleted successfully.');
     }

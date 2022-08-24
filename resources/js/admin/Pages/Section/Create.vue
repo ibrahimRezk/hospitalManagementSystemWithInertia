@@ -33,10 +33,9 @@ const form = useForm({
     // name: props.item.name ?? "",
     name_ar: props.item.name_ar ?? "",
     name_en: props.item.name_en ?? "",
-    email: props.item.email ?? "",
-    password: "",
-    passwordConfirmation: "",
-    roleId: props.item.roles?.[0]?.id ?? "",
+    description_ar: props.item.description_ar ?? "",
+    description_en: props.item.description_en ?? "",
+    
 
 });
 

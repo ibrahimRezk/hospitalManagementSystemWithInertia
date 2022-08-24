@@ -86,11 +86,11 @@ const open = ref(false);
                     class="block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
                     href="#"
                 >
-                    <img
+                    <!-- <img
                         src="../../../../public/admin/assets/img/logo-ct.jpg"
                         class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-12"
                         alt="main_logo"
-                    />
+                    /> -->
                     <!-- <span
                         class1="rtl:ml-1 ltr:mr-1 font-semibold transition-all duration-200 ease-nav-brand"
                         class="mr-1 font-semibold transition-all duration-200 ease-nav-brand"
@@ -469,6 +469,35 @@ const open = ref(false);
                                                 <div
                                                     class="border-t border-gray-200"
                                                 />
+        <JetDropdownLink
+                                                    as="button"
+                                                    @click="
+                                                        loadLanguageAsync('ar')
+                                                    "
+                                                >
+                                                    <!-- add show class on dropdown open js -->
+
+                                                    <div class="flex py-1">
+                                                        <div class="my-auto">
+                                                            <img
+                                                                src="../../../../public/admin/assets/img/eg-flag-icon.png"
+                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="flex flex-col justify-center"
+                                                        >
+                                                            <h6
+                                                                class="mb-1 font-normal leading-normal text-size-sm"
+                                                            >
+                                                                <span
+                                                                    class="font-semibold"
+                                                                    >العربية</span
+                                                                >
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </JetDropdownLink>
 
                                                 <JetDropdownLink
                                                     as="button"
@@ -499,36 +528,7 @@ const open = ref(false);
                                                         </div>
                                                     </div>
                                                 </JetDropdownLink>
-                                                <JetDropdownLink
-                                                    as="button"
-                                                    @click="
-                                                        loadLanguageAsync('ar')
-                                                    "
-                                                >
-                                                    <!-- add show class on dropdown open js -->
-
-                                                    <div class="flex py-1">
-                                                        <div class="my-auto">
-                                                            <img
-                                                                src="../../../../public/admin/assets/img/eg-flag-icon.png"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
-                                                            />
-                                                        </div>
-                                                        <div
-                                                            class="flex flex-col justify-center"
-                                                        >
-                                                            <h6
-                                                                class="mb-1 font-normal leading-normal text-size-sm"
-                                                            >
-                                                                <span
-                                                                    class="font-semibold"
-                                                                    >العربية</span
-                                                                >
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </JetDropdownLink>
-
+                                        
                                                 <div
                                                     class="border-t border-gray-100"
                                                 />

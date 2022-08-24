@@ -77,20 +77,20 @@ const open = ref(false);
             classltr="ml-4     ltr:xl:translate-x-0 ltr:-translate-x-full     xl:left-0      "
             classrtl="mr-4       rtl:xl:translate-x-0  rtl:translate-x-full    xl:right-0"
         >
-            <div class="h-19.5">
+            <div class="h-30 mb-2">
                 <i
                     class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
                     sidenav-close
                 ></i>
                 <a
-                    class="block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
+                    class=" block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
                     href="#"
                 >
-                    <!-- <img
-                        src="../../../../public/admin/assets/img/logo-ct.jpg"
-                        class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-12"
+                    <img
+                        src="../../../../public/admin/assets/img/logo-ct.png"
+                        class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24"
                         alt="main_logo"
-                    /> -->
+                    />
                     <!-- <span
                         class1="rtl:ml-1 ltr:mr-1 font-semibold transition-all duration-200 ease-nav-brand"
                         class="mr-1 font-semibold transition-all duration-200 ease-nav-brand"

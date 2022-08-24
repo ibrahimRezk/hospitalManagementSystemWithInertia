@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Section extends Model
 {
@@ -16,8 +17,8 @@ class Section extends Model
     use HasFactory;
 
 
-    public function doctors()
-    {
-        return $this->hasMany(Doctor::class);
-    }
+    // public function doctors(): HasMany
+    // {
+    //     return $this->hasMany(User::class ,'section_id');
+    // }
 }

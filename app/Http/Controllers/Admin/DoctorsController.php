@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsersRequest;
+use App\Http\Resources\DoctorResource;
 use App\Http\Resources\RoleResource;
+use App\Http\Resources\SectionResource;
 use App\Http\Resources\UserResource;
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Builder; 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,8 +17,7 @@ use Spatie\Permission\Models\Role;
 
 class DoctorsController extends Controller
 {
-    private string $routeResourceName = 'Doctors';
-    // private string $role = 'Super Admin';
+    private string $routeResourceName = 'doctors';
     private string $role = 'Doctor';
 
     public function __construct()
@@ -28,18 +30,29 @@ class DoctorsController extends Controller
 
     public function index(Request $request)
     {
-        $users = User::query()
-            ->select([
-                'id',
-                // 'name',
-                'email',
-                'created_at', 
+        // dd($request);
+
+        $doctors = User::query()
+        
+        
+        ->select([
+            'id',
+            // 'name',
+            'email',
+            'created_at',
+            // it is very important to put section_id here otherwise the relation will return on null 
+            'section_id',
+            'phone',
+            'status'
             ])
+
+            ->with(['section:id'])
+            
             // to get only one kind of userd depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
-            ->with(['roles:roles.id,roles.name'])
 
-             /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
+
+/////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
              ->whereHas('translations' , fn ($query) => 
 
              $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
@@ -58,7 +71,7 @@ class DoctorsController extends Controller
             //         fn (Builder $builder) => $builder->where('roles.id', $roleId)
             //     )
             // )
-            
+
             ->when( 
                 $request->sectionId,
                 fn (Builder $builder, $sectionId) => $builder->whereHas(
@@ -68,10 +81,12 @@ class DoctorsController extends Controller
             )
             ->latest('id')
             ->paginate(10);
+            // dd($doctors);
 
-        return Inertia::render('User/Index', [
-            'title' => 'Users',
-            'items' => UserResource::collection($users),
+
+        return Inertia::render('Doctor/Index', [
+            'title' => 'Doctors',
+            'items' => DoctorResource::collection($doctors),
             'headers' => [
                 [
                     'label' => 'Name',
@@ -82,9 +97,22 @@ class DoctorsController extends Controller
                 //     'name' => 'headers',
                 // ],
                 [
-                    'label' => 'Role',
-                    'name' => 'role',
+                    'label' => 'section',
+                    'name' => 'section',
                 ],
+                [
+                    'label' => 'phone number',
+                    'name' => 'phone_number',
+                ],
+                [
+                    'label' => 'dates',
+                    'name' => 'dates',
+                ],
+                [
+                    'label' => 'status',
+                    'name' => 'status',
+                ],
+
                 [
                     'label' => 'Created At',
                     'name' => 'created_at',
@@ -96,10 +124,10 @@ class DoctorsController extends Controller
             ],
             'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
-            'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+            // 'sections' => SectionResource::collection(Section::get(['id'])),
             // 'roles' => RoleResource::collection(Role::get(['id'])),
             'can' => [
-                'create' => $request->user()->can('create user'),
+                'create' => $request->user()->can('create doctor'),
             ],
         ]);
     }

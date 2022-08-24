@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource; 
 
-class UserResource extends JsonResource
+class DoctorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,18 +25,14 @@ class UserResource extends JsonResource
             // 'name_ar' => $this->whenNotNull($this->translate('en')->name), // delete this if database has arabic content and activate above one this will keep showing name_ar and name_en both in english if not changed to ar but if database has no arabic data it will return error in index becase name ar is null
             'name_en' => $this->whenNotNull($this->translate('en')->name),
 
-            
-            'section' => new SectionResource($this->whenLoaded('section')),
-
-
             'email' => $this->when($this->email, $this->email),
-            'is_email_verified' => $this->when($this->email_verified_at, function () {
-                return $this->email_verified_at !== null;
-            }),
+            'section' => new SectionResource($this->whenLoaded('section')),
+            'phone' => $this->when($this->phone, $this->phone),
+            'status' => $this->when($this->status, $this->status),
+            'appointements' => 'sat, sun , mon', ///// need more work       
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'can' => [
                 'edit' => $request->user()?->can('edit user'),
                 'delete' => $request->user()?->can('delete user'), 

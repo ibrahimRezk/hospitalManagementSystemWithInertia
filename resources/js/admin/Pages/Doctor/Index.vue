@@ -21,7 +21,7 @@ import useFilters from "@/admin/Composables/useFilters.js";
 
 const props = defineProps({
     title: {
-        type: String,
+        type: String, 
         required: true,
     },
     items: {
@@ -42,7 +42,7 @@ const props = defineProps({
     },
     can: Object,
 
-    sections: Array,
+    sections: Object,
 });
 
 const {
@@ -109,17 +109,34 @@ const { filters, isLoading, isFilled } = useFilters({
                                 {{ item.email }}
                             </template>
                         </Td>
-                        <!-- <Td>
-                            {{ item.email }} 
-                        </Td> -->
                         <Td>
-                            <Button
-                                v-for="section in item.sections"
-                                :key="section.id"
+                        <Button
                                 color="blue"
                                 small
                             >
-                                {{ section.name }}
+                                {{ item.section.name }}
+                            </Button>
+
+                            
+                        </Td>
+                    
+                        <Td>
+                        <Button
+                                color="red"
+                                small
+                            >
+                            {{ item.phone }}
+                            </Button>
+                        </Td>
+                        <Td>
+                            {{ item.appointements }}
+                        </Td>
+                        <Td>
+                        <Button
+                                color="red"
+                                small
+                            >
+                            {{ item.status }}
                             </Button>
                         </Td>
                         <Td>

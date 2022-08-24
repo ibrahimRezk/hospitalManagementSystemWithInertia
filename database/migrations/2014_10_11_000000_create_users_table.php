@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
 
-            $table->foreignId('section_id')->nullable()->references('id')->on('sections')->onDelete('cascade');
+            $table->foreignId('section_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('phone')->nullable();
             $table->boolean('status')->nullable()->default(1);
 

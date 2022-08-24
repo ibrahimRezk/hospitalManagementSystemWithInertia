@@ -42,6 +42,7 @@ const props = defineProps({
     },
     can: Object,
     roles: Array,
+    section:String
 });
 
 const {

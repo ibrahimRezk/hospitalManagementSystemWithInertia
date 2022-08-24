@@ -12,8 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Astrotomic\Translatable\Translatable;
 use App\Casts\PasswordCast;
-
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -38,6 +37,10 @@ class User extends Authenticatable
         // 'name',
         'email',
         'password',
+        'email_verified_at',
+        'phone',
+        'section_id',
+        'status'
     ];
 
     /**
@@ -70,4 +73,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class , 'section_id');
+        // return $this->belongsTo(SectionTranslation::class ,'section_id');
+
+    }
 }

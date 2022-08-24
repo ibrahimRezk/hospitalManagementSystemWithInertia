@@ -129,4 +129,12 @@ class SectionsController extends Controller
 
         return back()->with('success', 'User deleted successfully.');
     }
+
+// to show all doctors depending on section name 
+    // public function show($id)
+    // {
+    //     $doctors = Section::findOrFail($id)->doctors;
+    //     $section = Section::findOrFail($id);
+    //     return view('Dashboard.Sections.show_doctors', compact('doctors', 'section'));
+    // }
 }

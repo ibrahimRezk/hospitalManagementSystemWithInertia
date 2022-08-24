@@ -54,7 +54,6 @@ class UsersController extends Controller
             )
             ->latest('id')
             ->paginate(10);
-
         return Inertia::render('User/Index', [
             'title' => 'Users',
             'items' => UserResource::collection($users),

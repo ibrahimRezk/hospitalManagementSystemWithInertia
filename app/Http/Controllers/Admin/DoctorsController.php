@@ -81,7 +81,7 @@ class DoctorsController extends Controller
             
             ->latest('id')
             ->paginate(10);
-            // dd($doctors);
+            // dd($doctors); 
 
 
         return Inertia::render('Doctor/Index', [
@@ -122,7 +122,7 @@ class DoctorsController extends Controller
                     'name' => 'actions',
                 ],
             ],
-            // 'filters' => (object) $request->all(),
+            'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
             'sections' => SectionResource::collection(Section::get(['id'])),
             'roles' => RoleResource::collection(Role::get(['id'])),
@@ -147,7 +147,7 @@ class DoctorsController extends Controller
         ]);
     }
 
-    public function store(DoctorsRequest $request)
+    public function store(UsersRequest $request)
     {
         //remember to use section_id not section because in database column name is section_id
 

@@ -18,7 +18,7 @@ const sidebarlabel = computed(() => {
 </script>
 
 <template>
-    <div>
+    <div class=" hover:text-gray-300 text-gray-600">
         {{ sidebarlabel }}
     </div>
 </template>

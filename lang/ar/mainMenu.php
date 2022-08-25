@@ -10,6 +10,10 @@ return [
     'Products'  => 'المنتجات',
     'Sections'  => 'الأقسام',
     'Doctors'  => 'الأطباء',
+    'Services'  => 'الخدمات',
+    'Single Services'  => 'خدمة مفردة',
+    'Group Services'  => 'مجموعة خدمات',
+
 
 
 ];

@@ -114,7 +114,7 @@ class SectionsController extends Controller
         ]);
     }
 
-    public function update(SectionsRequest $request , Section $section)
+    public function update(SectionsRequest $request , Section $section) 
     {
         
         $section->update($request->saveData());

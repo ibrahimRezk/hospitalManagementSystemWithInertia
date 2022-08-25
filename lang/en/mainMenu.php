@@ -9,6 +9,10 @@ return [
     'Products'  => 'Products',
     'Sections'  => 'Sections',
     'Doctors'  => 'Doctors',
+    'Services'  => 'services',
+    'Single Services'  => 'Single Services',
+    'Group Services'  => 'Group Services',
+
 
 
 ];

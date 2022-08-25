@@ -62,5 +62,12 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create doctor']);
         Permission::create(['name' => 'edit doctor']);
         Permission::create(['name' => 'delete doctor']); 
+
+
+        Permission::create(['name' => 'view services module']);
+        Permission::create(['name' => 'view services list']);
+        Permission::create(['name' => 'create service']);
+        Permission::create(['name' => 'edit service']);
+        Permission::create(['name' => 'delete service']); 
     }
 }

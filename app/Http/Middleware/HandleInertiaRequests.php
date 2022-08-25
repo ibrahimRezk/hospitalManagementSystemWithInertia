@@ -54,12 +54,23 @@ class HandleInertiaRequests extends Middleware
                     'url' => route('admin.dashboard'),
                     'isActive' => $request->routeIs('admin.dashboard'),
                     'isVisible' => true,
+                    'hasSubmenu' => false,
                 ],
                 [
                     'label' => 'Profile',
                     'url' => route('admin.profile.show'),
                     'isActive' => $request->routeIs('admin.profile.show'),    // check if it is work
                     'isVisible' => true,
+                    'hasSubmenu' => false,
+
+                ],
+                [
+                    'label' => 'Users',
+                    'url' => route('admin.users.index'),
+                    'isActive' => $request->routeIs('admin.users.*'),
+                    'isVisible' => $request->user()?->can('view users module'),
+                    'hasSubmenu' => false,
+
                 ],
                 // [
                 //     'label' => 'Permissions',
@@ -79,18 +90,38 @@ class HandleInertiaRequests extends Middleware
                     'url' => route('admin.sections.index'),
                     'isActive' => $request->routeIs('admin.sections.*'),
                     'isVisible' => $request->user()?->can('view sections module'),
+                    'hasSubmenu' => false,
+
                 ],
                 [
                     'label' => 'Doctors',
                     'url' => route('admin.doctors.index'),
                     'isActive' => $request->routeIs('admin.doctors.*'),
                     'isVisible' => $request->user()?->can('view doctors module'),
+                    'hasSubmenu' => false,
+
                 ],
                 [
-                    'label' => 'Users',
-                    'url' => route('admin.users.index'),
-                    'isActive' => $request->routeIs('admin.users.*'),
-                    'isVisible' => $request->user()?->can('view users module'),
+                    'label' => 'Services',
+                    // 'url' => route('admin.services.index'),
+                    'isActive' => $request->routeIs('admin.services.*'),
+                    'isVisible' => $request->user()?->can('view services module'),
+                    'hasSubmenu' => true,
+                    'subMenus'=> [
+                        [
+                            'label' => 'Single Services',
+                            'url' => route('admin.services.singleService'),
+                            'isActive'=>$request->routeIs('admin.services.singleService*'),
+                            // 'isVisible' => $request->user()?->can('view services module'),
+                        ],
+                        [
+                            'label' => 'Group Services',
+                            // 'url' => route('admin.services.servicesGroup'),
+                            'isActive'=>$request->routeIs('admin.services.servicesGroup*'),
+                            // 'isVisible' => $request->user()?->can('view services module'),
+                        ],
+                    ]
+
                 ],
         
             ],

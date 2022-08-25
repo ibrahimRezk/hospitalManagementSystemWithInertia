@@ -38,7 +38,6 @@ const direction = computed(() => {
     else return "right";
 });
 
-
 const showHideSidebar = ref(false);
 
 const showHideClass = computed(() => {
@@ -51,16 +50,15 @@ const showHideClass = computed(() => {
 
 const open = ref(false);
 
-
 // important
 // z-990 in class in template down can cause apperance of sidebar items in white above all items
 </script>
 
 <template>
-<body
+    <body
         class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500"
     >
- <div
+        <div
             v-show="showHideSidebar"
             class="z-990 fixed inset-0 transform transition-all"
             @click="showHideSidebar = false"
@@ -69,7 +67,7 @@ const open = ref(false);
         </div>
 
         <!-- sidenav  -->
- <aside
+        <aside
             class1=" max-w-62.5 ease-nav-brand fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent ps"
             :class="showHideClass"
             class="rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:ml-4 ltr:xl:left-0 max-w-62.5 ease-nav-brand fixed inset-y-0 my-4 rtl:mr-4 block w-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent ps"
@@ -83,7 +81,7 @@ const open = ref(false);
                     sidenav-close
                 ></i>
                 <a
-                    class=" block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
+                    class="block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
                     href="#"
                 >
                     <img
@@ -109,187 +107,139 @@ const open = ref(false);
                 <ul class="flex flex-col pl-0 mb-0">
                     <!-- sidebar links -->
                     <li class="mt-0.5 w-full">
-                        <Link
-                            :class1="
-                                menu.isActive
-                                    ? 'py-2.7 shadow-soft-xl text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
-                                    : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
-                            "
-                            :class="
-                                menu.isActive
-                                    ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
-                                    : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
-                            "
-                            classltr="mr-2   "
-                            classrtl="ml-2   "
+                        <div
                             v-show="menu.isVisible"
                             v-for="menu in $page.props.menus"
                             :key="menu.label"
-                            :href="menu.url"
                             :active="menu.isActive"
                         >
-                            <SidebarIcon
-                                :active="menu.isActive"
-                                :icon="menu.label"
-                            />
+                            <!-- //////////////////////////////////////////////////menus with sub menu/////////////////////////////////////////// -->
+                            <div v-if="menu.hasSubmenu">
+                                <button
+                                    class="w-56 flex items-center justify-between hover:bg-slate-200"
+                                    @click="open = !open"
+                                    :class="
+                                        menu.isActive
+                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
+                                            : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
+                                    "
+                                >
+                                    <SidebarIcon
+                                        :active="menu.isActive"
+                                        :icon="menu.label"
+                                    />
+                                    <span
+                                        class="w-full flex items-center justify-between"
+                                    >
+                                        <span
+                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
+                                        >
+                                            <Translations :label="menu.label" />
+                                        </span>
 
-                            <span
-                                class1="ml-1 duration-300 opacity-100 pointer-events-none ease-soft"
-                                class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
-                            >
-                                <!-- {{ menu.label }} -->
-                                <Translations :label="menu.label" />
-                            </span>
-                        </Link>
+                                        <span>
+                                            <svg
+                                                v-show="!open"
+                                                class="h-5 w-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+
+                                            <svg
+                                                v-show="open"
+                                                class="h-5 w-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </button>
+                                <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
+                                <div
+                                    v-show="open"
+                                    v-for="submenu in menu.subMenus"
+                                    :key="submenu.label"
+                                    class="px-4"
+                                    id="filter-section-mobile-1"
+                                >
+                                    <Link
+                                        class="hover:bg-slate-200 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
+                                        :class="
+                                            submenu.isActive
+                                                ? ' shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-white font-semibold text-slate-700 transition-colors'
+                                                : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-50 '
+                                        "
+                                        :href="submenu.url"
+                                    >
+                                        <SidebarIcon
+                                            :active="submenu.isActive"
+                                            :icon="submenu.label"
+                                        />
+                                        <span
+                                            class="w-full flex items-center justify-between"
+                                        >
+                                            <span
+                                                class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
+                                            >
+                                                <Translations
+                                                    :label="submenu.label"
+                                                />
+                                            </span>
+                                        </span>
+                                    </Link>
+                                </div>
+                            </div>
+                            <!-- //////////////////////////////////////////////////menus without sub menu /////////////////////////////////////////// -->
+                            <div v-else>
+                                <Link
+                                    class="hover:bg-slate-200"
+                                    :class="
+                                        menu.isActive
+                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
+                                            : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
+                                    "
+                                    :href="menu.url"
+                                >
+                                    <SidebarIcon
+                                        :active="menu.isActive"
+                                        :icon="menu.label"
+                                    />
+                                    <span
+                                        class="w-full flex items-center justify-between"
+                                    >
+                                        <span
+                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
+                                        >
+                                            <Translations :label="menu.label" />
+                                        </span>
+                                    </span>
+                                </Link>
+                            </div>
+                        </div>
                     </li>
 
                     <li class="xl:hidden"></li>
                 </ul>
             </div>
-
-            <!-- ////////////////// new added items ////////////////////////////////////////// -->
-
-            <div class="border-t border-gray-200 px-4 py-6">
-                <h3 class="-mx-2 -my-3 flow-root">
-                    <!-- Expand/collapse section button -->
-                    <button @click="open = !open"
-                        type="button"
-                        class="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500"
-                        aria-controls="filter-section-mobile-1"
-                        aria-expanded="false"
-                    >
-                        <span class="font-medium text-gray-900">
-                            Category
-                        </span>
-                        <span class="ml-6 flex items-center">
-                            <!--
-                      Expand icon, show/hide based on section open state.
-
-                      Heroicon name: solid/plus-sm
-                    -->
-                            <svg v-show="!open"
-                                class="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            <!--
-                      Collapse icon, show/hide based on section open state.
-
-                      Heroicon name: solid/minus-sm
-                    -->
-                            <svg v-show="open"
-                                class="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                        </span>
-                    </button>
-                </h3>
-                <!-- Filter section, show/hide based on section state. -->
-                <div v-show="open" class="pt-6" id="filter-section-mobile-1">
-                    <div class="space-y-6">
-                        <div class="flex items-center">
-                            <input
-                                id="filter-mobile-category-0"
-                                name="category[]"
-                                value="new-arrivals"
-                                type="checkbox"
-                                class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="filter-mobile-category-0"
-                                class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                                New Arrivals
-                            </label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input
-                                id="filter-mobile-category-1"
-                                name="category[]"
-                                value="sale"
-                                type="checkbox"
-                                class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="filter-mobile-category-1"
-                                class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                                Sale
-                            </label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input
-                                id="filter-mobile-category-2"
-                                name="category[]"
-                                value="travel"
-                                type="checkbox"
-                                checked
-                                class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="filter-mobile-category-2"
-                                class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                                Travel
-                            </label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input
-                                id="filter-mobile-category-3"
-                                name="category[]"
-                                value="organization"
-                                type="checkbox"
-                                class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="filter-mobile-category-3"
-                                class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                                Organization
-                            </label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input
-                                id="filter-mobile-category-4"
-                                name="category[]"
-                                value="accessories"
-                                type="checkbox"
-                                class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="filter-mobile-category-4"
-                                class="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                                Accessories
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ////////////////// new added items ////////////////////////////////////////// -->
         </aside>
-<main
+
+        <main
             class1="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200"
             class="ltr:xl:ml-64 rtl:xl:mr-64 ease-soft-in-out relative h-full max-h-screen rounded-xl transition-all duration-200"
             classltr="xl:ml-64"
@@ -408,7 +358,7 @@ const open = ref(false);
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium  text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
                                                     >
                                                         <svg
                                                             class="rtl:ml-2 ltr:mr-2 -mr-0.5 h-4 w-4"
@@ -470,7 +420,7 @@ const open = ref(false);
                                                 <div
                                                     class="border-t border-gray-200"
                                                 />
-        <JetDropdownLink
+                                                <JetDropdownLink
                                                     as="button"
                                                     @click="
                                                         loadLanguageAsync('ar')
@@ -512,7 +462,7 @@ const open = ref(false);
                                                         <div class="my-auto">
                                                             <img
                                                                 src="../../../../public/admin/assets/img/us-flag-icon.jpg"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-5 w-9 max-w-none "
+                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-5 w-9 max-w-none"
                                                             />
                                                         </div>
                                                         <div
@@ -529,7 +479,7 @@ const open = ref(false);
                                                         </div>
                                                     </div>
                                                 </JetDropdownLink>
-                                        
+
                                                 <div
                                                     class="border-t border-gray-100"
                                                 />
@@ -678,6 +628,5 @@ const open = ref(false);
 
             <slot />
         </main>
-
-</body>
+    </body>
 </template>

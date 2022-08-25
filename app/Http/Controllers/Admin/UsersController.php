@@ -89,7 +89,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function create()
+    public function create() 
     {
         return Inertia::render('User/Create', [
             'edit' => false,
@@ -101,6 +101,7 @@ class UsersController extends Controller
 
     public function store(UsersRequest $request)
     {
+        // dd($request);
         $data = $request->safe()->only(['email', 'password']);
 
         $data["ar"]["name"] = $request->name_ar;

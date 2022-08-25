@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,17 +29,26 @@ class UsersRequest extends FormRequest
     public function rules() 
     {
         $model = $this->route('user');
+        // $model = ( $this->user->id ) ?? null ;
+
+
+
         // $passwordRule = $model ? ['nullable'] : ['required'];
 
         return [
             'name_ar' => ['bail', 'required', 'string', 'max:255'],
             'name_en' => ['bail', 'required', 'string', 'max:255'],
             'email' => ['bail', 'required', 'email', 'max:255', Rule::unique(User::class)->ignore($model->id ?? null)],
+            // 'email' => 'bail|required|email|max:255|unique:users,email,'.$model,
             // 'password' => ['bail', ...$passwordRule, Password::defaults()],
             // 'passwordConfirmation' => ['bail', ...$passwordRule, 'same:password'], 
+            'phone'=> ['bail', 'nullable', 'string', 'max:255'],
             'password' => ['bail', 'required', Password::defaults()],
             'passwordConfirmation' => ['bail','required', 'same:password'],
             'roleId' => ['bail', 'required', Rule::exists(Role::class, 'id')], 
+            'section_id' => ['bail', 'nullable', Rule::exists(Section::class, 'id')], 
+            'appointments'=> ['bail', 'nullable', 'string', 'max:255'],
+
         ];
     }
 }

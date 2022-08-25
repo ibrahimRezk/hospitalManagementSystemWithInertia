@@ -408,7 +408,7 @@ const open = ref(false);
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium  text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
                                                     >
                                                         <svg
                                                             class="rtl:ml-2 ltr:mr-2 -mr-0.5 h-4 w-4"
@@ -429,7 +429,7 @@ const open = ref(false);
                                                                 'en'
                                                             "
                                                             src="../../../../public/admin/assets/img/us-flag-icon.jpg"
-                                                            class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-6 w-6 max-w-none rounded-xl"
+                                                            class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-4 w-full max-w-none"
                                                         />
 
                                                         <img
@@ -438,7 +438,8 @@ const open = ref(false);
                                                                 'ar'
                                                             "
                                                             src="../../../../public/admin/assets/img/eg-flag-icon.png"
-                                                            class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-6 w-6 max-w-none rounded-xl"
+                                                            class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-4 w-full max-w-none"
+                                                            class1=" rounded-xl"
                                                         />
 
                                                         <!-- <svg
@@ -481,7 +482,7 @@ const open = ref(false);
                                                         <div class="my-auto">
                                                             <img
                                                                 src="../../../../public/admin/assets/img/eg-flag-icon.png"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
+                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-5 w-9"
                                                             />
                                                         </div>
                                                         <div
@@ -511,7 +512,7 @@ const open = ref(false);
                                                         <div class="my-auto">
                                                             <img
                                                                 src="../../../../public/admin/assets/img/us-flag-icon.jpg"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
+                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-5 w-9 max-w-none "
                                                             />
                                                         </div>
                                                         <div

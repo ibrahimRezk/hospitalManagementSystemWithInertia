@@ -110,7 +110,7 @@ const { filters, isLoading, isFilled } = useFilters({
                             </template>
                         </Td>
                         <Td>
-                        <Button
+                        <Button v-if="item.section" 
                                 color="blue"
                                 small
                             >
@@ -128,7 +128,7 @@ const { filters, isLoading, isFilled } = useFilters({
                             {{ item.phone }}
                             </Button>
                         </Td>
-                        <Td>
+                        <Td >
                             {{ item.appointements }}
                         </Td>
                         <Td>

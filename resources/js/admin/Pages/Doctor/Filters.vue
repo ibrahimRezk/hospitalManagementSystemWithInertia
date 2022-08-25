@@ -40,7 +40,7 @@ watch(
             <InputGroup label="Email"
                         v-model="filters.email"
                         type="email" />
-            <SelectGroup label="Role"
+            <SelectGroup label="Section"
                          v-model="filters.sectionId"
                          :items="sections" />
         </form>

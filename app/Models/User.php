@@ -79,7 +79,6 @@ class User extends Authenticatable
     public function section(): BelongsTo
     {
         return $this->belongsTo(Section::class , 'section_id');
-        // return $this->belongsTo(SectionTranslation::class ,'section_id');
 
     }
 }

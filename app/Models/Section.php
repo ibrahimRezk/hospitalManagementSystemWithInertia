@@ -17,8 +17,8 @@ class Section extends Model
     use HasFactory;
 
 
-    // public function doctors(): HasMany
-    // {
-    //     return $this->hasMany(User::class ,'section_id');
-    // }
+    public function doctors(): HasMany
+    {
+        return $this->hasMany(User::class ,'section_id');
+    }
 }

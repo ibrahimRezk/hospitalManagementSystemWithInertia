@@ -32,7 +32,7 @@ const props = defineProps({
 const form = useForm({
     // name: props.item.name ?? "",
     name_ar: props.item.name_ar ?? "",
-    name_en: props.item.name_en ?? "",
+    name_en: props.item.name_en ?? "", 
     email: props.item.email ?? "",
     password: "",
     passwordConfirmation: "",

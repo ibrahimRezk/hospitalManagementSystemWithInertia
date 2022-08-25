@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\DoctorsRequest;
 use App\Http\Requests\Admin\UsersRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\RoleResource;
@@ -43,7 +44,7 @@ class DoctorsController extends Controller
             // it is very important to put section_id here otherwise the relation will return on null 
             'section_id',
             'phone',
-            'status'
+            'status',
             ])
 
             ->with(['section:id'])
@@ -72,13 +73,12 @@ class DoctorsController extends Controller
             //     )
             // )
 
+            // down here we are looking for section_id column depending on sectionId witch comming from request
             ->when( 
                 $request->sectionId,
-                fn (Builder $builder, $sectionId) => $builder->whereHas(
-                    'sections',
-                    fn (Builder $builder) => $builder->where('sections.id', $sectionId)
+                fn (Builder $builder, $sectionId) =>  $builder->where( 'section_id', $sectionId)
                 )
-            )
+            
             ->latest('id')
             ->paginate(10);
             // dd($doctors);
@@ -122,48 +122,73 @@ class DoctorsController extends Controller
                     'name' => 'actions',
                 ],
             ],
-            'filters' => (object) $request->all(),
+            // 'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
-            // 'sections' => SectionResource::collection(Section::get(['id'])),
-            // 'roles' => RoleResource::collection(Role::get(['id'])),
+            'sections' => SectionResource::collection(Section::get(['id'])),
+            'roles' => RoleResource::collection(Role::get(['id'])),
             'can' => [
                 'create' => $request->user()->can('create doctor'),
             ],
         ]);
     }
 
+
+
     public function create()
     {
-        return Inertia::render('User/Create', [
+        return Inertia::render('Doctor/Create', [
             'edit' => false,
-            'title' => 'Add User',
+            'title' => 'Add Doctor',
             'routeResourceName' => $this->routeResourceName,
             'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+
+            'sections' => SectionResource::collection(Section::get(['id'])),
+            // 'appointments' =>
         ]);
     }
 
-    public function store(UsersRequest $request)
+    public function store(DoctorsRequest $request)
     {
-        $data = $request->safe()->only(['email', 'password']);
+        //remember to use section_id not section because in database column name is section_id
+
+        // $data = $request->safe()->only(['email', 'password' ,'phone']);
+        $data = $request->only(['email', 'password' ,'phone' ,'section_id']);
 
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;
+
+        // we can use it like this 
+        // $data['section_id'] = $request->section; 
+
         $user = User::create($data);
         $user->assignRole($request->roleId);
+        // $appointments // to be done
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
 
+
+// very important here we don't use route model binding becase we are looking in user table but url is doctor and it has to be the same so we search for the id 
+    // public function edit($id)
+    // $user= User::find($id);
+
+
+
     public function edit(User $user)
     {
         $user->load(['roles:roles.id']);
+        $user->load(['section:id']);
 
-        return Inertia::render('User/Create', [ 
+        return Inertia::render('Doctor/Create', [ 
             'edit' => true,
             'title' => 'Edit User',
             'item' => new UserResource($user),
             'routeResourceName' => $this->routeResourceName,
             'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+            'sections' => SectionResource::collection(Section::get(['id'])),
+            // 'appointments' =>
+
+            
         ]);
     }
 

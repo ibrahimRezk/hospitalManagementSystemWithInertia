@@ -27,16 +27,28 @@ const props = defineProps({
         type: Array,
         required: true, 
     },
+    sections: {
+        type: Array,
+        required: true, 
+    },
+    appointments: {
+        type: Array,
+        required: false, 
+    },
 });
 
 const form = useForm({
     // name: props.item.name ?? "",
     name_ar: props.item.name_ar ?? "",
-    name_en: props.item.name_en ?? "",
+    name_en: props.item.name_en ?? "", 
     email: props.item.email ?? "",
     password: "",
     passwordConfirmation: "",
-    roleId: props.item.roles?.[0]?.id ?? "",
+    roleId: props.item.roles?.[0]?.id ?? "",   /// important   it will work only like this in create and edit cecase of the relation
+    phone: props.item.phone ?? "",
+    section_id: props.item.section?.id ?? "",  /// important   it will work only like this in create and edit cecase of the relation this is diffrent
+    appointments:props.item.appointments ?? ""
+
 
 });
 
@@ -101,6 +113,12 @@ const submit = () => {
                             :error-message="form.errors.passwordConfirmation"
                             :required="!edit"
                         />
+                        <InputGroup
+                            label="phone"
+                            v-model="form.phone"
+                            :error-message="form.phone"
+                            :required="!edit"
+                        />
 
                         <SelectGroup
                             label="Role"
@@ -109,6 +127,14 @@ const submit = () => {
                             :error-message="form.errors.roleId"
                             required
                         />
+                        <SelectGroup
+                            label="Section"
+                            v-model="form.section_id"
+                            :items="sections"
+                            :error-message="form.errors.section"
+                            required
+                        />
+                       
                     </div>
 
                     <div class="mt-4">

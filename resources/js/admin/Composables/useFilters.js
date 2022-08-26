@@ -2,7 +2,7 @@ import { ref, watch, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia"; 
 
 export default function (params) {
-  const { filters: defaultFilters, routeResourceName } = params;
+  const { filters: defaultFilters, routeResourceName , method } = params;
 // we have to convert filters to ref becase it is calling a v-model 
   const filters = ref(defaultFilters); 
 
@@ -21,7 +21,7 @@ export default function (params) {
   const fetchItemsHandler = ref(null); 
 
   function fetchItems() {
-    Inertia.get(route(`admin.${routeResourceName}.index`), {
+    Inertia.get(route(`admin.${routeResourceName}.${method}`), {
       ...filters.value,
       page:1
     }, {

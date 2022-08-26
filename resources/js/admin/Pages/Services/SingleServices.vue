@@ -41,6 +41,7 @@ const props = defineProps({
         required: true,
     },
     can: Object,
+    method:String
 });
 
 const {
@@ -57,6 +58,7 @@ const {
 const { filters, isLoading, isFilled } = useFilters({
     filters: props.filters,
     routeResourceName: props.routeResourceName,
+    method:props.method
 });
 </script>
 

@@ -47,7 +47,14 @@ class ServicesController extends Controller
 ->whereHas('translations' , fn ($query) => 
 $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
 )
+->whereHas('translations' , fn ($query) => 
+$query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+)
+
 ////////////////////////////////////////////////////////////////////////////////////      
+->when($request->status, fn (Builder $builder, $status) => $builder->where('status', 'like', "%{$status}%"))
+->when($request->price, fn (Builder $builder, $price) => $builder->where('price', 'like', "%{$price}%"))
+
             ->latest('id')
             ->paginate(10);
 
@@ -86,6 +93,7 @@ $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'n
             'can' => [
                 'create' => $request->user()->can('create service'),
             ],
+            'method'=> 'singleService',
         ]);
     }
 }

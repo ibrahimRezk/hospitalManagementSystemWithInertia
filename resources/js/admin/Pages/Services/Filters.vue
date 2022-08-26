@@ -34,15 +34,15 @@ watch(
             Filters
         </template> 
 
-        <form class="grid grid-cols-4 gap-8"> 
+        <form class="grid grid-cols-3 gap-8"> 
             <InputGroup label="Name"
                         v-model="filters.name" />
-            <!-- <InputGroup label="Email"
-                        v-model="filters.email"
-                        type="email" /> -->
-            <!-- <SelectGroup label="Role"
-                         v-model="filters.roleId"
-                         :items="roles" /> -->
+            <InputGroup label="price"
+                        v-model="filters.price" />
+            <InputGroup label="status"
+                        v-model="filters.status" />
+            
+            
         </form>
     </Card>
 </template>

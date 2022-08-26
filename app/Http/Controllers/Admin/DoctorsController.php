@@ -129,6 +129,8 @@ class DoctorsController extends Controller
             'can' => [
                 'create' => $request->user()->can('create doctor'),
             ],
+            'method'=> 'index',
+
         ]);
     }
 

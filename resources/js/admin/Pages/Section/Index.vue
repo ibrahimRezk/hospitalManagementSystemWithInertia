@@ -41,7 +41,7 @@ const props = defineProps({
         required: true,
     },
     can: Object,
-    // roles: Array,
+    method:String
 });
 
 const {

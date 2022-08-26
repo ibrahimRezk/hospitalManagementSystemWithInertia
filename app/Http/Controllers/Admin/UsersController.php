@@ -86,6 +86,8 @@ class UsersController extends Controller
             'can' => [
                 'create' => $request->user()->can('create user'),
             ],
+            'method'=> 'index',
+
         ]);
     }
 

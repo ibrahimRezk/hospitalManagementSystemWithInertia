@@ -43,6 +43,8 @@ const props = defineProps({
     can: Object,
 
     sections: Object,
+    method:String
+
 });
 
 const {

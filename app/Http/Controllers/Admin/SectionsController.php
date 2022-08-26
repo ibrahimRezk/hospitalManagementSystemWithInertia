@@ -82,6 +82,8 @@ class SectionsController extends Controller
             'can' => [
                 'create' => $request->user()->can('create section'),
             ],
+            'method'=> 'index',
+
         ]);
     }
 

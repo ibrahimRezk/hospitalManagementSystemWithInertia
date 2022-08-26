@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\SingleServicesController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
@@ -32,9 +33,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
 
     // important : any extra route must be put before resource route or it will not work
-    Route::get('services/singleService', [ServicesController::class, 'singleService'])->name('services.singleService');
-    // Route::get('services/servicesGroup' , [ServicesController::class ,'servicesGroup'])->name('services.servicesGroup');
-    Route::resource('services', ServicesController::class);
+    Route::resource('singleServices', SingleServicesController::class);
 
 
 

@@ -9,7 +9,7 @@ use App\Http\Resources\RoleResource;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\UserResource;
 use App\Models\Section;
-use Illuminate\Database\Eloquent\Builder; 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
@@ -34,19 +34,21 @@ class SectionsController extends Controller
             ->select([
                 'id',
                 // name will come from section resource
-                'created_at', 
+                'created_at',
             ])
-           
 
-/////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
-            ->whereHas('translations' , fn ($query) => 
 
-            $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+            /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
+            ->whereHas(
+                'translations',
+                fn ($query) =>
+
+                $query->when($request->name, fn (Builder $builder, $name) => $builder->where('name', 'like', "%{$name}%"))
             )
- ////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////
 
-            
-            ->when( 
+
+            ->when(
                 $request->sectionId,
                 fn (Builder $builder, $sectionId) => $builder->whereHas(
                     'sections',
@@ -82,7 +84,7 @@ class SectionsController extends Controller
             'can' => [
                 'create' => $request->user()->can('create section'),
             ],
-            'method'=> 'index',
+            'method' => 'index',
 
         ]);
     }
@@ -98,7 +100,7 @@ class SectionsController extends Controller
 
     public function store(SectionsRequest $request)
     {
-        
+
 
         Section::create($request->saveData());
 
@@ -108,7 +110,7 @@ class SectionsController extends Controller
     public function edit(Section $section)
     {
 
-        return Inertia::render('Section/Create', [ 
+        return Inertia::render('Section/Create', [
             'edit' => true,
             'title' => 'Edit User',
             'item' => new SectionResource($section),
@@ -116,9 +118,9 @@ class SectionsController extends Controller
         ]);
     }
 
-    public function update(SectionsRequest $request , Section $section) 
+    public function update(SectionsRequest $request, Section $section)
     {
-        
+
         $section->update($request->saveData());
 
 
@@ -132,7 +134,7 @@ class SectionsController extends Controller
         return back()->with('success', 'User deleted successfully.');
     }
 
-// to show all doctors depending on section name 
+    // to show all doctors depending on section name 
     // public function show($id)
     // {
     //     $doctors = Section::findOrFail($id)->doctors;

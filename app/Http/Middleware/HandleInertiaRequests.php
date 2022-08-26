@@ -103,21 +103,21 @@ class HandleInertiaRequests extends Middleware
                 ],
                 [
                     'label' => 'Services',
-                    // 'url' => route('admin.services.index'),
-                    'isActive' => $request->routeIs('admin.services.*'),
+                    // 'url' => route('admin.singleServices.index'),
+                    'isActive' => $request->routeIs('admin.singleServices.*'),
                     'isVisible' => $request->user()?->can('view services module'),
                     'hasSubmenu' => true,
                     'subMenus'=> [
                         [
                             'label' => 'Single Services',
-                            'url' => route('admin.services.singleService'),
-                            'isActive'=>$request->routeIs('admin.services.singleService*'),
-                            // 'isVisible' => $request->user()?->can('view services module'),
+                            'url' => route('admin.singleServices.index'),
+                            'isActive'=>$request->routeIs('admin.singleService*'),
+                            'isVisible' => $request->user()?->can('view services module'),
                         ],
                         [
                             'label' => 'Group Services',
                             // 'url' => route('admin.services.servicesGroup'),
-                            'isActive'=>$request->routeIs('admin.services.servicesGroup*'),
+                            // 'isActive'=>$request->routeIs('admin.services.servicesGroup*'),
                             // 'isVisible' => $request->user()?->can('view services module'),
                         ],
                     ]

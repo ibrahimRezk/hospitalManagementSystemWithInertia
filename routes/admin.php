@@ -33,7 +33,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
 
     // important : any extra route must be put before resource route or it will not work
-    Route::resource('singleServices', SingleServicesController::class);
+    Route::resource('singleServices', SingleServicesController::class)->parameters(['singleServices' => 'service']);
 
 
 

@@ -6,6 +6,8 @@ import Card from "@/admin/Components/Card/Card.vue";
 import Button from "@/admin/Components/Button.vue";
 import InputGroup from "@/admin/Components/InputGroup.vue";
 import SelectGroup from "@/admin/Components/SelectGroup.vue";
+import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
+
 
 const props = defineProps({
     edit: {
@@ -19,7 +21,7 @@ const props = defineProps({
         type: Object,
         default: () => ({}), 
     },
-    routeResourceName: {
+    routeResourceName: { 
         type: String,
         required: true,
     },
@@ -35,8 +37,8 @@ const form = useForm({
     name_en: props.item.name_en ?? "",
     description_ar: props.item.description_ar ?? "",
     description_en: props.item.description_en ?? "",
-    
-
+    price: props.item.price ?? "",
+    status: props.item.status ?? "",
 });
 
 const submit = () => {
@@ -91,6 +93,20 @@ const submit = () => {
                             :error-message="form.errors.description_en"
                             required
                         />
+
+                        <InputGroup
+                            label="Price"
+                            v-model="form.price"
+                            :error-message="form.errors.price"
+                            required
+                        />
+
+                        <div class="mt-3 mb-4">
+                            <CheckboxGroup
+                                label="Active"
+                                v-model:checked="form.status" 
+                            />
+                        </div>
 
 </div>
                     <div class="mt-4">

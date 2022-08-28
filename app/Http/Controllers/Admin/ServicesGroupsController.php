@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\SingleServiceRequest;
 use App\Http\Resources\ServiceResource;
+use App\Http\Resources\ServicesGroupResource;
+use App\Models\Group;
 use App\Models\Service;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\ServicesGroup;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+
+
 use Inertia\Inertia;
 
-class SingleServicesController extends Controller
+
+class ServicesGroupsController extends Controller
 {
-    private string $routeResourceName = 'singleServices';
+    private string $routeResourceName = 'servicesGroups';
 
 
     public function __construct()
@@ -25,48 +30,48 @@ class SingleServicesController extends Controller
 
     public function index(Request $request)
     {
-        $Services = Service::query()
+        $ServicesGroup = Group::query()
             ->select([
                 'id',
-                'price',
+                // 'name',
+                // 'notes',
+                'Total_with_tax',
                 'status',
                 'created_at',
 
             ])
+            ->with('services')
             /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
             ->whereHas(
                 'translations',
                 fn ($query) =>
                 $query->when($request->name, fn (Builder $builder, $name) => $builder->where('name', 'like', "%{$name}%"))
             )
-        
-
-            ////////////////////////////////////////////////////////////////////////////////////      
+                    ////////////////////////////////////////////////////////////////////////////////////      
             ->when($request->status, fn (Builder $builder, $status) => $builder->where('status', 'like', "%{$status}%"))
-            ->when($request->price, fn (Builder $builder, $price) => $builder->where('price', 'like', "%{$price}%"))
 
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Services/SingleService/Index', [
-            'title' => 'Services',
-            'items' => ServiceResource::collection($Services),
+        return Inertia::render('Services/ServicesGroup/Index', [
+            'title' => 'Services Groups',
+            'items' => ServicesGroupResource::collection($ServicesGroup),
             'headers' => [
                 [
                     'label' => 'Name',
                     'name' => 'name',
                 ],
                 [
-                    'label' => 'Description',
-                    'name' => 'description',
-                ],
-                [
-                    'label' => 'price',
-                    'name' => 'price',
+                    'label' => 'total with tax',
+                    'name' => 'Total_with_tax',
                 ],
                 [
                     'label' => 'status',
                     'name' => 'status',
+                ],
+                [
+                    'label' => 'notes',
+                    'name' => 'notes',
                 ],
 
                 [
@@ -90,44 +95,16 @@ class SingleServicesController extends Controller
 
     public function create()
     {
-        return Inertia::render('Services/SingleService/Create', [
+        $Services = Service::select('id')->latest()->get();
+        // $Services->load(['groups:id']); 
+
+
+        return Inertia::render('Services/ServicesGroup/Create', [
             'edit' => false,
             'title' => 'Add Single Service',
             'routeResourceName' => $this->routeResourceName,
+            'services' =>ServiceResource::collection($Services)
         ]);
     }
 
-    public function store(SingleServiceRequest $request)
-    {
-
-
-        Service::create($request->saveData());
-
-        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
-    }
-
-    public function edit(Service $service)
-    {
-        return Inertia::render('Services/SingleService/Create', [
-            'edit' => true,
-            'title' => 'Edit Single Service',
-            'item' => new ServiceResource($service),
-            'routeResourceName' => $this->routeResourceName,
-        ]);
-    }
-
-    public function update(SingleServiceRequest $request, Service $service)
-    {
-        $service->update($request->saveData());
-
-
-        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
-    }
-
-    public function destroy(Service $service)
-    {
-        $service->delete();
-
-        return back()->with('success', 'User deleted successfully.');
-    }
 }

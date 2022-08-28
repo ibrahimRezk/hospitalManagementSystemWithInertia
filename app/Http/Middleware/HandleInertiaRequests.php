@@ -116,9 +116,9 @@ class HandleInertiaRequests extends Middleware
                         ],
                         [
                             'label' => 'Group Services',
-                            // 'url' => route('admin.services.servicesGroup'),
-                            // 'isActive'=>$request->routeIs('admin.services.servicesGroup*'),
-                            // 'isVisible' => $request->user()?->can('view services module'),
+                            'url' => route('admin.servicesGroups.index'),
+                            'isActive'=>$request->routeIs('admin.servicesGroups*'),
+                            'isVisible' => $request->user()?->can('view services module'),
                         ],
                     ]
 

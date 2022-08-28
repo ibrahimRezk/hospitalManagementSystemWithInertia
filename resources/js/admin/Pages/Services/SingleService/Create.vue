@@ -10,7 +10,7 @@ import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
 
 
 const props = defineProps({
-    edit: {
+    edit: { 
         type: Boolean,
         default: false,
     },

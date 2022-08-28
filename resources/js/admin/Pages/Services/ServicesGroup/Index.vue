@@ -98,11 +98,9 @@ const { filters, isLoading, isFilled } = useFilters({
                             {{ item.name }}
                         
                         </Td>
+                        
                         <Td>
-                            {{ item.notes }} 
-                        </Td>
-                        <Td>
-                            {{ item.total_with_tax }} 
+                            {{ item.Total_with_tax }} 
                         </Td>
                         <Td>
                             {{ item.status }} 

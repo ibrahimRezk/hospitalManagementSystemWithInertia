@@ -96,7 +96,8 @@ class ServicesGroupsController extends Controller
     public function create()
     {
         $Services = Service::select('id')->latest()->get();
-        // $Services->load(['groups:id']); 
+// dd($Services);
+        $Services->load(['groups:id']); 
 
 
         return Inertia::render('Services/ServicesGroup/Create', [

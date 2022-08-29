@@ -10,10 +10,9 @@ import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
 import { ref } from "@vue/reactivity";
 import { computed, watch } from "@vue/runtime-core";
 import Table from "@/admin/Components/Table/Table.vue";
+import Trash from "@/admin/Components/Icons/Trash.vue";
 
-
-
-const props = defineProps({ 
+const props = defineProps({
     edit: {
         type: Boolean,
         default: false,
@@ -23,17 +22,16 @@ const props = defineProps({
     },
     item: {
         type: Object,
-        default: () => ({}), 
+        default: () => ({}),
     },
-    routeResourceName: { 
+    routeResourceName: {
         type: String,
         required: true,
     },
-    services :{
+    services: {
         type: Object,
-        default: () => ({}), 
-    }
- 
+        default: () => ({}),
+    },
 });
 const form = useForm({
     // name: props.item.name ?? "",
@@ -50,25 +48,33 @@ const form = useForm({
     services: props.item.services ?? "",
 });
 
-const  choosenService = ref({})
 
-  const addedServices = ref([]);
+const quantity = ref()
 
+const choosenService = ref({});
 
+const addedServices = ref([]);
 
-  const addService = computed(()=>{
+watch(
+    () => choosenService.value,
+    () => addService.value
+);
 
+const addService = computed(() => {
     if (!choosenService.value) return [];
 
-    let singleService = props.services.find((c) => c.id == choosenService.value);
+    let singleService = props.services.find(
+        (c) => c.id == choosenService.value
+    );
     if (!singleService) return [];
 
-    addedServices.value.push(singleService)
-  })
+    addedServices.value.push(singleService);
+});
 
-
-
-  
+const removeServiceFromList = (index) => {
+    console.log(index);
+    addedServices.value.splice(index, 1);
+};
 
 
 
@@ -82,10 +88,7 @@ const submit = () => {
         : form.post(route(`admin.${props.routeResourceName}.store`));
 };
 
-
-const show = ref(false)
-
-
+const show = ref(false);
 </script>
 
 <template>
@@ -114,9 +117,8 @@ const show = ref(false)
                             :error-message="form.errors.name"
                             required
                         />
-                        </div>
-                    <div class="grid grid-cols-1 gap-6  mb-6">
-
+                    </div>
+                    <div class="grid grid-cols-1 gap-6 mb-6">
                         <InputGroup
                             label="notes ar"
                             v-model="form.notes_ar"
@@ -129,97 +131,134 @@ const show = ref(false)
                             :error-message="form.errors.notes_en"
                             required
                         />
-
-                        </div>
-                        
-
-                                    <hr class="h-px  mt-10 bg-black bg-gradient-horizontal-dark " />
-
-
-
-<button @click="show= true" class=" bg-cyan-900 px-3 py-2 rounded-md text-gray-100 mt-8 mb-8">Add single service</button>
-
-
-
-                                <SelectGroup    
-                                    label="services"
-                                    v-model="choosenService"
-                                    :items="services"
-                                    :error-message="form.errors.services"
-                                />
-
-<table class=" w-full bg-slate-300 mt-8 border-stone-800 border px-2 py-2 " >
-<thead class="px-2 py-2 bg-slate-200">
-<th  class="px-2 py-2">name</th>
-<th  class="px-2 py-2">quantity</th>
-<th  class="px-2 py-2">actions</th>
-</thead>
-<tbody v-for="(service , index ) in addedServices"   class="px-2 py-2">
-<td  class="px-2 py-2">
-{{ service.name}}
-</td>
-<td  class="px-2 py-2">
-<input type="text">
-</td>
-<td  class="px-2 py-2">
-edit/delete
-</td>
-
-</tbody>
-</table>
-
-
-
-                    <div v-if="show">
-                    <div class="grid grid-cols-5 gap-6  mb-6">
-
-                            <InputGroup
-                            label="discount_value"
-                            v-model="form.discount_value"
-                            :error-message="form.errors.discount_value"
-                            required
-                        />
-                            <InputGroup
-                            label="Total_before_discount"
-                            v-model="form.Total_before_discount"
-                            :error-message="form.errors.Total_before_discount"
-                            required
-                        />
-                            <InputGroup
-                            label="Total_after_discount"
-                            v-model="form.Total_after_discount"
-                            :error-message="form.errors.Total_after_discount"
-                            required
-                        />
-
-
-                            <InputGroup
-                            label="tax_rate"
-                            v-model="form.tax_rate"
-                            :error-message="form.errors.tax_rate"
-                            required
-                        />
-                            <InputGroup
-                            label="Total_with_tax"
-                            v-model="form.Total_with_tax"
-                            :error-message="form.errors.Total_with_tax"
-                            required
-                        />
-
-
-                        <div class="mt-6 mb-4 ">
-                            <CheckboxGroup
-                                label="Active"
-                                v-model:checked="form.status" 
-                            />
-
                     </div>
 
+                    <hr
+                        class="h-px mt-10 bg-black bg-gradient-horizontal-dark"
+                    />
+
+                    <button
+                        @click="show = true"
+                        class="bg-cyan-900 px-3 py-2 rounded-md text-gray-100 mt-8 mb-8"
+                    >
+                        Add single service
+                    </button>
+
+  <div v-if="show">
+                    <SelectGroup
+                        label="services"
+                        v-model="choosenService"
+                        :items="services"
+                        :error-message="form.errors.services"
+                    />
+<table
+                        class="items-center w-full  align-top border-gray-200 text-slate-500 my-6  "
+                    >
+                        <thead class="align-bottom bg-gray-600">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                >name</th>
+                                 <th
+                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                >number</th>
+                                 <th
+                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                >actions</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="(service, index) in addedServices"
+                                class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400">
+                            <tr>
+                                <td
+                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                >
+                                    <div class="flex px-2 py-1">
+                                        <div class="flex-col justify-center">
+                                            <h6
+                                                class="mb-0 leading-normal text-size-sm"
+                                            > {{ service.name }}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                >
+                                    <div class="flex px-2 py-1">
+                                        <div class="flex-col justify-center">
+                                             <input v-model="quantity" type="number" class=" rounded-lg w-30"/>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                >
+                                    <Trash
+                                        class="w-4 h-4 text-red-700"
+                                        @click="removeServiceFromList(index)"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                  <hr
+                        class="h-px mt-10 bg-black bg-gradient-horizontal-dark"
+                    />
+
+                    
+                        <div class="grid grid-cols-2 gap-6 mb-6 mt-12">
+                            <InputGroup
+                                label="discount value"
+                                v-model="form.discount_value"
+                                :error-message="form.errors.discount_value"
+                                required
+                            />
+                            <InputGroup
+                                label="Total before discount"
+                                v-model="form.Total_before_discount"
+                                :error-message="
+                                    form.errors.Total_before_discount
+                                "
+                                required
+                            />
+                            <InputGroup
+                                label="Total after discount"
+                                v-model="form.Total_after_discount"
+                                :error-message="
+                                    form.errors.Total_after_discount
+                                "
+                                required
+                            />
+
+                            <InputGroup
+                                label="tax rate"
+                                v-model="form.tax_rate"
+                                :error-message="form.errors.tax_rate"
+                                required
+                            />
+                            <InputGroup
+                                label="Total with tax"
+                                v-model="form.Total_with_tax"
+                                :error-message="form.errors.Total_with_tax"
+                                required
+                            />
+
+                            
                         </div>
-                    <div class="mt-4">
-                        <Button :disabled="form.processing">
-                            {{ form.processing ? "Saving..." : "Save" }}
-                        </Button>
+
+                        <div class="mt-2 mb-4">
+                                <CheckboxGroup
+                                    label="Active"
+                                    v-model:checked="form.status"
+                                />
+                            </div>
+                        <div class="mt-4">
+                            <Button :disabled="form.processing">
+                                {{ form.processing ? "Saving..." : "Save" }}
+                            </Button>
                         </div>
                     </div>
                 </form>

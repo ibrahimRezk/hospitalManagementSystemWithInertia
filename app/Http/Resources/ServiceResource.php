@@ -37,7 +37,9 @@ class ServiceResource extends JsonResource
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
-            // 'group' => ServiceResource::collection($this->whenLoaded('groups')),
+            'group' => ServicesGroupResource::collection($this->whenLoaded('groups')),
+
+
 
 
             'can' => [

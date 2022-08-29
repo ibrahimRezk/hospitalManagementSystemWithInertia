@@ -95,8 +95,11 @@ class ServicesGroupsController extends Controller
 
     public function create()
     {
-        $Services = Service::select('id')->latest()->get();
-// dd($Services);
+        $Services = Service::select('id','price','status')->latest()->get();
+        $groupService = Group::select('id')->latest()->get();;
+
+        // dd($groupService);
+        $groupService->load(['services:id']);
         $Services->load(['groups:id']); 
 
 
@@ -104,7 +107,8 @@ class ServicesGroupsController extends Controller
             'edit' => false,
             'title' => 'Add Single Service',
             'routeResourceName' => $this->routeResourceName,
-            'services' =>ServiceResource::collection($Services)
+            'services' =>ServiceResource::collection($Services),
+            'groupServiceCollection'=> ServicesGroupResource::collection($groupService)
         ]);
     }
 

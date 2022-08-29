@@ -33,23 +33,34 @@ const props = defineProps({
         default: () => ({}),
     },
 });
+
+// const quantity = ref(1)
+
+const Total_before_discount = ref(0);
+const discount_value = ref(0);
+const Total_after_discount = ref(0);
+const tax_rate = ref(14);
+const Total_with_tax = ref(0);
+const status = ref(true);
+
+// remember to fix total befor discount and total after discount and total with tax to be just numbers not input becase any one can change it from page inspect
+
 const form = useForm({
     // name: props.item.name ?? "",
     name_ar: props.item.name_ar ?? "",
     name_en: props.item.name_en ?? "",
     notes_ar: props.item.notes_ar ?? "",
     notes_en: props.item.notes_en ?? "",
-    status: props.item.status ?? "",
-    discount_value: props.item.discount_value ?? "",
-    Total_before_discount: props.item.Total_before_discount ?? "",
-    Total_after_discount: props.item.Total_after_discount ?? "",
-    tax_rate: props.item.tax_rate ?? "",
-    Total_with_tax: props.item.Total_with_tax ?? "",
+    status: props.item.status ?? status,
+    discount_value: props.item.discount_value ?? discount_value,
+    Total_before_discount:
+        props.item.Total_before_discount ?? Total_before_discount, // here we dont use .value because we will view it down in temlate
+    Total_after_discount:
+        props.item.Total_after_discount ?? Total_after_discount,
+    tax_rate: props.item.tax_rate ?? tax_rate,
+    Total_with_tax: props.item.Total_with_tax ?? Total_with_tax,
     services: props.item.services ?? "",
 });
-
-
-const quantity = ref()
 
 const choosenService = ref({});
 
@@ -58,6 +69,11 @@ const addedServices = ref([]);
 watch(
     () => choosenService.value,
     () => addService.value
+);
+
+watch(
+    () => choosenService.value,
+    () => primaryTotalBeforeDiscount.value
 );
 
 const addService = computed(() => {
@@ -71,12 +87,44 @@ const addService = computed(() => {
     addedServices.value.push(singleService);
 });
 
+const primaryTotalBeforeDiscount = computed(() => {
+    Total_before_discount.value = 0; // we have to make it zero because we will calculate all items again
+    addedServices.value.forEach((element) => {
+        Total_before_discount.value = Total_before_discount.value += parseInt(
+            element.price
+        ); // we use parseint here because it is saved as string in array
+        Total_after_discount.value = Total_before_discount.value;
+    });
+});
+watch(
+    () => discount_value.value,
+    () => primaryTotalAfterDiscount.value
+);
+const primaryTotalAfterDiscount = computed(() => {
+    Total_after_discount.value =
+        Total_before_discount.value - discount_value.value;
+});
+
 const removeServiceFromList = (index) => {
     console.log(index);
     addedServices.value.splice(index, 1);
 };
 
+watch(
+    () => Total_after_discount.value,
+    () => finalTotalWithTax.value
+);
+watch(
+    () => tax_rate.value,
+    () => finalTotalWithTax.value
+);
 
+const finalTotalWithTax = computed(() => {
+    Total_with_tax.value = Math.round(
+        Total_after_discount.value *
+            (1 + (tax_rate.value ? tax_rate.value : 0) / 100)
+    );
+});
 
 const submit = () => {
     props.edit
@@ -104,161 +152,180 @@ const show = ref(false);
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-2 gap-6 mb-6">
-                        <InputGroup
-                            label="Name ar"
-                            v-model="form.name_ar"
-                            :error-message="form.errors.name"
-                            required
-                        />
-                        <InputGroup
-                            label="Name en"
-                            v-model="form.name_en"
-                            :error-message="form.errors.name"
-                            required
-                        />
-                    </div>
-                    <div class="grid grid-cols-1 gap-6 mb-6">
-                        <InputGroup
-                            label="notes ar"
-                            v-model="form.notes_ar"
-                            :error-message="form.errors.notes_ar"
-                            required
-                        />
-                        <InputGroup
-                            label="notes en"
-                            v-model="form.notes_en"
-                            :error-message="form.errors.notes_en"
-                            required
-                        />
-                    </div>
-
-                    <hr
-                        class="h-px mt-10 bg-black bg-gradient-horizontal-dark"
-                    />
-
-                    <button
-                        @click="show = true"
-                        class="bg-cyan-900 px-3 py-2 rounded-md text-gray-100 mt-8 mb-8"
-                    >
-                        Add single service
-                    </button>
-
-  <div v-if="show">
-                    <SelectGroup
-                        label="services"
-                        v-model="choosenService"
-                        :items="services"
-                        :error-message="form.errors.services"
-                    />
-<table
-                        class="items-center w-full  align-top border-gray-200 text-slate-500 my-6  "
-                    >
-                        <thead class="align-bottom bg-gray-600">
-                            <tr>
-                                <th
-                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                                >name</th>
-                                 <th
-                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                                >number</th>
-                                 <th
-                                    class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                                >actions</th>
-                            </tr>
-                        </thead>
-                        <tbody v-for="(service, index) in addedServices"
-                                class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400">
-                            <tr>
-                                <td
-                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                                >
-                                    <div class="flex px-2 py-1">
-                                        <div class="flex-col justify-center">
-                                            <h6
-                                                class="mb-0 leading-normal text-size-sm"
-                                            > {{ service.name }}</h6>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                                >
-                                    <div class="flex px-2 py-1">
-                                        <div class="flex-col justify-center">
-                                             <input v-model="quantity" type="number" class=" rounded-lg w-30"/>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                                >
-                                    <Trash
-                                        class="w-4 h-4 text-red-700"
-                                        @click="removeServiceFromList(index)"
-                                    />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                  <hr
-                        class="h-px mt-10 bg-black bg-gradient-horizontal-dark"
-                    />
-
-                    
-                        <div class="grid grid-cols-2 gap-6 mb-6 mt-12">
+                
+                    <div>
+                        <div class="grid grid-cols-2 gap-6 mb-6">
                             <InputGroup
-                                label="discount value"
-                                v-model="form.discount_value"
-                                :error-message="form.errors.discount_value"
+                                label="Name ar"
+                                v-model="form.name_ar"
+                                :error-message="form.errors.name"
                                 required
                             />
                             <InputGroup
-                                label="Total before discount"
-                                v-model="form.Total_before_discount"
-                                :error-message="
-                                    form.errors.Total_before_discount
-                                "
+                                label="Name en"
+                                v-model="form.name_en"
+                                :error-message="form.errors.name"
+                                required
+                            />
+                        </div>
+                        <div class="grid grid-cols-1 gap-6 mb-6">
+                            <InputGroup
+                                label="notes ar"
+                                v-model="form.notes_ar"
+                                :error-message="form.errors.notes_ar"
                                 required
                             />
                             <InputGroup
-                                label="Total after discount"
-                                v-model="form.Total_after_discount"
-                                :error-message="
-                                    form.errors.Total_after_discount
-                                "
+                                label="notes en"
+                                v-model="form.notes_en"
+                                :error-message="form.errors.notes_en"
                                 required
                             />
-
-                            <InputGroup
-                                label="tax rate"
-                                v-model="form.tax_rate"
-                                :error-message="form.errors.tax_rate"
-                                required
-                            />
-                            <InputGroup
-                                label="Total with tax"
-                                v-model="form.Total_with_tax"
-                                :error-message="form.errors.Total_with_tax"
-                                required
-                            />
-
-                            
                         </div>
 
-                        <div class="mt-2 mb-4">
+                        <hr
+                            class="h-px mt-10 bg-black bg-gradient-horizontal-dark"
+                        />
+                    </div>
+                    <div>
+                        <button
+                            @click="show = true"
+                            class="bg-cyan-900 px-3 py-2 rounded-md text-gray-100 mt-8 mb-8"
+                        >
+                            Add single service
+                        </button>
+
+                        <div v-if="show">
+                        <div class=" grid grid-cols-1 sm:grid-cols-2 ">
+                        <div class="md:px-20 border border-gray-400 rounded-md p-5 mx-2 my-1  ">
+                            <div class="w-full md:w-1\2">
+                                <SelectGroup
+                                    label="services"
+                                    v-model="choosenService"
+                                    :items="services"
+                                    :error-message="form.errors.services"
+                                />
+                                <table
+                                    class="items-center w-full align-top border-gray-200 text-slate-500 my-6"
+                                >
+                                    <thead class="align-bottom bg-gray-600">
+                                        <tr>
+                                            <th
+                                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                            >
+                                                name
+                                            </th>
+
+                                            <th
+                                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                            >
+                                                actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        v-for="(
+                                            service, index
+                                        ) in addedServices"
+                                        class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400"
+                                    >
+                                        <tr>
+                                            <td
+                                                class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                            >
+                                                <div class="flex px-2 py-1">
+                                                    <div
+                                                        class="flex-col justify-center"
+                                                    >
+                                                        <h6
+                                                            class="mb-0 leading-normal text-size-sm"
+                                                        >
+                                                            {{ service.name }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td
+                                                class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                            >
+                                                <Trash
+                                                    class="w-4 h-4 text-red-700"
+                                                    @click="
+                                                        removeServiceFromList(
+                                                            index
+                                                        )
+                                                    "
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+</div>
+                       <div class=" md:px-20 border border-gray-400 rounded-md p-5  mx-2 ">
+
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-2 w-full md:w-1\2  gap-6 mb-6 "
+                            >
+                                <InputGroup
+                                    type="Number"
+                                    label="discount value"
+                                    v-model="form.discount_value"
+                                    :error-message="form.errors.discount_value"
+                                    required
+                                />
+
+                                <InputGroup
+                                    type="Number"
+                                    label="tax rate"
+                                    v-model="form.tax_rate"
+                                    :error-message="form.errors.tax_rate"
+                                    required
+                                />
+                            </div>
+
+                            <label
+                                for=""
+                                class="bg-slate-700 py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
+                            >
+                                Total Before Discount :
+                                {{ form.Total_before_discount }}
+                            </label>
+                            <br />
+                            <label
+                                for=""
+                                class="bg-slate-700  py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
+                            >
+                                Total After Discount :
+                                {{ form.Total_after_discount }}
+                            </label>
+                            <br />
+                            <hr
+                                class="h-px mt-4 bg-black bg-gradient-horizontal-dark "
+                            />
+                            <label
+                                for=""
+                                class2="bg-slate-700 px-3 py-1 rounded-md w-full md:w-1/2 text-yellow-500 my-2 mt-5"
+                                class="bg-slate-700  py-1 rounded-md w-full md:w-1\2 px-4 text-yellow-500  my-2 mt-5"
+                            >
+                                Total With Tax : {{ form.Total_with_tax }}
+                            </label>
+
+                            <div class="mt-2 mb-4">
                                 <CheckboxGroup
                                     label="Active"
                                     v-model:checked="form.status"
                                 />
                             </div>
-                        <div class="mt-4">
-                            <Button :disabled="form.processing">
-                                {{ form.processing ? "Saving..." : "Save" }}
-                            </Button>
+                            <div class="mt-8">
+                                <Button :disabled="form.processing">
+                                    {{ form.processing ? "Saving..." : "Save" }}
+                                </Button>
+                            </div>
+                            </div>
+</div>
+                            
                         </div>
                     </div>
                 </form>

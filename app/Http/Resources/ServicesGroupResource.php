@@ -46,6 +46,8 @@ class ServicesGroupResource extends JsonResource
             }),
 
             // 'services' => ServiceResource::collection($this->whenLoaded('services')),
+            'groupService' => $this->whenNotNull($this->whenLoaded('services')),
+
 
 
             'can' => [

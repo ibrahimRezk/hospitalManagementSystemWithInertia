@@ -106,9 +106,12 @@ const primaryTotalAfterDiscount = computed(() => {
 });
 
 const removeServiceFromList = (index) => {
-    console.log(index);
     addedServices.value.splice(index, 1);
+    choosenService.value={}
+    
 };
+
+
 
 watch(
     () => Total_after_discount.value,
@@ -117,6 +120,10 @@ watch(
 watch(
     () => tax_rate.value,
     () => finalTotalWithTax.value
+);
+watch(
+    () => Total_before_discount.value,
+    () => primaryTotalAfterDiscount.value ,
 );
 
 const finalTotalWithTax = computed(() => {
@@ -263,7 +270,7 @@ const show = ref(false);
                                 </table>
                             </div>
 </div>
-                       <div class=" md:px-20 border border-gray-400 rounded-md p-5  mx-2 ">
+                       <div class=" md:px-20 border border-gray-400 rounded-md p-5  mx-2 my-1">
 
                             <div
                                 class="grid grid-cols-1 md:grid-cols-2 w-full md:w-1\2  gap-6 mb-6 "

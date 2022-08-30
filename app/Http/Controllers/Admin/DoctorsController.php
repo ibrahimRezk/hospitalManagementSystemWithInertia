@@ -149,7 +149,7 @@ class DoctorsController extends Controller
         ]);
     }
 
-    public function store(UsersRequest $request)
+    public function store(UsersRequest $request) 
     {
         //remember to use section_id not section because in database column name is section_id
 

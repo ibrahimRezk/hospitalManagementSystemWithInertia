@@ -35,7 +35,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
     // important : any extra route must be put before resource route or it will not work
     Route::resource('singleServices', SingleServicesController::class)->parameters(['singleServices' => 'service']);
-    Route::resource('servicesGroups', ServicesGroupsController::class)->parameters(['servicesGroups' => 'services_group']);
+    Route::resource('servicesGroups', ServicesGroupsController::class)->parameters(['servicesGroups' => 'group']);
 
 
 

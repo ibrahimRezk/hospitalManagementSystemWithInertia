@@ -8,7 +8,7 @@ import InputGroup from "@/admin/Components/InputGroup.vue";
 import SelectGroup from "@/admin/Components/SelectGroup.vue";
 import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
 import { ref } from "@vue/reactivity";
-import { computed, watch } from "@vue/runtime-core";
+import { computed, onMounted, watch } from "@vue/runtime-core";
 import Table from "@/admin/Components/Table/Table.vue";
 import Trash from "@/admin/Components/Icons/Trash.vue";
 
@@ -32,7 +32,14 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    servicesWithinGroup: {
+        type:Object,
+                default: () => ({}),
+
+    }
 });
+
+
 
 // const quantity = ref(1)
 
@@ -43,6 +50,30 @@ const tax_rate = ref(14);
 const Total_with_tax = ref(0);
 const status = ref(true);
 
+const choosenService = ref({});
+
+const addedServices = ref([]);
+
+
+if(props.edit ==  true) {
+props.servicesWithinGroup.forEach((element)=> {
+element.quantity = element.pivot.quantity
+addedServices.value.push(element)
+});
+}
+
+onMounted(()=>{   // we did this here because in edit mode we have to bring data from database not refs
+    if(props.edit){
+        Total_before_discount.value = props.item.Total_before_discount;
+        Total_after_discount.value = props.item.Total_after_discount;
+        Total_with_tax.value =props.item.Total_with_tax;
+        discount_value.value = props.item.discount_value;
+        tax_rate.value = props.item.tax_rate
+
+
+    }
+})
+
 // remember to fix total befor discount and total after discount and total with tax to be just numbers not input becase any one can change it from page inspect
 
 const form = useForm({
@@ -51,20 +82,20 @@ const form = useForm({
     name_en: props.item.name_en ?? "",
     notes_ar: props.item.notes_ar ?? "",
     notes_en: props.item.notes_en ?? "",
+
     status: props.item.status ?? status,
-    discount_value: props.item.discount_value ?? discount_value,
-    Total_before_discount:
-        props.item.Total_before_discount ?? Total_before_discount, // here we dont use .value because we will view it down in temlate
-    Total_after_discount:
-        props.item.Total_after_discount ?? Total_after_discount,
-    tax_rate: props.item.tax_rate ?? tax_rate,
-    Total_with_tax: props.item.Total_with_tax ?? Total_with_tax,
-    services: props.item.services ?? "",
+    addedServices: addedServices.value ?? [],
+    
+    discount_value:  discount_value,
+    tax_rate: tax_rate,
+    Total_before_discount: Total_before_discount, 
+    Total_after_discount:Total_after_discount,
+    Total_with_tax: Total_with_tax,
+
+    
 });
 
-const choosenService = ref({});
 
-const addedServices = ref([]);
 
 watch(
     () => choosenService.value,
@@ -99,14 +130,18 @@ watch(
     addedServices.value,
     () => {primaryTotalBeforeDiscount.value} , { deeep:true}
 );
+// watch(
+//     ()=>discount_value.value,
+//     () => {primaryTotalBeforeDiscount.value} , { deeep:true}
+// );
 
 
 
     ///// to add numbers of service
-    // we added a new field to single service called quantity
+    // we added a new field to single service called quantity   in addService function
     // then we bind it in v model in th v-for in template down with it's place in the array of addedServices like this
     //  v-model="addedServices[index].quantity" 
-    // we added watch on added services for any change on numbers and we make it deep because it is an array
+    // we added watch on addedeSrvices for any change on numbers and we make it "deep" because it is an array
  
 
 
@@ -166,7 +201,7 @@ const submit = () => {
         : form.post(route(`admin.${props.routeResourceName}.store`));
 };
 
-const show = ref(false);
+const show = ref(props.edit);
 
 
 </script>
@@ -227,7 +262,7 @@ const show = ref(false);
                             Add single service
                         </button>
 
-                        <div v-if="show">
+                        <div v-if="show " >
                             <div class="grid grid-cols-1 sm:grid-cols-2">
                                 <div
                                     class="md:px-20 border border-gray-400 rounded-md p-5 mx-2 my-1"
@@ -243,7 +278,7 @@ const show = ref(false);
                                             "
                                         />
 
-                                        <table v-if="addedServices.length > 0"
+                                        <table
                                             class="items-center w-full align-top border-gray-200 text-slate-500 my-6"
                                         >
                                             <thead
@@ -303,7 +338,7 @@ const show = ref(false);
                                                             <div
                                                                 class="flex-col justify-center"
                                                             >
-<input v-model="addedServices[index].quantity" type="number" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-30 ">
+<input v-model="addedServices[index].quantity" type="number" min="1" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-30 ">
                                                             </div>
                                                         </div>
                                                     </td>

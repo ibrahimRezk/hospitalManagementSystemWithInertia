@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\servicesGroupsRequest;
 use App\Http\Resources\ServiceResource;
 use App\Http\Resources\ServicesGroupResource;
 use App\Models\Group;
@@ -110,6 +111,69 @@ class ServicesGroupsController extends Controller
             'services' =>ServiceResource::collection($Services),
             'groupServiceCollection'=> ServicesGroupResource::collection($groupService)
         ]);
+    }
+
+
+
+    public function store(servicesGroupsRequest $request)
+    {
+// dd($request);
+        $servicesGroup = Group::create($request->saveData());
+        foreach($request->addedServices as $service)
+        {
+            $servicesGroup->services()->attach($service['id'],['quantity' => $service['quantity']]);
+
+        }
+
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
+    }
+
+
+    public function edit(Group $group)
+    {
+
+        $Services = Service::select('id','price','status')->latest()->get();
+        $servicesWithinGroup = $group->services;
+        // $addedServices = Group::select('id')->latest()->get();;
+
+        $group->load(['services:id']);
+
+        $Services->load(['groups:id']); 
+
+
+        return Inertia::render('Services/ServicesGroup/Create', [
+            'edit' => true,
+            'title' => 'Edit Services Group',
+            'item' => new ServicesGroupResource($group),
+            'services' =>ServiceResource::collection($Services),
+            'routeResourceName' => $this->routeResourceName,
+            'servicesWithinGroup'=> $servicesWithinGroup,
+        ]);
+    }
+
+
+    public function update(servicesGroupsRequest $request, Group $group)
+    {
+        // dd($request);
+        $group->update($request->saveData());
+
+        // becauae we have pivot so we have to detach first the attach
+        $group->services()->detach();
+        foreach($request->addedServices as $service)
+        {
+           
+            $group->services()->attach($service['id'],['quantity' => $service['quantity']]);
+
+        }
+
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
+    }
+
+    public function destroy(Group $group)
+    {
+        $group->delete();
+
+        return back()->with('success', 'User deleted successfully.');
     }
 
 }

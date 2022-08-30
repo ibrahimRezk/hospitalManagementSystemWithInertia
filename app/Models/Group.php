@@ -14,6 +14,11 @@ class Group extends Model
     public $fillable= ['Total_before_discount','discount_value','Total_after_discount','tax_rate','Total_with_tax','status'];
     //public $guarded=[];
 
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     public function services()  
     {
         return $this->belongsToMany(Service::class,'groups_services')->withPivot('quantity');

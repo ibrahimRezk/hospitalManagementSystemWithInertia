@@ -76,23 +76,48 @@ watch(
     () => primaryTotalBeforeDiscount.value
 );
 
+
 const addService = computed(() => {
+
     if (!choosenService.value) return [];
 
     let singleService = props.services.find(
         (c) => c.id == choosenService.value
     );
     if (!singleService) return [];
+        singleService.quantity = 1  // new field added to collect numbers of item
 
+    let RepeatedService = addedServices.value.find((c)=> c.id == singleService.id)
+    if (RepeatedService) return ;
+    
     addedServices.value.push(singleService);
+    console.log(addedServices)
+    choosenService.value = {}
 });
+
+watch(
+    addedServices.value,
+    () => {primaryTotalBeforeDiscount.value} , { deeep:true}
+);
+
+
+
+    ///// to add numbers of service
+    // we added a new field to single service called quantity
+    // then we bind it in v model in th v-for in template down with it's place in the array of addedServices like this
+    //  v-model="addedServices[index].quantity" 
+    // we added watch on added services for any change on numbers and we make it deep because it is an array
+ 
+
+
+
 
 const primaryTotalBeforeDiscount = computed(() => {
     Total_before_discount.value = 0; // we have to make it zero because we will calculate all items again
     addedServices.value.forEach((element) => {
-        Total_before_discount.value = Total_before_discount.value += parseInt(
-            element.price
-        ); // we use parseint here because it is saved as string in array
+        Total_before_discount.value = Total_before_discount.value += ((parseInt(element.price)) * parseInt(element.quantity));
+        // Total_before_discount.value = Total_before_discount.value += (parseInt(element.price)) * (parseInt(element.quantity));
+         // we use parseint here because it is saved as string in array
         Total_after_discount.value = Total_before_discount.value;
     });
 });
@@ -107,11 +132,8 @@ const primaryTotalAfterDiscount = computed(() => {
 
 const removeServiceFromList = (index) => {
     addedServices.value.splice(index, 1);
-    choosenService.value={}
-    
+    choosenService.value = {};
 };
-
-
 
 watch(
     () => Total_after_discount.value,
@@ -123,8 +145,9 @@ watch(
 );
 watch(
     () => Total_before_discount.value,
-    () => primaryTotalAfterDiscount.value ,
+    () => primaryTotalAfterDiscount.value
 );
+
 
 const finalTotalWithTax = computed(() => {
     Total_with_tax.value = Math.round(
@@ -144,6 +167,8 @@ const submit = () => {
 };
 
 const show = ref(false);
+
+
 </script>
 
 <template>
@@ -159,7 +184,6 @@ const show = ref(false);
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                
                     <div>
                         <div class="grid grid-cols-2 gap-6 mb-6">
                             <InputGroup
@@ -196,6 +220,7 @@ const show = ref(false);
                     </div>
                     <div>
                         <button
+                        type="button"
                             @click="show = true"
                             class="bg-cyan-900 px-3 py-2 rounded-md text-gray-100 mt-8 mb-8"
                         >
@@ -203,136 +228,175 @@ const show = ref(false);
                         </button>
 
                         <div v-if="show">
-                        <div class=" grid grid-cols-1 sm:grid-cols-2 ">
-                        <div class="md:px-20 border border-gray-400 rounded-md p-5 mx-2 my-1  ">
-                            <div class="w-full md:w-1\2">
-                                <SelectGroup
-                                    label="services"
-                                    v-model="choosenService"
-                                    :items="services"
-                                    :error-message="form.errors.services"
-                                />
-                                <table
-                                    class="items-center w-full align-top border-gray-200 text-slate-500 my-6"
+                            <div class="grid grid-cols-1 sm:grid-cols-2">
+                                <div
+                                    class="md:px-20 border border-gray-400 rounded-md p-5 mx-2 my-1"
                                 >
-                                    <thead class="align-bottom bg-gray-600">
-                                        <tr>
-                                            <th
-                                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                                            >
-                                                name
-                                            </th>
+                                    <div class="w-full md:w-1\2">
+                                        <SelectGroup
+                                        withoutSelect
+                                            label="services"
+                                            v-model="choosenService"
+                                            :items="services"
+                                            :error-message="
+                                                form.errors.services
+                                            "
+                                        />
 
-                                            <th
-                                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                        <table v-if="addedServices.length > 0"
+                                            class="items-center w-full align-top border-gray-200 text-slate-500 my-6"
+                                        >
+                                            <thead
+                                                class="align-bottom bg-gray-600"
                                             >
-                                                actions
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody
-                                        v-for="(
-                                            service, index
-                                        ) in addedServices"
-                                        class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400"
-                                    >
-                                        <tr>
-                                            <td
-                                                class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                                            >
-                                                <div class="flex px-2 py-1">
-                                                    <div
-                                                        class="flex-col justify-center"
+                                                <tr>
+                                                    <th
+                                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
                                                     >
-                                                        <h6
-                                                            class="mb-0 leading-normal text-size-sm"
-                                                        >
-                                                            {{ service.name }}
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                        name
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                                    >
+                                                        quantity
+                                                    </th>
 
-                                            <td
-                                                class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                                    <th
+                                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                                    >
+                                                        actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                v-for="(
+                                                    service, index
+                                                ) in addedServices"
+                                                class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400"
                                             >
-                                                <Trash
-                                                    class="w-4 h-4 text-red-700"
-                                                    @click="
-                                                        removeServiceFromList(
-                                                            index
-                                                        )
-                                                    "
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-</div>
-                       <div class=" md:px-20 border border-gray-400 rounded-md p-5  mx-2 my-1">
+                                                <tr>
+                                                    <td
+                                                        class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                                    >
+                                                        <div
+                                                            class="flex px-2 py-1"
+                                                        >
+                                                            <div
+                                                                class="flex-col justify-center"
+                                                            >
+                                                                <h6
+                                                                    class="mb-0 leading-normal text-size-sm"
+                                                                >
+                                                                    {{
+                                                                        service.name
+                                                                    }}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td
+                                                        class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                                    >
+                                                        <div
+                                                            class="flex px-2 py-1"
+                                                        >
+                                                            <div
+                                                                class="flex-col justify-center"
+                                                            >
+<input v-model="addedServices[index].quantity" type="number" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-30 ">
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                            <div
-                                class="grid grid-cols-1 md:grid-cols-2 w-full md:w-1\2  gap-6 mb-6 "
-                            >
-                                <InputGroup
-                                    type="Number"
-                                    label="discount value"
-                                    v-model="form.discount_value"
-                                    :error-message="form.errors.discount_value"
-                                    required
-                                />
+                                                    <td
+                                                        class="px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                                    >
+                                                        <Trash
+                                                            class="w-4 h-4 text-red-700"
+                                                            @click="
+                                                                removeServiceFromList(
+                                                                    index
+                                                                )
+                                                            "
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div
+                                    class="md:px-20 border border-gray-400 rounded-md p-5 mx-2 my-1"
+                                >
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-2 w-full md:w-1\2 gap-6 mb-6"
+                                    >
+                                        <InputGroup
+                                            type="Number"
+                                            label="discount value"
+                                            v-model="form.discount_value"
+                                            :error-message="
+                                                form.errors.discount_value
+                                            "
+                                            required
+                                        />
 
-                                <InputGroup
-                                    type="Number"
-                                    label="tax rate"
-                                    v-model="form.tax_rate"
-                                    :error-message="form.errors.tax_rate"
-                                    required
-                                />
-                            </div>
+                                        <InputGroup
+                                            type="Number"
+                                            label="tax rate"
+                                            v-model="form.tax_rate"
+                                            :error-message="
+                                                form.errors.tax_rate
+                                            "
+                                            required
+                                        />
+                                    </div>
 
-                            <label
-                                for=""
-                                class="bg-slate-700 py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
-                            >
-                                Total Before Discount :
-                                {{ form.Total_before_discount }}
-                            </label>
-                            <br />
-                            <label
-                                for=""
-                                class="bg-slate-700  py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
-                            >
-                                Total After Discount :
-                                {{ form.Total_after_discount }}
-                            </label>
-                            <br />
-                            <hr
-                                class="h-px mt-4 bg-black bg-gradient-horizontal-dark "
-                            />
-                            <label
-                                for=""
-                                class2="bg-slate-700 px-3 py-1 rounded-md w-full md:w-1/2 text-yellow-500 my-2 mt-5"
-                                class="bg-slate-700  py-1 rounded-md w-full md:w-1\2 px-4 text-yellow-500  my-2 mt-5"
-                            >
-                                Total With Tax : {{ form.Total_with_tax }}
-                            </label>
+                                    <label
+                                        for=""
+                                        class="bg-slate-700 py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
+                                    >
+                                        Total Before Discount :
+                                        {{ form.Total_before_discount }}
+                                    </label>
+                                    <br />
+                                    <label
+                                        for=""
+                                        class="bg-slate-700 py-1 rounded-md w-full md:w-1\2 px-4 text-white my-2"
+                                    >
+                                        Total After Discount :
+                                        {{ form.Total_after_discount }}
+                                    </label>
+                                    <br />
+                                    <hr
+                                        class="h-px mt-4 bg-black bg-gradient-horizontal-dark"
+                                    />
+                                    <label
+                                        for=""
+                                        class2="bg-slate-700 px-3 py-1 rounded-md w-full md:w-1/2 text-yellow-500 my-2 mt-5"
+                                        class="bg-slate-700 py-1 rounded-md w-full md:w-1\2 px-4 text-yellow-500 my-2 mt-5"
+                                    >
+                                        Total With Tax :
+                                        {{ form.Total_with_tax }}
+                                    </label>
 
-                            <div class="mt-2 mb-4">
-                                <CheckboxGroup
-                                    label="Active"
-                                    v-model:checked="form.status"
-                                />
+                                    <div class="mt-2 mb-4">
+                                        <CheckboxGroup
+                                            label="Active"
+                                            v-model:checked="form.status"
+                                        />
+                                    </div>
+                                    <div class="mt-8">
+                                        <Button :disabled="form.processing">
+                                            {{
+                                                form.processing
+                                                    ? "Saving..."
+                                                    : "Save"
+                                            }}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mt-8">
-                                <Button :disabled="form.processing">
-                                    {{ form.processing ? "Saving..." : "Save" }}
-                                </Button>
-                            </div>
-                            </div>
-</div>
-                            
                         </div>
                     </div>
                 </form>

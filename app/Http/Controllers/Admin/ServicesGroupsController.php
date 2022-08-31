@@ -49,7 +49,17 @@ class ServicesGroupsController extends Controller
                 $query->when($request->name, fn (Builder $builder, $name) => $builder->where('name', 'like', "%{$name}%"))
             )
                     ////////////////////////////////////////////////////////////////////////////////////      
-            ->when($request->status, fn (Builder $builder, $status) => $builder->where('status', 'like', "%{$status}%"))
+
+
+                    /// on boolean cases it has to be like this , and we make scopes in model
+            ->when(
+                $request->status !== null,
+                fn (Builder $builder) => $builder->when(
+                    $request->status,
+                    fn (Builder $builder) => $builder->active(),
+                    fn (Builder $builder) => $builder->inActive()
+                )
+            )
 
             ->latest('id')
             ->paginate(10);
@@ -97,11 +107,10 @@ class ServicesGroupsController extends Controller
     public function create()
     {
         $Services = Service::select('id','price','status')->latest()->get();
-        $groupService = Group::select('id')->latest()->get();;
+        // $groupService = Group::select('id')->latest()->get();  // problem in create page 
 
-        // dd($groupService);
-        $groupService->load(['services:id']);
-        $Services->load(['groups:id']); 
+        // $groupService->load(['services:id']);  //problem in create page 
+        // $Services->load(['groups:id']);  // problem in create page 
 
 
         return Inertia::render('Services/ServicesGroup/Create', [
@@ -109,7 +118,7 @@ class ServicesGroupsController extends Controller
             'title' => 'Add Single Service',
             'routeResourceName' => $this->routeResourceName,
             'services' =>ServiceResource::collection($Services),
-            'groupServiceCollection'=> ServicesGroupResource::collection($groupService)
+            // 'groupServiceCollection'=> ServicesGroupResource::collection($groupService)   //problem in create page 
         ]);
     }
 
@@ -119,6 +128,7 @@ class ServicesGroupsController extends Controller
     {
 // dd($request);
         $servicesGroup = Group::create($request->saveData());
+        
         foreach($request->addedServices as $service)
         {
             $servicesGroup->services()->attach($service['id'],['quantity' => $service['quantity']]);

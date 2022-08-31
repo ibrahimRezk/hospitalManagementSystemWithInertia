@@ -13,6 +13,7 @@ return [
     'Services'  => 'الخدمات',
     'Single Services'  => 'خدمة مفردة',
     'Group Services'  => 'مجموعة خدمات',
+    'Insurance Companies'  => 'شركات التأمين',
 
 
 

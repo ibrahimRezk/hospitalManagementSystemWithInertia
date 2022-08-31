@@ -10,7 +10,7 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
-    roles: Array,
+    // roles: Array,
 });
 
 const emits = defineEmits(["update:modelValue"]); 
@@ -39,8 +39,18 @@ watch(
                         v-model="filters.name" />
             <InputGroup label="price"
                         v-model="filters.price" />
-            <InputGroup label="status"
+            <!-- <InputGroup label="status"
                         v-model="filters.status" />
+                        <label for=""> status</label> -->
+    
+            <SelectGroup
+                label="Active"
+                v-model="filters.status"
+                :items="[
+                    { id: 1, name: 'Yes' },
+                    { id: 0, name: 'No' },
+                ]"
+            />
             
             
         </form>

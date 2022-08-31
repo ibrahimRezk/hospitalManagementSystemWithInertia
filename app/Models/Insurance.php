@@ -6,13 +6,13 @@ use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Insurance extends Model
 {
     use Translatable;
     use HasFactory;
     public $translatedAttributes = ['name','notes'];
-    public $fillable= ['Total_before_discount','discount_value','Total_after_discount','tax_rate','Total_with_tax','status'];
-    //public $guarded=[];
+    public $fillable= ['insurance_code','discount_percentage','Company_rate','status'];
+
 
     public function scopeActive($builder)
     {
@@ -27,9 +27,4 @@ class Group extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
-
-    public function services()  
-    {
-        return $this->belongsToMany(Service::class,'services_groups')->withPivot('quantity');
-    }
 }

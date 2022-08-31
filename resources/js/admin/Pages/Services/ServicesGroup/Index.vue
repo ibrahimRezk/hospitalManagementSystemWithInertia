@@ -14,6 +14,7 @@ import Modal from '@/admin/Components/ConfirmationModal.vue'
 import Label from "@/admin/Components/Label.vue";
 import Input from "@/admin/Components/Input.vue";
 import AddNew from "@/admin/Components/AddNew.vue";
+import YesNoLabel from "@/admin/Components/YesNoLabel.vue";
 import Filters from "./Filters.vue";
 
 import useDeleteItem from "@/admin/Composables/useDeleteItem.js";
@@ -52,8 +53,9 @@ const {
     showDeleteModal,
     handleDeleteItem,
 } = useDeleteItem({
-    routeResourceName: props.routeResourceName,
+    routeResourceName: props.routeResourceName, 
 });
+
 
 const { filters, isLoading, isFilled } = useFilters({
     filters: props.filters,
@@ -80,7 +82,7 @@ const { filters, isLoading, isFilled } = useFilters({
                 >
 
                 <template #filters>
-                    <Filters v-model="filters" />
+                    <Filters v-model="filters"  />
                 </template>
             </AddNew>
 
@@ -103,7 +105,8 @@ const { filters, isLoading, isFilled } = useFilters({
                             {{ item.Total_with_tax }} 
                         </Td>
                         <Td>
-                            {{ item.status }} 
+                            <YesNoLabel :active="item.status" />
+                            <!-- {{ item.status }}  -->
                         </Td>
                         <Td>
                             {{ item.notes }} 

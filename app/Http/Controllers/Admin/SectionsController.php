@@ -31,7 +31,7 @@ class SectionsController extends Controller
     public function index(Request $request)
     {
         $sections = Section::query()
-            ->select([
+            ->select([ 
                 'id',
                 // name will come from section resource
                 'created_at',

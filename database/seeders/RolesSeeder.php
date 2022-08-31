@@ -69,5 +69,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create service']);
         Permission::create(['name' => 'edit service']);
         Permission::create(['name' => 'delete service']); 
+
+        Permission::create(['name' => 'view insurances module']);
+        Permission::create(['name' => 'view insurances list']);
+        Permission::create(['name' => 'create insurance']);
+        Permission::create(['name' => 'edit insurance']);
+        Permission::create(['name' => 'delete insurance']); 
     }
 }

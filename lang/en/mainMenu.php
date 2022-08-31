@@ -12,6 +12,7 @@ return [
     'Services'  => 'services',
     'Single Services'  => 'Single Services',
     'Group Services'  => 'Group Services',
+    'Insurance Companies'  => 'Insurance Companies',
 
 
 

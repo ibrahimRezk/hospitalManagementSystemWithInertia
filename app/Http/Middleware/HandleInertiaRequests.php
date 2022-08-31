@@ -126,6 +126,12 @@ class HandleInertiaRequests extends Middleware
                             'isActive'=>$request->routeIs('admin.insurances*'),
                             'isVisible' => $request->user()?->can('view insurances module'),
                         ],
+                        [
+                            'label' => 'Ambulances',
+                            'url' => route('admin.ambulances.index'),
+                            'isActive'=>$request->routeIs('admin.ambulances*'),
+                            'isVisible' => $request->user()?->can('view ambulances module'),
+                        ],
                     ]
 
                 ],

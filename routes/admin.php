@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AmbulancesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RolesController;
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('singleServices', SingleServicesController::class)->parameters(['singleServices' => 'service']);
     Route::resource('servicesGroups', ServicesGroupsController::class)->parameters(['servicesGroups' => 'group']);
     Route::resource('insurances', InsurancesController::class);
+    Route::resource('ambulances', AmbulancesController::class);
 
 
 

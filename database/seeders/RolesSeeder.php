@@ -75,5 +75,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create insurance']);
         Permission::create(['name' => 'edit insurance']);
         Permission::create(['name' => 'delete insurance']); 
+
+        Permission::create(['name' => 'view ambulances module']);
+        Permission::create(['name' => 'view ambulances list']);
+        Permission::create(['name' => 'create ambulance']);
+        Permission::create(['name' => 'edit ambulance']);
+        Permission::create(['name' => 'delete ambulance']); 
     }
 }

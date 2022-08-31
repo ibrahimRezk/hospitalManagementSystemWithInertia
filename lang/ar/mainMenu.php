@@ -14,6 +14,7 @@ return [
     'Single Services'  => 'خدمة مفردة',
     'Group Services'  => 'مجموعة خدمات',
     'Insurance Companies'  => 'شركات التأمين',
+    'Ambulances'  => 'الاسعاف',
 
 
 

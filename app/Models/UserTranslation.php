@@ -11,6 +11,6 @@ class UserTranslation extends Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','address'];
     public $timestamps = false;
 }

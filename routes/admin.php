@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UploadImagesController;
 use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
+use App\Http\Controllers\Admin\PatientsController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\ServicesGroupsController;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('servicesGroups', ServicesGroupsController::class)->parameters(['servicesGroups' => 'group']);
     Route::resource('insurances', InsurancesController::class);
     Route::resource('ambulances', AmbulancesController::class);
+    Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
 
 
 

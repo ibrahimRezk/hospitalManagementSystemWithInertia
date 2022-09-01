@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('user_translations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('address')->nullable();
             
             $table->string('locale')->index();
             $table->unique(['user_id', 'locale']);

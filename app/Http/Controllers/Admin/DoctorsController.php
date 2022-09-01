@@ -136,7 +136,7 @@ class DoctorsController extends Controller
 
 
 
-    public function create()
+    public function create() 
     {
         return Inertia::render('Doctor/Create', [
             'edit' => false,

@@ -135,6 +135,14 @@ class HandleInertiaRequests extends Middleware
                     ]
 
                 ],
+                [
+                    'label' => 'Patients',
+                    'url' => route('admin.patients.index'),
+                    'isActive' => $request->routeIs('admin.patients.*'),
+                    'isVisible' => $request->user()?->can('view patients module'),
+                    'hasSubmenu' => false,
+
+                ],
         
             ],
         ]);

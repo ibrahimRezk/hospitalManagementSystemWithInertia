@@ -15,6 +15,7 @@ return [
     'Group Services'  => 'مجموعة خدمات',
     'Insurance Companies'  => 'شركات التأمين',
     'Ambulances'  => 'الاسعاف',
+    'Patients'  => 'المرضى',
 
 
 

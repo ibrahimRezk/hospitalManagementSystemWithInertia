@@ -24,7 +24,7 @@ class User extends Authenticatable
     use HasRoles;
     use Translatable;
 
-    public $translatedAttributes =[ 'name'];
+    public $translatedAttributes =[ 'name', 'address'];
 
 
 
@@ -40,7 +40,11 @@ class User extends Authenticatable
         'email_verified_at',
         'phone',
         'section_id',
-        'status'
+        'status',
+
+        'birth_date',
+        'gender'   , 
+        'blood_group'   ,
     ];
 
     /**
@@ -63,6 +67,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => PasswordCast::class,
+        'status' => 'boolean',
     ];
 
     /**

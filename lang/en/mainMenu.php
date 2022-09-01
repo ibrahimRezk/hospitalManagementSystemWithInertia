@@ -14,6 +14,7 @@ return [
     'Group Services'  => 'Group Services',
     'Insurance Companies'  => 'Insurance Companies',
     'Ambulances'  => 'Ambulances',
+    'Patients'  => 'Patients',
 
 
 

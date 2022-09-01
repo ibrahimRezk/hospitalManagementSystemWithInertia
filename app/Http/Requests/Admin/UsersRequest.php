@@ -29,7 +29,7 @@ class UsersRequest extends FormRequest
     public function rules() 
     {
         $model = $this->route('user');
-        // $model = ( $this->user->id ) ?? null ;
+        // $model = ( $this->user->id ) ?? null ; 
 
 
 
@@ -38,6 +38,9 @@ class UsersRequest extends FormRequest
         return [
             'name_ar' => ['bail', 'required', 'string', 'max:255'],
             'name_en' => ['bail', 'required', 'string', 'max:255'],
+            'address_ar' => ['bail', 'nullable', 'string', 'max:255'],
+            'address_en' => ['bail', 'nullable', 'string', 'max:255'],
+
             'email' => ['bail', 'required', 'email', 'max:255', Rule::unique(User::class)->ignore($model->id ?? null)],
             // 'email' => 'bail|required|email|max:255|unique:users,email,'.$model,
             // 'password' => ['bail', ...$passwordRule, Password::defaults()],
@@ -48,6 +51,12 @@ class UsersRequest extends FormRequest
             'roleId' => ['bail', 'required', Rule::exists(Role::class, 'id')], 
             'section_id' => ['bail', 'nullable', Rule::exists(Section::class, 'id')], 
             'appointments'=> ['bail', 'nullable', 'string', 'max:255'],
+
+            'birth_date' =>  ['bail', 'nullable', 'date', 'max:255'],
+
+            // change birth data to type to date instead of string
+            'gender' => ['bail', 'nullable', 'string', 'max:255'],
+            'blood_group' => ['bail', 'nullable', 'string', 'max:255'],
 
         ];
     }

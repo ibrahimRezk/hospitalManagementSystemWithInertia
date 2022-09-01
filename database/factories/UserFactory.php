@@ -45,7 +45,11 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'phone' => $this->faker->phoneNumber,
             'section_id' => Section::all()->random()->id,
+            'birth_date' => $this->faker->date(),
+            'gender' =>'male',
+            'blood_group' => 'AB'
         );
+
 
         foreach ($locales as $locale) {
             $data[$locale] = [

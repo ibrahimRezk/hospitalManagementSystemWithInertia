@@ -29,7 +29,10 @@ class RolesSeeder extends Seeder
 
 
         $doctor = Role::create(['name' => 'Doctor']);
+
         $doctor = User::find(3)->assignRole($doctor);
+
+        $patient = Role::create(['name'=>'Patient']);
 
         Permission::create(['name' => 'view permissions module']);
         Permission::create(['name' => 'view permissions list']);
@@ -81,5 +84,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create ambulance']);
         Permission::create(['name' => 'edit ambulance']);
         Permission::create(['name' => 'delete ambulance']); 
+
+        Permission::create(['name' => 'view patients module']);
+        Permission::create(['name' => 'view patients list']);
+        Permission::create(['name' => 'create patient']);
+        Permission::create(['name' => 'edit patient']);
+        Permission::create(['name' => 'delete patient']); 
     }
 }

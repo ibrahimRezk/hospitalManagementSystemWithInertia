@@ -116,7 +116,7 @@ const open = ref(false);
                             <!-- //////////////////////////////////////////////////menus with sub menu/////////////////////////////////////////// -->
                             <div v-if="menu.hasSubmenu">
                                 <button
-                                    class="w-56 flex items-center justify-between hover:bg-slate-200"
+                                    class="w-56 flex items-center justify-between bg-slate-300 rounded-md hover:bg-slate-200"
                                     @click="open = !open"
                                     :class="
                                         menu.isActive
@@ -186,6 +186,7 @@ const open = ref(false);
                                                 : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-50 '
                                         "
                                         :href="submenu.url"
+
                                     >
                                         <SidebarIcon
                                             :active="submenu.isActive"

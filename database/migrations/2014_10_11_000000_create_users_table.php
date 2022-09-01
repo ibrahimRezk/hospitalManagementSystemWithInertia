@@ -16,16 +16,23 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-
-            $table->foreignId('section_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->timestamp('email_verified_at')->nullable(); 
+            
             $table->string('phone')->nullable();
+            // make phone unique
             $table->boolean('status')->nullable()->default(1);
-
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            
+            $table->string('birth_date')->nullable()->date();
+            $table->string('gender')->nullable();
+            $table->string('blood_group')->nullable();
+
+            
+            $table->foreignId('current_team_id')->nullable();
+            $table->foreignId('section_id')->nullable()->constrained()->cascadeOnDelete();
+
+            $table->rememberToken();
             $table->timestamps();
         });
     }

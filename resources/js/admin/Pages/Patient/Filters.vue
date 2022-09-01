@@ -41,12 +41,12 @@
                 <InputGroup label="Address" v-model="filters.address" />
                 <InputGroup label="Phone" v-model="filters.phone" />
     
-                <!-- <SelectGroup
+                <SelectGroup
                 label="Gender"
                 v-model="filters.gender"
                 :items="[
-                    { id: 1, name: 'Male' },
-                    { id: 0, name: 'Female' },
+                    { id: 'Male', name: 'Male' },
+                    { id: 'Female', name: 'Female' },
                 ]"
             />
 
@@ -54,16 +54,16 @@
                 label="Gender"
                 v-model="filters.blood_group"
                 :items="[
-                    { id: 0, name: 'A+' },
-                    { id: 1, name: 'B+' },
-                    { id: 2, name: 'AB+' },
-                    { id: 3, name: 'O+' },
-                    { id: 4, name: 'A-' },
-                    { id: 5, name: 'B-' },
-                    { id: 6, name: 'AB-' },
-                    { id: 7, name: '0-' },
+                     { id: 'A+',  name: 'A+' },
+                    { id: 'B+',  name: 'B+' },
+                    { id: 'AB+', name: 'AB+' },
+                    { id: 'O+',  name: 'O+' },
+                    { id: 'A-',  name: 'A-' },
+                    { id: 'B-',  name: 'B-' },
+                    { id: 'AB-', name: 'AB-' },
+                    { id: '0-',  name: '0-' },
                 ]"
-            /> -->
+            />
             </form>
     
         

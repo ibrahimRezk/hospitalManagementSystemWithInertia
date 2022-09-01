@@ -21,15 +21,45 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
+
+
+
+
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    
+    
+    // model with multiple controllers 
+    // To achieve this with a resource you'll need to manually name the resource parameters, which would effectively be something like Route::resource('two', 'TwoController')->parameters(['two' => 'myModel']) where myModel would be your model name.
+    
 
-// model with multiple controllers 
-// To achieve this with a resource you'll need to manually name the resource parameters, which would effectively be something like Route::resource('two', 'TwoController')->parameters(['two' => 'myModel']) where myModel would be your model name.
+
+
+
+    /// for profile route to work on jetstream
+    $authMiddleware = config('jetstream.guard') 
+    ? 'auth:'.config('jetstream.guard')
+    : 'auth';
+    
+    $authSessionMiddleware = config('jetstream.auth_session', false)
+    ? config('jetstream.auth_session')
+    : null;
+    
+    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware ]))], function () {
+    Route::get('/user/profile', [UserProfileController::class, 'show'])
+                ->name('profile.show')
+                ->middleware(['Lang' ]);
+});
+
+
+
+////// other routes///////////
 
 Route::middleware(['auth', 'Lang'])->group(function () {
+    
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::resource('users', UsersController::class);
     Route::resource('sections', SectionsController::class);
@@ -48,7 +78,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
 
 
-
+//////////// to change lang /////////
     Route::get('/change_lang/{locale}', function ($locale) {
         App::setLocale($locale);
         session()->put('lang', $locale);
@@ -57,5 +87,6 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 });
 
 
-require_once __DIR__ . '/jetstreamInertia.php';
-require_once __DIR__ . '/fortifyAdmin.php';
+
+// require_once __DIR__ . '/jetstreamInertia.php';
+// require_once __DIR__ . '/fortifyAdmin.php';

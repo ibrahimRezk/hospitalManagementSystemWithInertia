@@ -26,11 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (request()->is(['admin', 'admin/*'])) {
-            Inertia::setRootView('admin.app');
-        }
+        // if (request()->is(['admin', 'admin/*'])) {
+        //     Inertia::setRootView('admin.app');
+        // }
 
-        Inertia::setRootView('app');        //// needs more work  
+        // Inertia::setRootView('app');        //// needs more work  
     }
 
     /**

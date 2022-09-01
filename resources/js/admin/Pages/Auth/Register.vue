@@ -1,12 +1,12 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import JetAuthenticationCard from '@/Components/AuthenticationCard.vue';
-import JetAuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import JetButton from '@/Components/Button.vue';
-import JetInput from '@/Components/Input.vue';
-import JetInputError from '@/Components/InputError.vue';
-import JetCheckbox from '@/Components/Checkbox.vue';
-import JetLabel from '@/Components/Label.vue';
+import JetAuthenticationCard from '@/admin/Components/AuthenticationCard.vue';
+import JetAuthenticationCardLogo from '@/admin/Components/AuthenticationCardLogo.vue';
+import JetButton from '@/admin/Components/Button.vue';
+import JetInput from '@/admin/Components/Input.vue';
+import JetInputError from '@/admin/Components/InputError.vue';
+import JetCheckbox from '@/admin/Components/Checkbox.vue';
+import JetLabel from '@/admin/Components/Label.vue';
 
 const form = useForm({
     name: '',

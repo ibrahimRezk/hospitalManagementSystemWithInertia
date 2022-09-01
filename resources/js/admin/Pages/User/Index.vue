@@ -61,6 +61,8 @@ const {
 const { filters, isLoading, isFilled } = useFilters({
     filters: props.filters,
     routeResourceName: props.routeResourceName,
+    method:props.method
+
 });
 </script>
 

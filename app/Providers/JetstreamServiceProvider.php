@@ -31,8 +31,8 @@ class JetstreamServiceProvider extends ServiceProvider
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
-        Jetstream::ignoreRoutes();
-        Fortify::ignoreRoutes();
+        // Jetstream::ignoreRoutes();
+        // Fortify::ignoreRoutes();
 
           // register new LoginResponse
            $this->app->singleton(
@@ -40,10 +40,6 @@ class JetstreamServiceProvider extends ServiceProvider
             \App\Http\Responses\LoginResponse::class
         );
 
-          $this->app->singleton(
-            \Laravel\Fortify\Contracts\LogoutResponse::class,
-            \App\Http\Responses\LogoutResponse::class
-        );
 
 
         $this->app->singleton(

@@ -14,15 +14,15 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        return $request->wantsJson()
-                    ? response()->json(['two_factor' => false])
-                    // : redirect()->intended(request()->is(['admin', 'admin/*']) ? 'admin/dashboard' : '/dashboard');
-                    : redirect()->intended('admin/dashboard');
+        // return $request->wantsJson()
+        //             ? response()->json(['two_factor' => false])
+        //             // : redirect()->intended(request()->is(['admin', 'admin/*']) ? 'admin/dashboard' : '/dashboard');
+        //             : redirect()->intended('admin/dashboard');
 
 
-        // if (auth()->user()->hasRole('Super Admin')) {
-        //     return redirect()->route('admin.dashboard');
-        // }
+        if (auth()->user()->hasRole('Super Admin')) {
+            return redirect()->route('admin.dashboard');
+        }
         // if (auth()->user()->hasRole('blog')) {
         //     return redirect()->route('blog.dashboard');
         // }

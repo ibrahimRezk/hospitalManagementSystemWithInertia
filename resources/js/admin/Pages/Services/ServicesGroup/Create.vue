@@ -112,7 +112,7 @@ const addService = computed(() => {
 
     if (!choosenService.value) return [];
 
-    let singleService = props.services.find(
+    let singleService = props.services.find( 
         (c) => c.id == choosenService.value
     );
     if (!singleService) return [];

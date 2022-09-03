@@ -15,6 +15,9 @@ return [
     'Insurance Companies'  => 'Insurance Companies',
     'Ambulances'  => 'Ambulances',
     'Patients'  => 'Patients',
+    'Invoices'  => 'Invoices',
+    'Single Invoice'  => 'Single Invoice',
+    'Group Invoices'  => 'Group Invoices',
 
 
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource; 
+use Illuminate\Http\Resources\Json\JsonResource;  
 
 class ServiceResource extends JsonResource
 {
@@ -37,7 +37,6 @@ class ServiceResource extends JsonResource
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
-            'group' => ServicesGroupResource::collection($this->whenLoaded('groups')),
 
 
 

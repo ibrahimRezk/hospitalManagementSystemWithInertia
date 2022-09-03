@@ -86,4 +86,29 @@ class User extends Authenticatable
         return $this->belongsTo(Section::class , 'section_id');
 
     }
+
+
+    // public $with =['translations' , 'image' ,'section'];
+
+    // public function image()
+    // {
+    //     return $this->morphOne(Image::class, 'imageable');
+    // }
+
+    
+    // public function doctorappointments()
+    // {
+    //     return $this->belongsToMany(Appointment::class,'appointment_doctor');
+    // }
+
+
+    public function doctor()
+    {
+        return $this->belongsTo(Invoice::class,'doctor_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Invoice::class,'Service_id');
+    }
 }

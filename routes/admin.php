@@ -14,7 +14,10 @@ use App\Http\Controllers\Admin\InsurancesController;
 use App\Http\Controllers\Admin\PatientsController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\ServicesGroupInvoicesController;
 use App\Http\Controllers\Admin\ServicesGroupsController;
+use App\Http\Controllers\Admin\SingleInvoicesController;
+use App\Http\Controllers\Admin\SingleServiceInvoicesController;
 use App\Http\Controllers\Admin\SingleServicesController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -72,6 +75,8 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('insurances', InsurancesController::class);
     Route::resource('ambulances', AmbulancesController::class);
     Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
+    Route::resource('singleInvoices', SingleServiceInvoicesController::class)->parameters(['singleInvoices' => 'invoice']);
+    Route::resource('servicesGroupInvoices', ServicesGroupInvoicesController::class)->parameters(['servicesGroupInvoices' => 'invoice']);
 
 
 

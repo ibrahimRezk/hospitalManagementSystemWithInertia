@@ -178,9 +178,10 @@ class PatientsController extends Controller
     }
 
     public function update(UsersRequest $request, User $user)
-    {
-        // review samir gamal method to make password nullable on update and update userRequest file
-        $data = $request->safe()->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
+    { 
+        // user phone number is password phone must be long enoph or it will return an error on updating
+        $data = $request->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
+        // dd($data);
         
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;

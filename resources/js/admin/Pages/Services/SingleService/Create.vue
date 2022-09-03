@@ -95,6 +95,7 @@ const submit = () => {
                         />
 
                         <InputGroup
+                        type="number"
                             label="Price"
                             v-model="form.price"
                             :error-message="form.errors.price"

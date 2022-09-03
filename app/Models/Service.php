@@ -14,6 +14,16 @@ class Service extends Model
     public $fillable= ['price','status'];
 
 
+    public function scopeActive($builder)
+    {
+        return $builder->where('status', true);  // change it to active in database to be convenient
+    }
+
+    public function scopeInActive($builder)
+    {
+        return $builder->where('status', false);
+    }
+
     protected $casts = [
         'status' => 'boolean',
     ];

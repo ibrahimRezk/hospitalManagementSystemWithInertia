@@ -1,0 +1,226 @@
+<script setup>
+import { Head, useForm } from "@inertiajs/inertia-vue3";
+import Layout from "@/admin/Layouts/Authenticated.vue";
+import Container from "@/admin/Components/Container.vue";
+import Card from "@/admin/Components/Card/Card.vue";
+import Button from "@/admin/Components/Button.vue";
+import InputGroup from "@/admin/Components/InputGroup.vue";
+import SelectGroup from "@/admin/Components/SelectGroup.vue";
+import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
+import { computed, watch } from "@vue/runtime-core";
+
+const props = defineProps({
+    edit: {
+        type: Boolean,
+        default: false,
+    },
+    title: {
+        type: String,
+    },
+    item: {
+        type: Object,
+        default: () => ({}),
+    },
+    routeResourceName: {
+        type: String,
+        required: true,
+    },
+    services: {
+        type: Array,
+        required: true,
+    },
+    doctors: {
+        type: Array,
+        required: true,
+    },
+    patients: {
+        type: Array,
+        required: true,
+    },
+    sections: {
+        type: Array,
+        required: true,
+    },
+    type: {
+        type: Array,
+        required: true,
+    },
+});
+
+const form = useForm({
+    patient: props.item.patient?.[0]?.id ?? "",
+    doctor: props.item.doctor?.[0]?.id ?? "",
+    section: props.item.section?.[0]?.id ?? "",
+    type: props.item.type?.[0]?.id ?? "",
+    service: props.item.service?.[0]?.id ?? "", 
+
+    discount_value: props.item.discount_value ?? 0,
+
+    price: props.item.price ?? "",
+    tax_rate: props.item.tax_rate ?? 14,
+    tax_value: props.item.tax_value ?? "",
+    total_with_tax: props.item.total_with_tax ?? "",
+});
+
+// to add section automatically after choosing a doctor
+watch(
+    () => form.doctor,
+    () => findSection.value
+);
+
+const findSection = computed(() => {
+    if (form.doctor !== "") {
+        let doctor = props.doctors.find((doctor) => doctor.id == form.doctor);
+        form.section = doctor.section.id;
+    } else {
+        return "";
+    }
+});
+////////////////////////////////////////////////////////////
+
+// to add all service items automatically after choosing a service
+watch(
+    () => form.service,
+    () => findServiceValues.value
+);
+watch(
+    () => form.discount_value,
+    () => findServiceValues.value
+);
+watch(
+    () => form.tax_rate,
+    () => findServiceValues.value
+);
+
+const findServiceValues = computed(() => {
+    if (form.service !== "") {
+        let service = props.services.find(
+            (service) => service.id == form.service
+        );
+        let tax_value = ((service.price - form.discount_value)) *form.tax_rate  / 100;
+        let total_with_tax =
+            parseInt(service.price) + tax_value - form.discount_value;
+        form.price = service.price;
+        form.tax_value = tax_value;
+        form.total_with_tax = total_with_tax;
+    } else {
+        return "";
+    }
+});
+////////////////////////////////////////////////////////////
+
+const submit = () => {
+    props.edit
+        ? form.put(
+              route(`admin.${props.routeResourceName}.update`, {
+                  id: props.item.id,
+              })
+          )
+        : form.post(route(`admin.${props.routeResourceName}.store`));
+};
+</script>
+
+<template>
+    <Head :title="title" />
+
+    <Layout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ title }}
+            </h2>
+        </template>
+
+        <Container>
+            <Card>
+                <form @submit.prevent="submit">
+                    <div class="grid grid-cols-4 gap-6">
+                        <SelectGroup
+                            label="Patient"
+                            v-model="form.patient"
+                            :items="patients"
+                            :error-message="form.errors.paitent"
+                        />
+
+                        <SelectGroup
+                            label="Doctor"
+                            v-model="form.doctor"
+                            :items="doctors"
+                            :error-message="form.errors.doctor"
+                        />
+
+                        <SelectGroup
+                            disabled
+                            label="Section"
+                            v-model="form.section"
+                            :items="sections"
+                            :error-message="form.errors.section"
+                        />
+
+                        <SelectGroup
+                            label="Invoice type"
+                            v-model="form.type"
+                            :items="type"
+                            :error-message="form.errors.type"
+                        />
+                    </div>
+
+                    <hr class="h-px mt-12 bg-slate-700" />
+
+                    <div class="grid grid-cols-6 gap-6 mt-10">
+                        <SelectGroup
+                            withoutSelect
+                            label="Services"
+                            v-model="form.service"
+                            :items="services"
+                            :error-message="form.errors.service"
+                        />
+
+                        <InputGroup
+                            disabled
+                            type="number"
+                            label="Price"
+                            v-model="form.price"
+                            :error-message="form.errors.price"
+                        />
+                        <InputGroup
+                        min="0"
+                            type="number"
+                            label="discount value"
+                            v-model="form.discount_value"
+                            :error-message="form.errors.discount_value"
+                        />
+                        <InputGroup
+                        min="0"
+                            type="number"
+                            label="tax rate"
+                            v-model="form.tax_rate"
+                            :error-message="form.errors.tax_rate"
+                        />
+                        <InputGroup
+                        min="0"
+                            disabled
+                            type="number"
+                            label="tax value"
+                            v-model="form.tax_value"
+                            :error-message="form.errors.tax_value"
+                        />
+                        <InputGroup
+                        min="0"
+                            disabled
+                            type="number"
+                            label="total with tax"
+                            v-model="form.total_with_tax"
+                            :error-message="form.errors.total_with_tax"
+                        />
+                    </div>
+
+                    <div class="mt-4">
+                        <Button :disabled="form.processing">
+                            {{ form.processing ? "Saving..." : "Save" }}
+                        </Button>
+                    </div>
+                </form>
+            </Card>
+        </Container>
+    </Layout>
+</template>

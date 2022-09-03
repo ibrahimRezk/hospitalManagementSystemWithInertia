@@ -10,7 +10,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SingleServicesController extends Controller
+class SingleServicesController extends Controller 
 {
     private string $routeResourceName = 'singleServices';
 
@@ -42,8 +42,18 @@ class SingleServicesController extends Controller
         
 
             ////////////////////////////////////////////////////////////////////////////////////      
-            ->when($request->status, fn (Builder $builder, $status) => $builder->where('status', 'like', "%{$status}%"))
+           
             ->when($request->price, fn (Builder $builder, $price) => $builder->where('price', 'like', "%{$price}%"))
+
+
+            ->when(
+                $request->status !== null,
+                fn (Builder $builder) => $builder->when(
+                    $request->status,
+                    fn (Builder $builder) => $builder->active(),
+                    fn (Builder $builder) => $builder->inActive()
+                )
+            )
 
             ->latest('id')
             ->paginate(10);

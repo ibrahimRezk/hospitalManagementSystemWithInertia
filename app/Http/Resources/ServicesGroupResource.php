@@ -30,7 +30,7 @@ class ServicesGroupResource extends JsonResource
             
 
             'status' => $this->whenNotNull($this->status),
-            
+
 
             'discount_value' => $this->whenNotNull($this->discount_value),
             'Total_before_discount' => $this->whenNotNull($this->Total_before_discount),
@@ -38,6 +38,7 @@ class ServicesGroupResource extends JsonResource
             
 
             'tax_rate' => $this->whenNotNull($this->tax_rate),
+            // 'tax_value' => $this->whenNotNull($this->tax_value),
             'Total_with_tax' => $this->whenNotNull($this->Total_with_tax),
             
 

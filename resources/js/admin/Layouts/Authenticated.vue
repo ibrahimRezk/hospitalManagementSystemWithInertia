@@ -48,8 +48,6 @@ const showHideClass = computed(() => {
     }
 });
 
-const open = ref(false);
-
 // important
 // z-990 in class in template down can cause apperance of sidebar items in white above all items
 </script>
@@ -116,8 +114,8 @@ const open = ref(false);
                             <!-- //////////////////////////////////////////////////menus with sub menu/////////////////////////////////////////// -->
                             <div v-if="menu.hasSubmenu">
                                 <button
-                                    class="w-56 flex items-center justify-between bg-slate-300 rounded-md hover:bg-slate-200"
-                                    @click="open = !open"
+                                    class="w-56 flex items-center justify-between rounded-md hover:bg-slate-200"
+                                    @click="menu.open = !menu.open"
                                     :class="
                                         menu.isActive
                                             ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
@@ -139,7 +137,7 @@ const open = ref(false);
 
                                         <span>
                                             <svg
-                                                v-show="!open"
+                                                v-show="!menu.open"
                                                 class="h-5 w-5"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 20 20"
@@ -154,7 +152,7 @@ const open = ref(false);
                                             </svg>
 
                                             <svg
-                                                v-show="open"
+                                                v-show="menu.open"
                                                 class="h-5 w-5"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 20 20"
@@ -170,15 +168,18 @@ const open = ref(false);
                                         </span>
                                     </span>
                                 </button>
+
                                 <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
                                 <div
-                                    v-show="open"
+
+                                    v-show="menu.open"
                                     v-for="submenu in menu.subMenus"
                                     :key="submenu.label"
                                     class="px-4"
                                     id="filter-section-mobile-1"
                                 >
-                                    <Link
+                                
+                                <Link
                                         class="hover:bg-slate-200 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
                                         :class="
                                             submenu.isActive
@@ -186,7 +187,6 @@ const open = ref(false);
                                                 : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-50 '
                                         "
                                         :href="submenu.url"
-
                                     >
                                         <SidebarIcon
                                             :active="submenu.isActive"
@@ -204,12 +204,17 @@ const open = ref(false);
                                             </span>
                                         </span>
                                     </Link>
+                                    <hr class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark" />
                                 </div>
+                                <hr
+                                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                />
                             </div>
+
                             <!-- //////////////////////////////////////////////////menus without sub menu /////////////////////////////////////////// -->
                             <div v-else>
                                 <Link
-                                    class="hover:bg-slate-200"
+                                    class="w-56 flex items-center justify-between rounded-md hover:bg-slate-200"
                                     :class="
                                         menu.isActive
                                             ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
@@ -232,6 +237,7 @@ const open = ref(false);
                                     </span>
                                 </Link>
                             </div>
+                            <hr class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark" />
                         </div>
                     </li>
 

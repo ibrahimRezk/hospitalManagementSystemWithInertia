@@ -129,7 +129,7 @@ class DoctorsController extends Controller
             'can' => [
                 'create' => $request->user()->can('create doctor'),
             ],
-            'method'=> 'index',
+            'method'=> 'index', 
 
         ]);
     }
@@ -151,6 +151,8 @@ class DoctorsController extends Controller
 
     public function store(UsersRequest $request) 
     {
+
+        // dd($request);
         //remember to use section_id not section because in database column name is section_id
 
         // $data = $request->safe()->only(['email', 'password' ,'phone']);
@@ -197,7 +199,7 @@ class DoctorsController extends Controller
     public function update(UsersRequest $request, User $user)
     {
         // review samir gamal method to make password nullable on update and update userRequest file
-        $data = $request->safe()->only(['email', 'password']);
+        $data = $request->safe()->only(['email', 'password' ,'phone' ,'section_id']);
         
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;

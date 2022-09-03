@@ -43,9 +43,9 @@ class HandleInertiaRequests extends Middleware
             // ],
             'flash' => [
                 'success' => $request->session()->get('success'),
-            ], 
+            ],
             'currentPage' => last(request()->segments()),
-            'locale'=> App::getLocale(),
+            'locale' => App::getLocale(),
 
             'menus' => [
                 [
@@ -83,7 +83,7 @@ class HandleInertiaRequests extends Middleware
                 //     'isActive' => $request->routeIs('admin.roles.*'),
                 //     'isVisible' => $request->user()?->can('view roles module'),
                 // ],
-            
+
                 [
                     'label' => 'Sections',
                     'url' => route('admin.sections.index'),
@@ -101,48 +101,74 @@ class HandleInertiaRequests extends Middleware
 
                 ],
                 [
-                    'label' => 'Services',
-                    // 'url' => route('admin.singleServices.index'),
-                    'isActive' => $request->routeIs('admin.singleServices.*'),
-                    'isVisible' => $request->user()?->can('view services module'),
-                    'hasSubmenu' => true,
-                    'subMenus'=> [
-                        [
-                            'label' => 'Single Services',
-                            'url' => route('admin.singleServices.index'),
-                            'isActive'=>$request->routeIs('admin.singleService*'),
-                            'isVisible' => $request->user()?->can('view services module'),
-                        ],
-                        [
-                            'label' => 'Group Services',
-                            'url' => route('admin.servicesGroups.index'),
-                            'isActive'=>$request->routeIs('admin.servicesGroups*'),
-                            'isVisible' => $request->user()?->can('view services module'),
-                        ],
-                        [
-                            'label' => 'Insurance Companies',
-                            'url' => route('admin.insurances.index'),
-                            'isActive'=>$request->routeIs('admin.insurances*'),
-                            'isVisible' => $request->user()?->can('view insurances module'),
-                        ],
-                        [
-                            'label' => 'Ambulances',
-                            'url' => route('admin.ambulances.index'),
-                            'isActive'=>$request->routeIs('admin.ambulances*'),
-                            'isVisible' => $request->user()?->can('view ambulances module'),
-                        ],
-                    ]
-
-                ],
-                [
                     'label' => 'Patients',
                     'url' => route('admin.patients.index'),
                     'isActive' => $request->routeIs('admin.patients.*'),
                     'isVisible' => $request->user()?->can('view patients module'),
                     'hasSubmenu' => false,
+                ],
+                [
+                    'label' => 'Services',
+                    // 'url' => route('admin.singleServices.index'),
+                    'isActive' => $request->routeIs('admin.services.*'),
+                    'isVisible' => $request->user()?->can('view services module'),
+                    'hasSubmenu' => true,
+                    'open'=>false,
+                    'subMenus' => [
+                        [
+                            'label' => 'Single Services',
+                            'url' => route('admin.singleServices.index'),
+                            'isActive' => $request->routeIs('admin.singleService*'),
+                            'isVisible' => $request->user()?->can('view services module'),
+                        ],
+                        [
+                            'label' => 'Group Services',
+                            'url' => route('admin.servicesGroups.index'),
+                            'isActive' => $request->routeIs('admin.servicesGroups*'),
+                            'isVisible' => $request->user()?->can('view services module'),
+                        ],
+                        [
+                            'label' => 'Insurance Companies',
+                            'url' => route('admin.insurances.index'),
+                            'isActive' => $request->routeIs('admin.insurances*'),
+                            'isVisible' => $request->user()?->can('view insurances module'),
+                        ],
+                        [
+                            'label' => 'Ambulances',
+                            'url' => route('admin.ambulances.index'),
+                            'isActive' => $request->routeIs('admin.ambulances*'),
+                            'isVisible' => $request->user()?->can('view ambulances module'),
+                        ],
+                    ]
 
                 ],
-        
+
+
+                [
+                    'label' => 'Invoices',
+                    // 'url' => route('admin.singleServices.index'),
+                    'isActive' => $request->routeIs('admin.invoices.*'),
+                    'isVisible' => $request->user()?->can('view invoices module'),
+                    'hasSubmenu' => true,
+                    'open'=>false,
+                    'subMenus' => [
+                        [
+                            'label' => 'Single Invoice',
+                            'url' => route('admin.singleInvoices.index'),
+                            'isActive' => $request->routeIs('admin.singleInvoices*'),
+                            'isVisible' => $request->user()?->can('view invoices module'),
+                        ],
+                        [
+                            'label' => 'Group Invoices',
+                            'url' => route('admin.servicesGroupInvoices.index'),
+                            'isActive' => $request->routeIs('admin.servicesGroupInvoices*'),
+                            'isVisible' => $request->user()?->can('view invoices module'),
+                        ],
+                    ]
+
+                ],
+
+
             ],
         ]);
     }

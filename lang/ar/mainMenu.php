@@ -16,6 +16,9 @@ return [
     'Insurance Companies'  => 'شركات التأمين',
     'Ambulances'  => 'الاسعاف',
     'Patients'  => 'المرضى',
+    'Invoices'  => 'الفواتير',
+    'Single Invoice'  => 'فاتورة خدمة مفردة',
+    'Group Invoices'  => 'فاتورة مجموعة خدمات',
 
 
 

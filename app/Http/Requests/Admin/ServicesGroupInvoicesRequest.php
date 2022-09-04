@@ -27,11 +27,11 @@ class ServicesGroupInvoicesRequest extends FormRequest
     {
 
             return [
-                'patient'        => ['bail', 'required', 'string'],
-                'doctor'        => ['bail', 'required', 'string'],
+                'patient'        => ['bail', 'required'],
+                'doctor'        => ['bail', 'required'],
                 'section'        => ['bail', 'required'],
-                'type'        => ['bail', 'required', 'string' ,Rule::in(['1', '2'])],
-                'group'        => ['bail', 'required', 'string'],
+                'type'        => ['bail', 'required' ,Rule::in(['1', '2'])],
+                'group'        => ['bail', 'required'],
                 'discount_value'        => ['bail', 'required', 'numeric' , 'min:0'],
                 'price'        => ['bail', 'required', 'numeric' , 'min:0'],
                 'tax_rate'        => ['bail', 'required', 'numeric' , 'min:0'],

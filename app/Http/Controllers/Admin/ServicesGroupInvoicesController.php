@@ -161,14 +161,63 @@ class ServicesGroupInvoicesController extends Controller
         $invoice['section_id'] = $request->section;
         $invoice['group_id'] = $request->group;
 
-// dd($invoice);
-
-
         Invoice::create($invoice);
 
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
+
+
+
+    public function edit(Invoice $invoice)
+    {
+        $invoice->load(['patient:id', 'doctor:id' , 'section:id' ,'group:id']);
+    
+        $doctors = User::query()->select('id','section_id')->with('section')->role('Doctor')->get();    // to get only doctors from users table
+        $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
+
+        // dd($doctors);
+        return Inertia::render('Invoices/GroupInvoice/Create', [
+            'edit' => true,
+            'title' => 'Edit Services Group Invoice',
+            'item' => new InvoiceResource($invoice),
+            'routeResourceName' => $this->routeResourceName,
+            'doctors'  => DoctorResource::collection($doctors),
+            'patients'  => PatientResource::collection($patients),
+            'sections' => SectionResource::collection(Section::get(['id'])),
+            'groups' => ServicesGroupResource::collection(Group::get(['id','Total_before_discount', 'Total_before_discount','discount_value','tax_rate','Total_with_tax'])),
+            'type' => [ ["id" => 1 , "name" =>'cash'] , ["id" => 2 , "name" =>'later'] ],
+        ]);
+    }
+
+    public function update(ServicesGroupInvoicesRequest $request, Invoice $invoice)
+    {
+
+        // dd($request);
+        
+        $data = $request->only('type','discount_value','price','tax_rate','tax_value','total_with_tax');
+        $data['invoice_type'] = 2;
+        $data['invoice_status'] = 1;
+        $data['patient_id'] = $request->patient;
+        $data['doctor_id'] = $request->doctor;
+        $data['section_id'] = $request->section;
+        $data['group_id'] = $request->group;
+
+        $invoice->update($data);
+
+
+        // $invoice->update($request->saveData());
+
+
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
+    }
+
+    // public function destroy(Invoice $invoice)
+    // {
+    //     $invoice->delete();
+
+    //     return back()->with('success', 'User deleted successfully.');
+    // }
 
 
 

@@ -48,11 +48,11 @@ const props = defineProps({
 });
 
 const form = useForm({
-    patient: props.item.patient?.[0]?.id ?? "",
-    doctor: props.item.doctor?.[0]?.id ?? "",
-    section: props.item.section?.[0]?.id ?? "",
-    type: props.item.type?.[0]?.id ?? "",
-    service: props.item.service?.[0]?.id ?? "", 
+    patient: props.item.patient?.id ?? "", 
+    doctor: props.item.doctor?.id ?? "",
+    section: props.item.section?.id ?? "",
+    type: props.item.type ?? "",
+    service: props.item.service?.id ?? "", 
 
     discount_value: props.item.discount_value ?? 0,
 

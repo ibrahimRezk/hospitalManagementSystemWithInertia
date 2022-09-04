@@ -48,18 +48,21 @@
     });
     
     const form = useForm({
-        patient: props.item.patient?.[0]?.id ?? "",
-        doctor: props.item.doctor?.[0]?.id ?? "",
-        section: props.item.section?.[0]?.id ?? "",
-        type: props.item.type?.[0]?.id ?? "",
-        group: props.item.groups?.[0]?.id ?? "", 
-    
+
+        patient: props.item.patient?.id ?? "", 
+    doctor: props.item.doctor?.id ?? "",
+    section: props.item.section?.id ?? "",
+    type: props.item.type ?? "",
+
+    group: props.item.group?.id ?? "", 
+
+
         discount_value: props.item.discount_value ?? 0,
     
-        price: props.item.Total_before_tax ?? "",
+        price: props.item.price ?? "",
         tax_rate: props.item.tax_rate ?? "",
         tax_value: props.item.tax_value ?? "",
-        total_with_tax: props.item.Total_with_tax ?? "",
+        total_with_tax: props.item.total_with_tax ?? "",
     });
     
     // to add section automatically after choosing a doctor

@@ -154,7 +154,7 @@ class SingleServiceInvoicesController extends Controller
         $invoice['patient_id'] = $request->patient;
         $invoice['doctor_id'] = $request->doctor;
         $invoice['section_id'] = $request->section;
-        $invoice['Service_id'] = $request->service;
+        $invoice['service_id'] = $request->service;
 
         Invoice::create($invoice);
 
@@ -164,13 +164,14 @@ class SingleServiceInvoicesController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        $invoice->load(['patient:id', 'doctor:id' , 'section:id' ,'service:id']);
     
         $doctors = User::query()->select('id','section_id')->with('section')->role('Doctor')->get();    // to get only doctors from users table
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
         // dd($doctors);
         return Inertia::render('Invoices/SingleServiceInvoice/Create', [
-            'edit' => false,
+            'edit' => true,
             'title' => 'Edit Single Service',
             'item' => new InvoiceResource($invoice),
             'routeResourceName' => $this->routeResourceName,
@@ -182,18 +183,32 @@ class SingleServiceInvoicesController extends Controller
         ]);
     }
 
-    // public function update(SingleServiceRequest $request, Service $service)
-    // {
-    //     $service->update($request->saveData());
+    public function update(SingleInvoicesRequest $request, Invoice $invoice)
+    {
+
+        // dd($request);
+        
+        $data = $request->only('type','discount_value','price','tax_rate','tax_value','total_with_tax');
+        $data['invoice_type'] = 1;
+        $data['invoice_status'] = 1;
+        $data['patient_id'] = $request->patient;
+        $data['doctor_id'] = $request->doctor;
+        $data['section_id'] = $request->section;
+        $data['Service_id'] = $request->service;  // S in capital
+
+        $invoice->update($data);
 
 
-    //     return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
-    // }
+        // $invoice->update($request->saveData());
 
-    // public function destroy(Service $service)
-    // {
-    //     $service->delete();
 
-    //     return back()->with('success', 'User deleted successfully.');
-    // }
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
+    }
+
+    public function destroy(Invoice $invoice)
+    {
+        $invoice->delete();
+
+        return back()->with('success', 'User deleted successfully.');
+    }
 }

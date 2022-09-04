@@ -22,6 +22,6 @@ class PatientAccount extends Model
 
     public function PaymentAccount()
     {
-        return $this->belongsTo(PaymentAccount::class,'Payment_id');
+        return $this->belongsTo(PaymentAccount::class,'payment_id');
     }
 }

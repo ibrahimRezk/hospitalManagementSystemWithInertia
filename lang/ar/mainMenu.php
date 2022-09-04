@@ -19,6 +19,9 @@ return [
     'Invoices'  => 'الفواتير',
     'Single Invoice'  => 'فاتورة خدمة مفردة',
     'Group Invoices'  => 'فاتورة مجموعة خدمات',
+    'Accounts'  => 'الحسابات',
+    'Receipts'  => 'سندات القبض',
+    'Payments'  => 'سندات الصرف',
 
 
 

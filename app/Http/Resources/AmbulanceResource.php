@@ -25,7 +25,7 @@ class AmbulanceResource extends JsonResource
             // 'name_ar' => $this->whenNotNull($this->translate('en')->name), // delete this if database has arabic content and activate above one this will keep showing name_ar and name_en both in english if not changed to ar but if database has no arabic data it will return error in index becase name ar is null
             'driver_name_en' => $this->whenNotNull($this->translate('en')->driver_name),
 
-            'notes' => $this->when($this->name, $this->notes),
+            'notes' => $this->when($this->notes, $this->notes),
             'notes_ar' => $this->whenNotNull($this->translate('ar')->notes), 
             'notes_en' => $this->whenNotNull($this->translate('en')->notes),
 

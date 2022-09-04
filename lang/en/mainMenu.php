@@ -18,6 +18,11 @@ return [
     'Invoices'  => 'Invoices',
     'Single Invoice'  => 'Single Invoice',
     'Group Invoices'  => 'Group Invoices',
+    'Accounts'  => 'Accounts',
+    'Receipts'  => 'Receipts',
+    'Payments'  => 'Payments',
+
+
 
 
 

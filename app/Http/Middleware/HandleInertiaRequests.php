@@ -146,7 +146,6 @@ class HandleInertiaRequests extends Middleware
 
                 [
                     'label' => 'Invoices',
-                    // 'url' => route('admin.singleServices.index'),
                     'isActive' => $request->routeIs('admin.invoices.*'),
                     'isVisible' => $request->user()?->can('view invoices module'),
                     'hasSubmenu' => true,
@@ -162,8 +161,32 @@ class HandleInertiaRequests extends Middleware
                             'label' => 'Group Invoices',
                             'url' => route('admin.servicesGroupInvoices.index'),
                             'isActive' => $request->routeIs('admin.servicesGroupInvoices*'),
-                            'isVisible' => $request->user()?->can('view invoices module'),
+                            'isVisible' => $request->user()?->can('view invoices module'), 
                         ],
+
+                    ]
+
+                ],
+                [
+                    'label' => 'Accounts',
+                    'isActive' => $request->routeIs('admin.accounts.*'),
+                    'isVisible' => $request->user()?->can('view accounts module'),
+                    'hasSubmenu' => true,
+                    'open'=>false,
+                    'subMenus' => [
+                        [
+                            'label' => 'Receipts',
+                            'url' => route('admin.receipts.index'),
+                            'isActive' => $request->routeIs('admin.receipts*'),
+                            'isVisible' => $request->user()?->can('view receipts module'), 
+                        ],
+                        [
+                            'label' => 'Payments',
+                            'url' => route('admin.payments.index'),
+                            'isActive' => $request->routeIs('admin.payments*'),
+                            'isVisible' => $request->user()?->can('view payments module'),
+                        ],
+
                     ]
 
                 ],

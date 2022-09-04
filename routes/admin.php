@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
 use App\Http\Controllers\Admin\PatientsController;
+use App\Http\Controllers\Admin\PaymentsController;
+use App\Http\Controllers\Admin\ReceiptsController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\ServicesGroupInvoicesController;
@@ -77,6 +79,9 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
     Route::resource('singleInvoices', SingleServiceInvoicesController::class)->parameters(['singleInvoices' => 'invoice']);
     Route::resource('servicesGroupInvoices', ServicesGroupInvoicesController::class)->parameters(['servicesGroupInvoices' => 'invoice']);
+    Route::resource('payments', PaymentsController::class); 
+    Route::resource('receipts', ReceiptsController::class); 
+
 
 
 

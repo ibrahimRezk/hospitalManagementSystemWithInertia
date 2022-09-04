@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentAccount extends Model
+class Receipt extends Model
 {
     use HasFactory;
 
-    public function patients()
+    public function patient()
     {
         return $this->belongsTo(User::class,'patient_id');
     }

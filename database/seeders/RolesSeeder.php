@@ -90,5 +90,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create patient']);
         Permission::create(['name' => 'edit patient']);
         Permission::create(['name' => 'delete patient']); 
+
+        Permission::create(['name' => 'view receipts module']);
+        Permission::create(['name' => 'view receipts list']);
+        Permission::create(['name' => 'create receipt']);
+        Permission::create(['name' => 'edit receipt']);
+        Permission::create(['name' => 'delete receipt']); 
     }
 }

@@ -9,7 +9,9 @@ use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\PatientResource;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\ServiceResource;
+use App\Models\FundAccount;
 use App\Models\Invoice;
+use App\Models\PatientAccount;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\User;
@@ -156,7 +158,29 @@ class SingleServiceInvoicesController extends Controller
         $invoice['section_id'] = $request->section;
         $invoice['service_id'] = $request->service;
 
-        Invoice::create($invoice);
+        $singleInvoice =Invoice::create($invoice);
+
+    
+        if ($singleInvoice->type == 1) {
+            $fund_accounts = new FundAccount();
+            $fund_accounts->date = date('Y-m-d');
+            $fund_accounts->invoice_id = $singleInvoice->id;
+
+            $fund_accounts->Debit = $singleInvoice->total_with_tax;
+            $fund_accounts->credit = 0.00;
+            $fund_accounts->save();
+        } else {
+
+            $patient_accounts = new PatientAccount();
+            $patient_accounts->date = date('Y-m-d');
+            $patient_accounts->invoice_id = $singleInvoice->id;
+
+            $patient_accounts->patient_id = $singleInvoice->patient_id;
+
+            $patient_accounts->Debit = $singleInvoice->total_with_tax;
+            $patient_accounts->credit = 0.00;
+            $patient_accounts->save();
+        }
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
@@ -164,6 +188,7 @@ class SingleServiceInvoicesController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        // dd($invoice);
         $invoice->load(['patient:id', 'doctor:id' , 'section:id' ,'service:id']);
     
         $doctors = User::query()->select('id','section_id')->with('section')->role('Doctor')->get();    // to get only doctors from users table
@@ -194,10 +219,31 @@ class SingleServiceInvoicesController extends Controller
         $data['patient_id'] = $request->patient;
         $data['doctor_id'] = $request->doctor;
         $data['section_id'] = $request->section;
-        $data['Service_id'] = $request->service;  // S in capital
+        $data['service_id'] = $request->service;  // S in capital
 
         $invoice->update($data);
 
+
+        
+        if ($invoice->type == 1) {
+            $fund_accounts = FundAccount::where('invoice_id', $invoice->id)->first();
+            $fund_accounts->date = date('Y-m-d');
+            $fund_accounts->invoice_id = $invoice->id;
+
+            $fund_accounts->Debit = $invoice->total_with_tax;
+            $fund_accounts->credit = 0.00;
+            $fund_accounts->save();
+        } else {
+            $patient_accounts = PatientAccount::where('invoice_id', $invoice->id)->first();
+            $patient_accounts->date = date('Y-m-d');
+            $patient_accounts->invoice_id = $invoice->id;
+
+            $patient_accounts->patient_id = $invoice->patient_id;
+
+            $patient_accounts->Debit = 0.00;
+            $patient_accounts->credit = $invoice->total_with_tax;
+            $patient_accounts->save();
+        }
 
         // $invoice->update($request->saveData());
 

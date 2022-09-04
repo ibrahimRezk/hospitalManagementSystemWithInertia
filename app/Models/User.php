@@ -109,6 +109,6 @@ class User extends Authenticatable
 
     public function service()
     {
-        return $this->belongsTo(Invoice::class,'Service_id');
+        return $this->belongsTo(Invoice::class,'service_id');
     }
 }

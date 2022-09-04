@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('locale')->index();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->unique(['Service_id','locale','name']);
-            $table->foreignId('Service_id')->references('id')->on('Services')->onDelete('cascade');
+            $table->unique(['service_id','locale','name']);
+            $table->foreignId('service_id')->references('id')->on('Services')->onDelete('cascade');
         });
     }
 

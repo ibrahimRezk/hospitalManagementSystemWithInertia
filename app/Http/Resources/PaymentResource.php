@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReceiptResource extends JsonResource
+class PaymentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,8 +27,8 @@ class ReceiptResource extends JsonResource
             }),
 
             'can' => [
-                'edit' => $request->user()?->can('edit receipt'),
-                'delete' => $request->user()?->can('delete receipt'), 
+                'edit' => $request->user()?->can('edit payment'),
+                'delete' => $request->user()?->can('delete payment'), 
             ], 
         ];
     }

@@ -96,5 +96,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create receipt']);
         Permission::create(['name' => 'edit receipt']);
         Permission::create(['name' => 'delete receipt']); 
+
+        Permission::create(['name' => 'view payments module']);
+        Permission::create(['name' => 'view payments list']);
+        Permission::create(['name' => 'create payment']);
+        Permission::create(['name' => 'edit payment']);
+        Permission::create(['name' => 'delete payment']); 
     }
 }

@@ -79,8 +79,8 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
     Route::resource('singleInvoices', SingleServiceInvoicesController::class)->parameters(['singleInvoices' => 'invoice']);
     Route::resource('servicesGroupInvoices', ServicesGroupInvoicesController::class)->parameters(['servicesGroupInvoices' => 'invoice']);
-    Route::resource('payments', PaymentsController::class); 
     Route::resource('receipts', ReceiptsController::class); 
+    Route::resource('payments', PaymentsController::class); 
 
 
 

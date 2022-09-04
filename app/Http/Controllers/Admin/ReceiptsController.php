@@ -43,7 +43,7 @@ class ReceiptsController extends Controller
 
             ->when( 
                 $request->patient_id,
-                fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
+                fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id) 
                 )
 
             // ->when($request->car_number, fn (Builder $builder, $car_number) => $builder->where('car_number', 'like', "%{$car_number}%"))
@@ -103,7 +103,6 @@ class ReceiptsController extends Controller
     public function store(ReceiptsRequest $request)
     {
 
-        $data=$request->all();
         $receipt = Receipt::create($request->all());
 
                   // store fund_accounts

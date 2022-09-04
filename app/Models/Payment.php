@@ -9,7 +9,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    public function patients()
+    public function patient()
     {
         return $this->belongsTo(User::class,'patient_id');
     }

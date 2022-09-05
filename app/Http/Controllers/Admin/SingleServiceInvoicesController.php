@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin; 
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SingleInvoicesRequest;
@@ -15,6 +15,7 @@ use App\Models\PatientAccount;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -33,6 +34,7 @@ class SingleServiceInvoicesController extends Controller
 
     public function index(Request $request)
     {
+        // dd($request);
         $singleInvoices = Invoice::query()
             ->select([
                 'id',
@@ -60,7 +62,22 @@ class SingleServiceInvoicesController extends Controller
             ->where ('invoice_type' , '=',   1)  // go get single services only
 
 
-            // ->when($request->price, fn (Builder $builder, $price) => $builder->where('price', 'like', "%{$price}%"))
+
+
+/// very important when searching in a relation inside another relation (nested relations)
+            ->whereHas('patient' , fn ($query) => 
+            $query->whereHas('translations' , fn ($query) => 
+            $query->when($request->patient_name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+            ))
+
+            ->whereHas('service' , fn ($query) => 
+            $query->whereHas('translations' , fn ($query) => 
+            $query->when($request->service_name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+            ))
+        
+
+
+
 
             ->latest('id')
             ->paginate(10);
@@ -70,12 +87,12 @@ class SingleServiceInvoicesController extends Controller
             'items' => InvoiceResource::collection($singleInvoices),
             'headers' => [
                 [
-                    'label' => 'Service Name',
-                    'name' => 'service',
-                ],
-                [
                     'label' => 'Patient Name',
                     'name' => 'patient',
+                ],
+                [
+                    'label' => 'Service Name',
+                    'name' => 'service',
                 ],
                 [
                     'label' => 'Doctor Name',

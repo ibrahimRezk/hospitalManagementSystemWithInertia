@@ -34,15 +34,26 @@
             </template> 
     
             <form class="grid grid-cols-3 gap-8"> 
-                <InputGroup label="Name"
-                            v-model="filters.name" />
-                <InputGroup label="insurance code"
-                            v-model="filters.insurance_code" />
+                <InputGroup label="driver name"
+                            v-model="filters.driver_name" />
+                            
+                <InputGroup label="car number"
+                            v-model="filters.car_number" />
+
+                <InputGroup label="car model"
+                            v-model="filters.car_model" />
+                            
+                <InputGroup label="car_type"
+                            v-model="filters.car_type" />
+
+                <InputGroup label="driver license number"
+                            v-model="filters.driver_license_number" />
+
          
         
                 <SelectGroup
                     label="Active"
-                    v-model="filters.status"
+                    v-model="filters.is_available"
                     :items="[
                         { id: 1, name: 'Yes' },
                         { id: 0, name: 'No' },

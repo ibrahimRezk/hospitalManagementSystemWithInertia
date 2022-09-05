@@ -41,12 +41,15 @@ class PaymentsController extends Controller
 
             ->with(['patient:id'])
 
-            // ->when( 
-            //     $request->patient_id,
-            //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
-            //     )
+            ->when( 
+                $request->amount,
+                fn (Builder $builder, $amount) =>  $builder->where('amount', $amount) 
+                )
 
-            // ->when($request->car_number, fn (Builder $builder, $car_number) => $builder->where('car_number', 'like', "%{$car_number}%"))
+            ->whereHas('patient' , fn ($query) => 
+            $query->whereHas('translations' , fn ($query) => 
+            $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+            ))
 
 
             ->latest('id')

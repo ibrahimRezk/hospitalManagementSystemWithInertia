@@ -49,6 +49,16 @@ class RadiologistsController extends Controller
             ->when($request->email, fn (Builder $builder, $email) => $builder->where('email', 'like', "%{$email}%"))
             ->when($request->phone, fn (Builder $builder, $phone) => $builder->where('phone', 'like', "%{$phone}%"))
 
+
+            ->when(
+                $request->status !== null,
+                fn (Builder $builder) => $builder->when(
+                    $request->status,
+                    fn (Builder $builder) => $builder->active(),
+                    fn (Builder $builder) => $builder->inActive()
+                )
+            )
+            
             ->latest('id')
             ->paginate(10);
             // dd($doctors); 

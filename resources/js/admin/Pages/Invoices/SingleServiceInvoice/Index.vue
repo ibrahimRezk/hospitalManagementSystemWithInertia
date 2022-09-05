@@ -97,11 +97,11 @@ const { filters, isLoading, isFilled } = useFilters({
                     </template>
                     <template v-slot="{ item }">
                         <Td>
-                            {{ item.service.name }}
-                        
+                            {{ item.patient.name }} 
                         </Td>
                         <Td>
-                            {{ item.patient.name }} 
+                            {{ item.service.name }}
+                        
                         </Td>
                         <Td>
                             {{ item.doctor.name }} 

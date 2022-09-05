@@ -29,7 +29,7 @@ class ReceiptsRequest extends FormRequest
             'patient_id'=> 'bail|required|'. Rule::exists(User::class , 'id'),
             // 'patient_id' => ['bail', 'required', Rule::exists(User::class, 'id')], 
 
-            'amount'=>'required|numeric|digits:8',
+            'amount'=>'required|numeric',
             'description'=>'nullable'
         ];
     }

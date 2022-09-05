@@ -37,12 +37,20 @@ watch(
         <form class="grid grid-cols-4 gap-8"> 
             <InputGroup label="Name"
                         v-model="filters.name" />
-            <InputGroup label="Email"
-                        v-model="filters.email"
-                        type="email" />
-            <SelectGroup label="Section"
-                         v-model="filters.sectionId"
-                         :items="sections" />
+            <InputGroup label="email"
+                        v-model="filters.email" />
+            <InputGroup label="phone"
+                        v-model="filters.phone" />
+
+                        <SelectGroup
+                        label="Active"
+                        v-model="filters.status"
+                        :items="[
+                            { id: 1, name: 'Yes' },
+                            { id: 0, name: 'No' },
+                        ]"
+                    />
+
         </form>
     </Card>
 </template>

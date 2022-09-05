@@ -206,7 +206,8 @@ class HandleInertiaRequests extends Middleware
 
 // create new section in main menu for checkups for doctors and radiology section
 
-// add phone to users
+
+// add status to services
 
             ],
         ]);

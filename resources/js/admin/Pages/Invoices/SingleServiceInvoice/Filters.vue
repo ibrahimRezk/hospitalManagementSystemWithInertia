@@ -8,7 +8,7 @@ import SelectGroup from "@/admin/Components/SelectGroup.vue";
 const props = defineProps({
     modelValue: {
         type: Object,
-        default: () => ({}),
+        default: () => ({}), 
     },
     roles: Array,
 });
@@ -35,21 +35,10 @@ watch(
         </template> 
 
         <form class="grid grid-cols-3 gap-8"> 
-            <InputGroup label="Name"
-                        v-model="filters.name" />
-            <InputGroup label="price"
-                        v-model="filters.price" />
-                        <SelectGroup
-                        label="Active"
-                        v-model="filters.status"
-                        :items="[
-                            { id: 1, name: 'Yes' },
-                            { id: 0, name: 'No' },
-                        ]"
-                    />
-                    
-            
-            
+            <InputGroup label="Patient Name"
+                        v-model="filters.patient_name" />
+            <InputGroup label="Service Name"
+                        v-model="filters.service_name" />
         </form>
     </Card>
 </template>

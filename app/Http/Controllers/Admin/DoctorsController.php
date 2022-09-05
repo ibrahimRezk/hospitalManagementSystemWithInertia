@@ -194,7 +194,7 @@ class DoctorsController extends Controller
 
             
         ]);
-    }
+    } 
 
     public function update(UsersRequest $request, User $user)
     {

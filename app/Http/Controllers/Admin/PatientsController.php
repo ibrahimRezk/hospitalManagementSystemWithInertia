@@ -152,7 +152,7 @@ class PatientsController extends Controller
 
         $user = User::create($data);
         
-        $user->assignRole(4);  // to be changed
+        $user->assignRole($this->role);  // to be changed
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
@@ -190,7 +190,7 @@ class PatientsController extends Controller
 
         $user->update($data);
 
-        $user->syncRoles(4);  // to be changed
+        $user->syncRoles($this->role);
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
     }

@@ -36,18 +36,9 @@
             <form class="grid grid-cols-3 gap-8"> 
                 <InputGroup label="Name"
                             v-model="filters.name" />
-                <InputGroup label="insurance code"
-                            v-model="filters.insurance_code" />
-         
-        
-                <SelectGroup
-                    label="Active"
-                    v-model="filters.status"
-                    :items="[
-                        { id: 1, name: 'Yes' },
-                        { id: 0, name: 'No' },
-                    ]"
-                />
+                <InputGroup label="amount"
+                            v-model="filters.amount" />
+
                 
                 
             </form>

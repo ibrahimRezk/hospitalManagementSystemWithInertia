@@ -97,11 +97,11 @@
                         </template>
                         <template v-slot="{ item }">
                             <Td>
-                                {{ item.group.name }}
-                            
+                                {{ item.patient.name }} 
                             </Td>
                             <Td>
-                                {{ item.patient.name }} 
+                                {{ item.group.name }}
+                            
                             </Td>
                             <Td>
                                 {{ item.doctor.name }} 

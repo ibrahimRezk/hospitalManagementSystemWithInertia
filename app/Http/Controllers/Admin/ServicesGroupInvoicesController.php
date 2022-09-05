@@ -18,6 +18,7 @@ use App\Models\PatientAccount;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -63,7 +64,18 @@ class ServicesGroupInvoicesController extends Controller
             ->where('invoice_type', '=',   2)   // to get only services group invoices
 
 
-            // ->when($request->price, fn (Builder $builder, $price) => $builder->where('price', 'like', "%{$price}%"))
+
+/// very important when searching in a relation inside another relation (nested relations)
+->whereHas('patient' , fn ($query) => 
+$query->whereHas('translations' , fn ($query) => 
+$query->when($request->patient_name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+))
+
+->whereHas('group' , fn ($query) => 
+$query->whereHas('translations' , fn ($query) => 
+$query->when($request->service_name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+))
+
 
             ->latest('id')
             ->paginate(10);
@@ -73,12 +85,12 @@ class ServicesGroupInvoicesController extends Controller
             'items' => InvoiceResource::collection($groupInvoices),
             'headers' => [
                 [
-                    'label' => 'Service Name',
-                    'name' => 'group',
-                ],
-                [
                     'label' => 'Patient Name',
                     'name' => 'patient',
+                ],
+                [
+                    'label' => 'Service Name',
+                    'name' => 'group',
                 ],
                 [
                     'label' => 'Doctor Name',

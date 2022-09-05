@@ -51,7 +51,7 @@
             />
 
                 <SelectGroup
-                label="Gender"
+                label="Blood Group"
                 v-model="filters.blood_group"
                 :items="[
                      { id: 'A+',  name: 'A+' },

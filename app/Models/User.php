@@ -111,4 +111,17 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Invoice::class,'service_id');
     }
+
+
+    public function scopeActive($builder)
+    {
+        return $builder->where('status', true);  // change it to active in database to be convenient
+    }
+
+    public function scopeInActive($builder)
+    {
+        return $builder->where('status', false);
+    }
+
+
 }

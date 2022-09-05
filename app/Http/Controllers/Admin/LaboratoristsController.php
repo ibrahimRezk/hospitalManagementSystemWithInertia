@@ -40,14 +40,24 @@ class LaboratoristsController extends Controller
             ->role($this->role)
 
 /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
-             ->whereHas('translations' , fn ($query) => 
+->whereHas('translations' , fn ($query) => 
 
-             $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
-             )
- ////////////////////////////////////////////////////////////////////////////////////
+$query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
+)
+////////////////////////////////////////////////////////////////////////////////////
 
-            ->when($request->email, fn (Builder $builder, $email) => $builder->where('email', 'like', "%{$email}%"))
-            ->when($request->phone, fn (Builder $builder, $phone) => $builder->where('phone', 'like', "%{$phone}%"))
+->when($request->email, fn (Builder $builder, $email) => $builder->where('email', 'like', "%{$email}%"))
+->when($request->phone, fn (Builder $builder, $phone) => $builder->where('phone', 'like', "%{$phone}%"))
+
+
+->when(
+   $request->status !== null,
+   fn (Builder $builder) => $builder->when(
+       $request->status,
+       fn (Builder $builder) => $builder->active(),
+       fn (Builder $builder) => $builder->inActive()
+   )
+)
 
             ->latest('id')
             ->paginate(10);

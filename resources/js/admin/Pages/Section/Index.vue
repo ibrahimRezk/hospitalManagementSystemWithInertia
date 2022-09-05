@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import Layout from "@/admin/Layouts/Authenticated.vue";
 import Container from "@/admin/Components/Container.vue";
@@ -9,7 +9,7 @@ import Table from "@/admin/Components/Table/Table.vue";
 import Td from "@/admin/Components/Table/Td.vue";
 import Actions from "@/admin/Components/Table/Actions.vue";
 import Button from "@/admin/Components/Button.vue";
-import Modal from '@/admin/Components/ConfirmationModal.vue'
+import Modal from "@/admin/Components/ConfirmationModal.vue";
 
 import Label from "@/admin/Components/Label.vue";
 import Input from "@/admin/Components/Input.vue";
@@ -41,7 +41,7 @@ const props = defineProps({
         required: true,
     },
     can: Object,
-    method:String
+    method: String,
 });
 
 const {
@@ -58,8 +58,7 @@ const {
 const { filters, isLoading, isFilled } = useFilters({
     filters: props.filters,
     routeResourceName: props.routeResourceName,
-    method:props.method
-
+    method: props.method,
 });
 </script>
 
@@ -95,7 +94,7 @@ const { filters, isLoading, isFilled } = useFilters({
                         </div>
                     </template>
                     <template v-slot="{ item }">
-                        <Td>
+                        <Td >
                             <template #image>
                                 <div class="w-8 h-8 mx-1">
                                     <img
@@ -105,16 +104,25 @@ const { filters, isLoading, isFilled } = useFilters({
                                     />
                                 </div>
                             </template>
-                            {{ item.name }}
+                            <Link 
+                            class=" text-blue-700"
+                                :href="
+                                    route(`admin.doctors.index`, {
+                                        sectionId: item.id,
+                                    })
+                                "
+                            >
+                                {{ item.name }}
+                            </Link>
+
                             <template #second-line>
                                 <!-- {{ item.description }} -->
                             </template>
                         </Td>
                         <Td>
-                            {{ item.description }} 
+                            {{ item.description }}
                         </Td>
-                     
-                        
+
                         <Td>
                             {{ item.created_at_formatted }}
                         </Td>

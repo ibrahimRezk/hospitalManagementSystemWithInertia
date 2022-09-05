@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref, watch } from "vue";
-    import { Head } from "@inertiajs/inertia-vue3";
+    import { Head, Link } from "@inertiajs/inertia-vue3";
     import { Inertia } from "@inertiajs/inertia";
     import Layout from "@/admin/Layouts/Authenticated.vue";
     import Container from "@/admin/Components/Container.vue";
@@ -107,7 +107,16 @@
                                         />
                                     </div>
                                 </template>
-                                {{ item.name }}
+                                <Link 
+                                class=" text-blue-700"
+                                    :href="
+                                        route(`admin.${routeResourceName}.show`, {
+                                            id: item.id,
+                                        })
+                                    "
+                                >
+                                    {{ item.name }}
+                                </Link>
                                 <template #second-line>
                                     {{ item.email }}
                                 </template>

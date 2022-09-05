@@ -73,10 +73,8 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('radiologists', RadiologistsController::class)->parameters(['radiologists' => 'user']);
     Route::resource('laboratorists', LaboratoristsController::class)->parameters(['laboratorists' => 'user']);
     Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
-
-
+    
     Route::resource('sections', SectionsController::class);
-
 
     // important : any extra route must be put before resource route or it will not work
     Route::resource('singleServices', SingleServicesController::class)->parameters(['singleServices' => 'service']);

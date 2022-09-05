@@ -4,8 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsersRequest;
+use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\PatientResource;
+use App\Http\Resources\PaymentResource;
+use App\Http\Resources\ReceiptResource;
 use App\Http\Resources\UserResource;
+use App\Models\Invoice;
+use App\Models\PatientAccount;
+use App\Models\Payment;
+use App\Models\Receipt;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +30,9 @@ class PatientsController extends Controller
         $this->middleware('can:edit patient')->only(['edit', 'update']);
         $this->middleware('can:delete patient')->only('destroy');
     }
+
+    // important note 
+// we use resourcename collection when date will come as an array of objects but we use new resourceName if it is only one object
 
     public function index(Request $request)
     {
@@ -124,6 +134,67 @@ class PatientsController extends Controller
     }
 
 
+    public function show(User $user){
+
+        $patient_payments = Payment::where('patient_id', '=' , $user->id)->get();
+
+        $patient_invoices = Invoice::where('patient_id', '=' , $user->id)->get();
+        $patient_receipts = Receipt::where('patient_id', '=' , $user->id)->get();
+
+        //     $payments = new PatientResource($patient_payments);
+
+        // dd( $payments);
+
+
+        return Inertia::render('Patient/Show', [
+            // 'title' => 'Patient Details',
+
+            'patient'  => new PatientResource($user),
+            'payments' => PaymentResource::collection($patient_payments),
+            'invoices' => InvoiceResource::collection($patient_invoices),
+            'receipts' => ReceiptResource::collection($patient_receipts),
+
+            'headers' => [
+                [
+                    'label' => 'Patient Details',
+                    'name' => 'patient_details',
+                ],
+                [
+                    'label' => 'Invoices',
+                    'name' => 'invoices',
+                ],
+                [
+                    'label' => 'Payments',
+                    'name' => 'payments',
+                ],
+                [
+                    'label' => 'Statement',
+                    'name' => 'statement',
+                ],
+                [
+                    'label' => 'Radiology',
+                    'name' => 'radiology',
+                ],
+
+                [
+                    'label' => 'Laboratory',
+                    'name' => 'laboratory',
+                ],
+                [
+                    'label' => 'Created At',
+                    'name' => 'created_at',
+                ],
+                [
+                    'label' => 'Actions',
+                    'name' => 'actions',
+                ],
+            ],
+
+
+        ]);
+        
+    }
+
 
     public function create() 
     {
@@ -192,7 +263,7 @@ class PatientsController extends Controller
 
         $user->syncRoles($this->role);
 
-        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.'); 
     }
 
     public function destroy(User $user)

@@ -34,6 +34,8 @@ class PatientResource extends JsonResource
             'gender' => $this->when($this->gender, $this->gender),
             'blood_group' => $this->when($this->blood_group, $this->blood_group),
 
+            
+
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),

@@ -109,7 +109,17 @@ class User extends Authenticatable
 
     public function service()
     {
-        return $this->belongsTo(Invoice::class,'service_id');
+        return $this->belongsTo(Invoice::class,'service_id'); 
+    }
+
+    public function invoices(){
+        return $this->hasMany(Invoice::class,'patient_id');
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class,'patient_id');
+    }
+    public function receipts(){
+        return $this->hasMany(Receipt::class,'patient_id');
     }
 
 

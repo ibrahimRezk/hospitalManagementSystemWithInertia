@@ -142,7 +142,7 @@ class DoctorsController extends Controller
             'edit' => false,
             'title' => 'Add Doctor',
             'routeResourceName' => $this->routeResourceName,
-            'roles' => RoleResource::collection(Role::get(['id', 'name'])),
+            // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
 
             'sections' => SectionResource::collection(Section::get(['id'])),
             // 'appointments' =>
@@ -156,7 +156,7 @@ class DoctorsController extends Controller
         //remember to use section_id not section because in database column name is section_id
 
         // $data = $request->safe()->only(['email', 'password' ,'phone']);
-        $data = $request->only(['email', 'password' ,'phone' ,'section_id']);
+        $data = $request->only(['email', 'password' ,'phone' ,'section_id','status']);
 
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;
@@ -165,7 +165,7 @@ class DoctorsController extends Controller
         // $data['section_id'] = $request->section; 
 
         $user = User::create($data);
-        $user->assignRole($request->roleId);
+        $user->assignRole($this->role);
         // $appointments // to be done
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
@@ -199,13 +199,13 @@ class DoctorsController extends Controller
     public function update(UsersRequest $request, User $user)
     {
         // review samir gamal method to make password nullable on update and update userRequest file
-        $data = $request->safe()->only(['email', 'password' ,'phone' ,'section_id']);
+        $data = $request->safe()->only(['email', 'password' ,'phone' ,'section_id','status']);
         
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
         $user->update($data);
 
-        $user->syncRoles($request->roleId);
+        $user->syncRoles($this->role);
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
     }

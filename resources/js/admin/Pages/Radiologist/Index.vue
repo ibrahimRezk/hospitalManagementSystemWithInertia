@@ -14,8 +14,9 @@ import Modal from '@/admin/Components/ConfirmationModal.vue'
 import Label from "@/admin/Components/Label.vue";
 import Input from "@/admin/Components/Input.vue";
 import AddNew from "@/admin/Components/AddNew.vue";
-import YesNoLabel from "@/admin/Components/YesNoLabel.vue";
 import Filters from "./Filters.vue";
+import YesNoLabel from "@/admin/Components/YesNoLabel.vue";
+
 
 import useDeleteItem from "@/admin/Composables/useDeleteItem.js";
 import useFilters from "@/admin/Composables/useFilters.js";
@@ -42,8 +43,6 @@ const props = defineProps({
         required: true,
     },
     can: Object,
-
-    sections: Object,
     method:String
 
 });
@@ -114,16 +113,7 @@ const { filters, isLoading, isFilled } = useFilters({
                                 {{ item.email }}
                             </template>
                         </Td>
-                        <Td>
-                        <Button v-if="item.section" 
-                                color="blue"
-                                small
-                            >
-                                {{ item.section.name }}
-                            </Button>
 
-                            
-                        </Td>
                     
                         <Td>
                         <Button
@@ -133,9 +123,7 @@ const { filters, isLoading, isFilled } = useFilters({
                             {{ item.phone }}
                             </Button>
                         </Td>
-                        <Td >
-                            {{ item.appointements }}
-                        </Td>
+
                         <Td>
                             <YesNoLabel :active="item.status" />
 

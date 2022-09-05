@@ -6,6 +6,8 @@ import Card from "@/admin/Components/Card/Card.vue";
 import Button from "@/admin/Components/Button.vue";
 import InputGroup from "@/admin/Components/InputGroup.vue";
 import SelectGroup from "@/admin/Components/SelectGroup.vue";
+import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
+
 
 const props = defineProps({
     edit: {
@@ -23,10 +25,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    roles: {
-        type: Array,
-        required: true, 
-    },
+
     sections: {
         type: Array,
         required: true, 
@@ -44,10 +43,12 @@ const form = useForm({
     email: props.item.email ?? "",
     password: "",
     passwordConfirmation: "",
-    roleId: props.item.roles?.[0]?.id ?? "",   /// important   it will work only like this in create and edit cecase of the relation
+    // roleId: props.item.roles?.[0]?.id ?? "",   /// important   it will work only like this in create and edit cecase of the relation
     phone: props.item.phone ?? "",
     section_id: props.item.section?.id ?? "",  /// important   it will work only like this in create and edit cecase of the relation this is diffrent
-    appointments:props.item.appointments ?? ""
+    appointments:props.item.appointments ?? "",
+    status: props.item.status ?? "",
+
 
 
 });
@@ -99,6 +100,7 @@ const submit = () => {
                         />
 
                         <InputGroup
+                        minlength="8"
                             type="password"
                             label="Password"
                             v-model="form.password"
@@ -107,6 +109,7 @@ const submit = () => {
                         />
 
                         <InputGroup
+                        minlength="8"
                             type="password"
                             label="Confirm Password"
                             v-model="form.passwordConfirmation"
@@ -116,17 +119,11 @@ const submit = () => {
                         <InputGroup
                             label="phone"
                             v-model="form.phone"
-                            :error-message="form.phone"
+                            :error-message="form.errors.phone"
                             :required="!edit"
                         />
 
-                        <SelectGroup
-                            label="Role"
-                            v-model="form.roleId"
-                            :items="roles"
-                            :error-message="form.errors.roleId"
-                            required
-                        />
+                    
                         <SelectGroup
                             label="Section"
                             v-model="form.section_id"
@@ -134,6 +131,13 @@ const submit = () => {
                             :error-message="form.errors.section"
                             required
                         />
+
+                        <div class="mt-3 mb-4">
+                            <CheckboxGroup
+                                label="Active"
+                                v-model:checked="form.status" 
+                            />
+                        </div>
                        
                     </div>
 

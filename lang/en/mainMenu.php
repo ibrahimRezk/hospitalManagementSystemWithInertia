@@ -21,6 +21,8 @@ return [
     'Accounts'  => 'Accounts',
     'Receipts'  => 'Receipts',
     'Payments'  => 'Payments',
+    'Radiologists'  => 'Radiologists',
+    'Laboratorists'  => 'Laboratorists',
 
 
 

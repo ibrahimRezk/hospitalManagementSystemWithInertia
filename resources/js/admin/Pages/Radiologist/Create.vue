@@ -6,6 +6,8 @@ import Card from "@/admin/Components/Card/Card.vue";
 import Button from "@/admin/Components/Button.vue";
 import InputGroup from "@/admin/Components/InputGroup.vue";
 import SelectGroup from "@/admin/Components/SelectGroup.vue";
+import CheckboxGroup from "@/admin/Components/CheckboxGroup.vue";
+
 
 const props = defineProps({
     edit: {
@@ -23,10 +25,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    roles: {
-        type: Array,
-        required: true, 
-    },
+
 });
 
 const form = useForm({
@@ -36,7 +35,10 @@ const form = useForm({
     email: props.item.email ?? "",
     password: "",
     passwordConfirmation: "",
-    roleId: props.item.roles?.[0]?.id ?? "",
+    phone: props.item.phone ?? "",
+    status: props.item.status ?? "",
+
+
 
 });
 
@@ -103,14 +105,20 @@ const submit = () => {
                             :error-message="form.errors.passwordConfirmation"
                             :required="!edit"
                         />
-
-                        <SelectGroup
-                            label="Role"
-                            v-model="form.roleId"
-                            :items="roles"
-                            :error-message="form.errors.roleId"
-                            required
+                        <InputGroup
+                            label="phone"
+                            v-model="form.phone"
+                            :error-message="form.errors.phone"
+                            :required="!edit"
                         />
+
+                        <div class="mt-3 mb-4">
+                            <CheckboxGroup
+                                label="Active"
+                                v-model:checked="form.status" 
+                            />
+                        </div>
+
                     </div>
 
                     <div class="mt-4">

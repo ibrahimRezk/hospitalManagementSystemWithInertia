@@ -22,16 +22,23 @@ class UserSeeder extends Seeder
             'name' => 'Super Admin',
         ]);
         
-        User::factory()->create([
-            'email' => 'editor@gmail.com',
-            'password' => '55555sssss',
-            'name' => 'Editor',
-        ]);
-        
+
         User::factory()->create([
             'email' => 'doctor@gmail.com',
             'password' => '55555sssss',
             'name' => 'Doctor',
+        ]);
+
+        User::factory()->create([
+            'email' => 'radiologist@gmail.com',
+            'password' => '55555sssss',
+            'name' => 'Radiologist',
+        ]);
+        
+        User::factory()->create([
+            'email' => 'laboratorist@gmail.com',
+            'password' => '55555sssss',
+            'name' => 'Laboratorist',
         ]);
         $user =  User::factory()->count(10)->create();
 

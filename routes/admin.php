@@ -11,8 +11,10 @@ use App\Http\Controllers\Admin\UploadImagesController;
 use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
+use App\Http\Controllers\Admin\LaboratoristsController;
 use App\Http\Controllers\Admin\PatientsController;
 use App\Http\Controllers\Admin\PaymentsController;
+use App\Http\Controllers\Admin\RadiologistsController;
 use App\Http\Controllers\Admin\ReceiptsController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesController;
@@ -67,8 +69,13 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::resource('users', UsersController::class);
-    Route::resource('sections', SectionsController::class);
     Route::resource('doctors', DoctorsController::class)->parameters(['doctors' => 'user']);  // this to allow rout model binding in different controllers with one model and solve user request validation unique problems 'doctors' for the resource name  and 'user' for the model name
+    Route::resource('radiologists', RadiologistsController::class)->parameters(['radiologists' => 'user']);
+    Route::resource('laboratorists', LaboratoristsController::class)->parameters(['laboratorists' => 'user']);
+    Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
+
+
+    Route::resource('sections', SectionsController::class);
 
 
     // important : any extra route must be put before resource route or it will not work
@@ -76,7 +83,6 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('servicesGroups', ServicesGroupsController::class)->parameters(['servicesGroups' => 'group']);
     Route::resource('insurances', InsurancesController::class);
     Route::resource('ambulances', AmbulancesController::class);
-    Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
     Route::resource('singleInvoices', SingleServiceInvoicesController::class)->parameters(['singleInvoices' => 'invoice']);
     Route::resource('servicesGroupInvoices', ServicesGroupInvoicesController::class)->parameters(['servicesGroupInvoices' => 'invoice']);
     Route::resource('receipts', ReceiptsController::class); 

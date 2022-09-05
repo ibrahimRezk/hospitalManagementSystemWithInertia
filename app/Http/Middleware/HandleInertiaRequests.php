@@ -98,7 +98,20 @@ class HandleInertiaRequests extends Middleware
                     'isActive' => $request->routeIs('admin.doctors.*'),
                     'isVisible' => $request->user()?->can('view doctors module'),
                     'hasSubmenu' => false,
-
+                ],
+                [
+                    'label' => 'Radiologists',
+                    'url' => route('admin.radiologists.index'),
+                    'isActive' => $request->routeIs('admin.radiologists.*'),
+                    'isVisible' => $request->user()?->can('view radiologists module'),
+                    'hasSubmenu' => false,
+                ],
+                [
+                    'label' => 'Laboratorists',
+                    'url' => route('admin.laboratorists.index'),
+                    'isActive' => $request->routeIs('admin.laboratorists.*'),
+                    'isVisible' => $request->user()?->can('view laboratorists module'),
+                    'hasSubmenu' => false,
                 ],
                 [
                     'label' => 'Patients',
@@ -186,11 +199,14 @@ class HandleInertiaRequests extends Middleware
                             'isActive' => $request->routeIs('admin.payments*'),
                             'isVisible' => $request->user()?->can('view payments module'),
                         ],
-
                     ]
-
                 ],
+                
+// remember filters in accounts and invoices
 
+// create new section in main menu for checkups for doctors and radiology section
+
+// add phone to users
 
             ],
         ]);

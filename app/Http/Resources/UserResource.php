@@ -30,6 +30,7 @@ class UserResource extends JsonResource
 
 
             'email' => $this->when($this->email, $this->email),
+            'phone' => $this->when($this->phone, $this->phone),
             'is_email_verified' => $this->when($this->email_verified_at, function () {
                 return $this->email_verified_at !== null;
             }),

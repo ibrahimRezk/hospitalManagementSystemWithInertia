@@ -22,6 +22,8 @@ return [
     'Accounts'  => 'الحسابات',
     'Receipts'  => 'سندات القبض',
     'Payments'  => 'سندات الصرف',
+    'Radiologists'  => 'أخصائيي الآشعة',
+    'Laboratorists'  => 'أخصائيي المختبر',
 
 
 

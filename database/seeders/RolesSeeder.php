@@ -18,21 +18,20 @@ class RolesSeeder extends Seeder
     public function run()
     {
         $superAdmin = Role::create(['name' => 'Super Admin']); 
-
         User::find(1)->assignRole($superAdmin);
 
-
-
-        $editor = Role::create(['name' => 'Editor']);
-
-        $editor = User::find(2)->assignRole($editor);
-
-
         $doctor = Role::create(['name' => 'Doctor']);
+        User::find(2)->assignRole($doctor);
+        
 
-        $doctor = User::find(3)->assignRole($doctor);
+        $radiologist = Role::create(['name' => 'Radiologist']);
+        User::find(3)->assignRole($radiologist);
+        
 
-        $patient = Role::create(['name'=>'Patient']);
+        $laboratorist = Role::create(['name' => 'Laboratorist']);
+        User::find(4)->assignRole($laboratorist);
+
+        $patient     = Role::create(['name' =>'Patient']);
 
         Permission::create(['name' => 'view permissions module']);
         Permission::create(['name' => 'view permissions list']);
@@ -102,5 +101,12 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create payment']);
         Permission::create(['name' => 'edit payment']);
         Permission::create(['name' => 'delete payment']); 
-    }
+        
+        Permission::create(['name' => 'view radiologists module']);
+        Permission::create(['name' => 'view radiologists list']);
+        Permission::create(['name' => 'create radiologist']);
+        Permission::create(['name' => 'edit radiologist']);
+        Permission::create(['name' => 'delete radiologist']); 
+
+    }// remember to add main munus witch has submenus
 }

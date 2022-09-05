@@ -17,7 +17,7 @@ class DoctorSeeder extends Seeder
     public function run()
     {
         $doctors =  User::factory()->count(30)->create();
-        $role = Role::find(3);
+        $role = Role::find(2);
         foreach($doctors as $doctor){
             $doctor->assignRole($role);
         }

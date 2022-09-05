@@ -2,20 +2,18 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource; 
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class DoctorResource extends JsonResource
+class LaboratoristResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable 
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
-                // important ... i modified the seeder for categories , users , and products to be dynamic for multiple languages ... take a look at it
-
         return [
             'id' => $this->id, 
              // name on curren locale -> use in index
@@ -26,16 +24,14 @@ class DoctorResource extends JsonResource
             'name_en' => $this->whenNotNull($this->translate('en')->name),
 
             'email' => $this->when($this->email, $this->email),
-            'section' => new SectionResource($this->whenLoaded('section')),
             'phone' => $this->when($this->phone, $this->phone),
             'status' => $this->when($this->status, $this->status),
-            'appointements' => 'sat, sun , mon', ///// need more work       
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
             'can' => [
-                'edit' => $request->user()?->can('edit doctor'),
-                'delete' => $request->user()?->can('delete doctor'), 
+                'edit' => $request->user()?->can('edit radiologist'),
+                'delete' => $request->user()?->can('delete radiologist'), 
             ], 
         ];
     }

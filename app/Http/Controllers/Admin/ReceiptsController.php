@@ -144,16 +144,17 @@ class ReceiptsController extends Controller
 
     public function update(ReceiptsRequest $request, Receipt $receipt)
     {
+        // dd($request);
         $receipt->update($request->all());
 
-        $fund_accounts = FundAccount::where('receipt_id',$request->id)->first();
+        $fund_accounts = FundAccount::where('receipt_id',$receipt->id)->first();
         $fund_accounts->date =date('y-m-d');
         $fund_accounts->receipt_id = $receipt->id;
         $fund_accounts->Debit = $request->amount;
         $fund_accounts->credit = 0.00;
         $fund_accounts->save();
         // store patient_accounts
-        $patient_accounts = PatientAccount::where('receipt_id',$request->id)->first();
+        $patient_accounts = PatientAccount::where('receipt_id',$receipt->id)->first();
         $patient_accounts->date =date('y-m-d');
         $patient_accounts->patient_id = $request->patient_id;
         $patient_accounts->receipt_id = $receipt->id;

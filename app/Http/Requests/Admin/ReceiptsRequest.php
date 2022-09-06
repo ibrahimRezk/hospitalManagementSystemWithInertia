@@ -26,6 +26,7 @@ class ReceiptsRequest extends FormRequest
     public function rules()
     {
         return [
+            
             'patient_id'=> 'bail|required|'. Rule::exists(User::class , 'id'),
             // 'patient_id' => ['bail', 'required', Rule::exists(User::class, 'id')], 
 

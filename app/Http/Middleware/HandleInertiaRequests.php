@@ -100,6 +100,13 @@ class HandleInertiaRequests extends Middleware
                     'hasSubmenu' => false,
                 ],
                 [
+                    'label' => 'Patients',
+                    'url' => route('admin.patients.index'),
+                    'isActive' => $request->routeIs('admin.patients.*'),
+                    'isVisible' => $request->user()?->can('view patients module'),
+                    'hasSubmenu' => false,
+                ],
+                [
                     'label' => 'Radiologists',
                     'url' => route('admin.radiologists.index'),
                     'isActive' => $request->routeIs('admin.radiologists.*'),
@@ -113,13 +120,7 @@ class HandleInertiaRequests extends Middleware
                     'isVisible' => $request->user()?->can('view laboratorists module'),
                     'hasSubmenu' => false,
                 ],
-                [
-                    'label' => 'Patients',
-                    'url' => route('admin.patients.index'),
-                    'isActive' => $request->routeIs('admin.patients.*'),
-                    'isVisible' => $request->user()?->can('view patients module'),
-                    'hasSubmenu' => false,
-                ],
+            
                 [
                     'label' => 'Services',
                     // 'url' => route('admin.singleServices.index'),

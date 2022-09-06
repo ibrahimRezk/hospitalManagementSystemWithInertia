@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\InvoiceTypeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,12 @@ class Invoice extends Model
 
     // protected $guarded=[];
     protected $fillable = ['invoice_status'];
+
+    protected $casts = [
+        'type'=> InvoiceTypeCast::class
+    ];
+    protected $with =['group','service' , 'patient' ,'doctor' ,'section'];
+
 
     public function group()
     {

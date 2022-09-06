@@ -271,12 +271,12 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
     }
 
-    // public function destroy(Invoice $invoice)
-    // {
-    //     $invoice->delete();
+    public function destroy(Invoice $invoice)
+    {
+        $invoice->delete();
 
-    //     return back()->with('success', 'User deleted successfully.');
-    // }
+        return back()->with('success', 'User deleted successfully.');
+    }
 
 
 

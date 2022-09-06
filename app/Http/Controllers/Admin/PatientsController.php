@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsersRequest;
 use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\PatientAccountResource;
 use App\Http\Resources\PatientResource;
 use App\Http\Resources\PaymentResource;
 use App\Http\Resources\ReceiptResource;
@@ -50,6 +51,9 @@ class PatientsController extends Controller
             'gender',
             'blood_group',
             'created_at'
+
+
+            // add all fields
             ])
 
             // to get only one kind of user depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
@@ -136,15 +140,28 @@ class PatientsController extends Controller
 
     public function show(User $user){
 
-        $patient_payments = Payment::where('patient_id', '=' , $user->id)->get();
+        $patient_invoices = Invoice::where('patient_id', '=' , $user->id)->latest()->paginate(1000);
+        $patient_payments = Payment::query()->where('patient_id', '=' , $user->id)->latest()->paginate(1000);
+        $patient_receipts = Receipt::where('patient_id', '=' , $user->id)->latest()->paginate(1000);
 
-        $patient_invoices = Invoice::where('patient_id', '=' , $user->id)->get();
-        $patient_receipts = Receipt::where('patient_id', '=' , $user->id)->get();
+        $patient_account = PatientAccount::where('patient_id' , "=" , $user->id)
+        ->select('id','patient_id','invoice_id','receipt_id','payment_id','Debit', 'credit','created_at')
+        ->latest()->paginate(1000);
 
-        //     $payments = new PatientResource($patient_payments);
+        // dd($patient_account);
 
-        // dd( $payments);
+        $patient_invoices->load(['service']);
+        $patient_invoices->load(['group']);
 
+
+        $patient_account->load(['invoice']);
+        $patient_account->load(['receipt']);
+        $patient_account->load(['payment']);
+ 
+
+// we have to send data with all relations in invoice model to be recieved here   up  invoice_id  with invoice  and in invoice model we send all relations to get all data including names
+
+        // dd($patient_invoices);
 
         return Inertia::render('Patient/Show', [
             // 'title' => 'Patient Details',
@@ -153,6 +170,7 @@ class PatientsController extends Controller
             'payments' => PaymentResource::collection($patient_payments),
             'invoices' => InvoiceResource::collection($patient_invoices),
             'receipts' => ReceiptResource::collection($patient_receipts),
+            'statement'=> PatientAccountResource::collection($patient_account),
 
             'headers' => [
                 [

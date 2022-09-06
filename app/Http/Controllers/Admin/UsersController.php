@@ -56,7 +56,7 @@ class UsersController extends Controller
             ->paginate(10);
         return Inertia::render('User/Index', [
             'title' => 'Users',
-            'items' => UserResource::collection($users),
+            'items' => UserResource::collection($users), 
             'headers' => [
                 [
                     'label' => 'Name',

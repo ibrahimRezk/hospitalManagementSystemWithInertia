@@ -14,14 +14,14 @@ class PatientAccount extends Model
         return $this->belongsTo(Invoice::class,'invoice_id');
     }
 
-    public function ReceiptAccount()
+    public function receipt()
     {
-        return $this->belongsTo(ReceiptAccount::class,'receipt_id');
+        return $this->belongsTo(Receipt::class,'receipt_id');
     }
 
 
-    public function PaymentAccount()
+    public function payment()
     {
-        return $this->belongsTo(PaymentAccount::class,'payment_id');
+        return $this->belongsTo(Payment::class,'payment_id');
     }
 }

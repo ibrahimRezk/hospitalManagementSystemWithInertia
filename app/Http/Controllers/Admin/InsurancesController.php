@@ -60,7 +60,7 @@ class InsurancesController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Services/Insurance/Index', [
+        return Inertia::render('Admin/Services/Insurance/Index', [
             'title' => 'Insurance Companies',
             'items' => InsuranceResource::collection($insurances),
             'headers' => [
@@ -107,7 +107,7 @@ class InsurancesController extends Controller
 
     public function create()
     {
-        return Inertia::render('Services/Insurance/Create', [
+        return Inertia::render('Admin/Services/Insurance/Create', [
             'edit' => false,
             'title' => 'Add An Insurance Company',
             'routeResourceName' => $this->routeResourceName,
@@ -124,7 +124,7 @@ class InsurancesController extends Controller
 
     public function edit(Insurance $insurance)
     {
-        return Inertia::render('Services/Insurance/Create', [
+        return Inertia::render('Admin/Services/Insurance/Create', [
             'edit' => true,
             'title' => 'Edit Insurance company',
             'item' => new InsuranceResource($insurance),

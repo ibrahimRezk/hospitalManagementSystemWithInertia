@@ -54,7 +54,7 @@ class ReceiptsController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Accounts/Receipt/Index', [
+        return Inertia::render('Admin/Accounts/Receipt/Index', [
             'title' => 'Receipts',
             'items' => ReceiptResource::collection($receipts),
             'headers' => [
@@ -94,7 +94,7 @@ class ReceiptsController extends Controller
     {
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
-        return Inertia::render('Accounts/Receipt/Create', [
+        return Inertia::render('Admin/Accounts/Receipt/Create', [
             'edit' => false,
             'title' => 'Add Receipt',
             'routeResourceName' => $this->routeResourceName,
@@ -132,7 +132,7 @@ class ReceiptsController extends Controller
         $receipt->load(['patient:id']);
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
-        return Inertia::render('Accounts/Receipt/Create', [
+        return Inertia::render('Admin/Accounts/Receipt/Create', [
             'edit' => true,
             'title' => 'Edit Receipt',
             'item' => new ReceiptResource($receipt),

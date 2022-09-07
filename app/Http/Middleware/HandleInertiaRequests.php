@@ -210,6 +210,8 @@ class HandleInertiaRequests extends Middleware
 
 // add status to services
 
+// important review patient show   very interesting
+
             ],
         ]);
     }

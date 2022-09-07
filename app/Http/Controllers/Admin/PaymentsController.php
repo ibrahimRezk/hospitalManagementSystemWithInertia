@@ -55,7 +55,7 @@ class PaymentsController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Accounts/Payment/Index', [
+        return Inertia::render('Admin/Accounts/Payment/Index', [
             'title' => 'Receipts',
             'items' => PaymentResource::collection($payments),
             'headers' => [
@@ -95,7 +95,7 @@ class PaymentsController extends Controller
     {
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
-        return Inertia::render('Accounts/Payment/Create', [
+        return Inertia::render('Admin/Accounts/Payment/Create', [
             'edit' => false,
             'title' => 'Add Payment',
             'routeResourceName' => $this->routeResourceName,
@@ -138,7 +138,7 @@ class PaymentsController extends Controller
         $payment->load(['patient:id']);
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
-        return Inertia::render('Accounts/Payment/Create', [
+        return Inertia::render('Admin/Accounts/Payment/Create', [
             'edit' => true,
             'title' => 'Edit Payment',
             'item' => new PaymentResource($payment),

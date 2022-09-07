@@ -7,14 +7,14 @@ import i18n from 'laravel-vue-i18n/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: 'resources/js/admin/app.js',
+            input: 'resources/js/app.js',
             refresh: true,
         }),
         vue({
             template: {
                 transformAssetUrls: {
                     base: null,
-                    includeAbsolute: false,
+                    includeAbsolute: false, 
                 },
             },
         }),

@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'inertia' =>  \App\Http\Middleware\HandleInertiaRequests::class,
+        'inertiaDoctor' =>  \App\Http\Middleware\HandleInertiaDoctorRequests::class,
         'Lang' =>\App\Http\Middleware\Lang::class,
 
     ];

@@ -46,7 +46,7 @@ class AmbulancesController extends Controller
     
                  $query->when($request->driver_name, fn (Builder $builder, $driver_name) => $builder->where( 'driver_name' , 'like', "%{$driver_name}%"))
                  )
-     ////////////////////////////////////////////////////////////////////////////////////
+     //////////////////////////////////////////////////////////////////////////////////// 
                 ->when($request->car_number, fn (Builder $builder, $car_number) => $builder->where('car_number', 'like', "%{$car_number}%"))
                 ->when($request->car_model, fn (Builder $builder, $car_model) => $builder->where('car_model', 'like', "%{$car_model}%"))
                 ->when($request->driver_license_number, fn (Builder $builder, $driver_license_number) => $builder->where('driver_license_number', 'like', "%{$driver_license_number}%"))
@@ -66,7 +66,7 @@ class AmbulancesController extends Controller
                 ->paginate(10);
     
 
-            return Inertia::render('Services/Ambulance/Index', [
+            return Inertia::render('Admin/Services/Ambulance/Index', [
                 'title' => 'Insurance Companies',
                 'items' => AmbulanceResource::collection($ambulance),
                 'headers' => [
@@ -129,7 +129,7 @@ class AmbulancesController extends Controller
     
         public function create()
         {
-            return Inertia::render('Services/Ambulance/Create', [
+            return Inertia::render('Admin/Services/Ambulance/Create', [
                 'edit' => false,
                 'title' => 'Add An Ambulance',
                 'routeResourceName' => $this->routeResourceName,
@@ -146,7 +146,7 @@ class AmbulancesController extends Controller
     
         public function edit(Ambulance $ambulance)
         {
-            return Inertia::render('Services/Ambulance/Create', [
+            return Inertia::render('Admin/Services/Ambulance/Create', [
                 'edit' => true,
                 'title' => 'Edit Ambulance',
                 'item' => new AmbulanceResource($ambulance),

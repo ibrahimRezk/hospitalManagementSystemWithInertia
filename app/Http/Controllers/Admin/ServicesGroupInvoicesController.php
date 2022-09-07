@@ -80,7 +80,7 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Invoices/GroupInvoice/Index', [
+        return Inertia::render('Admin/Invoices/GroupInvoice/Index', [
             'title' => 'Invoices',
             'items' => InvoiceResource::collection($groupInvoices),
             'headers' => [
@@ -152,7 +152,7 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
 
 
         ///////////  very important  notice that total before discount is in capital t in migration    modify it later
-        return Inertia::render('Invoices/GroupInvoice/Create', [
+        return Inertia::render('Admin/Invoices/GroupInvoice/Create', [
             'edit' => false,
             'title' => 'Add Services Group Invoice',
             'routeResourceName' => $this->routeResourceName,
@@ -213,7 +213,7 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
         // dd($doctors);
-        return Inertia::render('Invoices/GroupInvoice/Create', [
+        return Inertia::render('Admin/Invoices/GroupInvoice/Create', [
             'edit' => true,
             'title' => 'Edit Services Group Invoice',
             'item' => new InvoiceResource($invoice),

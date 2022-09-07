@@ -63,7 +63,7 @@ $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'n
             ->paginate(10);
             // dd($doctors); 
 
-        return Inertia::render('Laboratorist/Index', [
+        return Inertia::render('Admin/Laboratorist/Index', [
             'title' => 'Laboratorists',
             'items' => LaboratoristResource::collection($laboratorists),
             'headers' => [
@@ -104,7 +104,7 @@ $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'n
 
     public function create() 
     {
-        return Inertia::render('Laboratorist/Create', [
+        return Inertia::render('Admin/Laboratorist/Create', [
             'edit' => false,
             'title' => 'Add Laboratorist',
             'routeResourceName' => $this->routeResourceName,
@@ -140,7 +140,7 @@ $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'n
     {
  
 
-        return Inertia::render('Laboratorist/Create', [ 
+        return Inertia::render('Admin/Laboratorist/Create', [ 
             'edit' => true,
             'title' => 'Edit Laboratorist',
             'item' => new LaboratoristResource($user),

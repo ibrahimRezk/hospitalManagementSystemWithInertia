@@ -63,7 +63,7 @@ class RadiologistsController extends Controller
             ->paginate(10);
             // dd($doctors); 
 
-        return Inertia::render('Radiologist/Index', [
+        return Inertia::render('Admin/Radiologist/Index', [
             'title' => 'Radiologists',
             'items' => RadiologistResource::collection($radiologists),
             'headers' => [
@@ -104,7 +104,7 @@ class RadiologistsController extends Controller
 
     public function create() 
     {
-        return Inertia::render('Radiologist/Create', [
+        return Inertia::render('Admin/Radiologist/Create', [
             'edit' => false,
             'title' => 'Add Radiologist',
             'routeResourceName' => $this->routeResourceName,
@@ -140,7 +140,7 @@ class RadiologistsController extends Controller
     {
  
 
-        return Inertia::render('Radiologist/Create', [ 
+        return Inertia::render('Admin/Radiologist/Create', [ 
             'edit' => true,
             'title' => 'Edit Radiologist',
             'item' => new RadiologistResource($user),

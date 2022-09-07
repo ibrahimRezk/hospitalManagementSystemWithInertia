@@ -84,7 +84,7 @@ class DoctorsController extends Controller
             // dd($doctors); 
 
 
-        return Inertia::render('Doctor/Index', [
+        return Inertia::render('Admin/Doctor/Index', [
             'title' => 'Doctors',
             'items' => DoctorResource::collection($doctors),
             'headers' => [
@@ -138,7 +138,7 @@ class DoctorsController extends Controller
 
     public function create() 
     {
-        return Inertia::render('Doctor/Create', [
+        return Inertia::render('Admin/Doctor/Create', [
             'edit' => false,
             'title' => 'Add Doctor',
             'routeResourceName' => $this->routeResourceName,
@@ -183,7 +183,7 @@ class DoctorsController extends Controller
         $user->load(['roles:roles.id']);
         $user->load(['section:id']);
 
-        return Inertia::render('Doctor/Create', [ 
+        return Inertia::render('Admin/Doctor/Create', [ 
             'edit' => true,
             'title' => 'Edit User',
             'item' => new UserResource($user),

@@ -82,7 +82,7 @@ class SingleServiceInvoicesController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Invoices/SingleServiceInvoice/Index', [
+        return Inertia::render('Admin/Invoices/SingleServiceInvoice/Index', [
             'title' => 'Invoices',
             'items' => InvoiceResource::collection($singleInvoices),
             'headers' => [
@@ -153,7 +153,7 @@ class SingleServiceInvoicesController extends Controller
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
         // dd($doctors);
-        return Inertia::render('Invoices/SingleServiceInvoice/Create', [
+        return Inertia::render('Admin/Invoices/SingleServiceInvoice/Create', [
             'edit' => false,
             'title' => 'Add Single Service Invoice',
             'routeResourceName' => $this->routeResourceName,
@@ -212,7 +212,7 @@ class SingleServiceInvoicesController extends Controller
         $patients = User::query()->select('id')->role('Patient')->get();   // to get only patients from users table
 
         // dd($doctors);
-        return Inertia::render('Invoices/SingleServiceInvoice/Create', [
+        return Inertia::render('Admin/Invoices/SingleServiceInvoice/Create', [
             'edit' => true,
             'title' => 'Edit Single Service',
             'item' => new InvoiceResource($invoice),

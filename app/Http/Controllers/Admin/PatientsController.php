@@ -26,7 +26,7 @@ class PatientsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:view patients list')->only('index');
+        $this->middleware('can:view patients list')->only(['index' ,'show']);
         $this->middleware('can:create patient')->only(['create', 'store']);
         $this->middleware('can:edit patient')->only(['edit', 'update']);
         $this->middleware('can:delete patient')->only('destroy');
@@ -51,14 +51,9 @@ class PatientsController extends Controller
             'gender',
             'blood_group',
             'created_at'
-
-
-            // add all fields
             ])
-
             // to get only one kind of user depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
-
 
 /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
              ->whereHas('translations' , fn ($query) => 
@@ -71,21 +66,16 @@ class PatientsController extends Controller
              )
  ////////////////////////////////////////////////////////////////////////////////////
 
-
-
             ->when($request->email, fn (Builder $builder, $email) => $builder->where('email', 'like', "%{$email}%"))
             ->when($request->phone, fn (Builder $builder, $phone) => $builder->where('phone', 'like', "%{$phone}%"))
             ->when($request->gender, fn (Builder $builder, $gender) => $builder->where('gender', 'like', "%{$gender}%"))
             ->when($request->blood_group, fn (Builder $builder, $blood_group) => $builder->where('blood_group', 'like', "%{$blood_group}%"))
-
-
-            
+    
             ->latest('id')
             ->paginate(10);
             // dd($patients); 
 
-
-        return Inertia::render('Patient/Index', [
+        return Inertia::render('Admin/Patient/Index', [
             'title' => 'Patients',
             'items' => PatientResource::collection($patients),
             'headers' => [
@@ -93,10 +83,7 @@ class PatientsController extends Controller
                     'label' => 'Name',
                     'name' => 'name',
                 ],
-                // [
-                //     'label' => 'Email',
-                //     'name' => 'email',
-                // ],
+
                 [
                     'label' => 'Date of Birth',
                     'name' => 'birth_date',
@@ -148,22 +135,16 @@ class PatientsController extends Controller
         ->select('id','patient_id','invoice_id','receipt_id','payment_id','Debit', 'credit','created_at')
         ->latest()->paginate(1000);
 
-        // dd($patient_account);
-
         $patient_invoices->load(['service']);
         $patient_invoices->load(['group']);
-
 
         $patient_account->load(['invoice']);
         $patient_account->load(['receipt']);
         $patient_account->load(['payment']);
- 
 
 // we have to send data with all relations in invoice model to be recieved here   up  invoice_id  with invoice  and in invoice model we send all relations to get all data including names
 
-        // dd($patient_invoices);
-
-        return Inertia::render('Patient/Show', [
+        return Inertia::render('Admin/Patient/Show', [
             // 'title' => 'Patient Details',
 
             'patient'  => new PatientResource($user),
@@ -198,17 +179,7 @@ class PatientsController extends Controller
                     'label' => 'Laboratory',
                     'name' => 'laboratory',
                 ],
-                [
-                    'label' => 'Created At',
-                    'name' => 'created_at',
-                ],
-                [
-                    'label' => 'Actions',
-                    'name' => 'actions',
-                ],
             ],
-
-
         ]);
         
     }
@@ -216,7 +187,7 @@ class PatientsController extends Controller
 
     public function create() 
     {
-        return Inertia::render('Patient/Create', [
+        return Inertia::render('Admin/Patient/Create', [
             'edit' => false,
             'title' => 'Add Patient',
             'routeResourceName' => $this->routeResourceName,
@@ -226,7 +197,6 @@ class PatientsController extends Controller
 
     public function store(UsersRequest $request) 
     {
-        // dd($request);
 
         // $data = $request->safe()->only(['email', 'password' ,'phone']);
         $data = $request->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
@@ -255,23 +225,21 @@ class PatientsController extends Controller
 
     public function edit(User $user)
     {
-
-        return Inertia::render('Patient/Create', [ 
+        return Inertia::render('Admin/Patient/Create', [ 
             'edit' => true,
             'title' => 'Edit Patient',
             'item' => new PatientResource($user),
             'routeResourceName' => $this->routeResourceName,
-
-            
+    
         ]);
     }
+
 
     public function update(UsersRequest $request, User $user)
     { 
         // user phone number is password phone must be long enoph or it will return an error on updating
         $data = $request->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
         // dd($data);
-        
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
         $data["ar"]["address"] = $request->address_ar;

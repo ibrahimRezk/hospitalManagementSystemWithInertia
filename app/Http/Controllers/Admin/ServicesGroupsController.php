@@ -64,7 +64,7 @@ class ServicesGroupsController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Services/ServicesGroup/Index', [
+        return Inertia::render('Admin/Services/ServicesGroup/Index', [
             'title' => 'Services Groups',
             'items' => ServicesGroupResource::collection($ServicesGroup),
             'headers' => [
@@ -113,7 +113,7 @@ class ServicesGroupsController extends Controller
         // $Services->load(['groups:id']);  // problem in create page 
 
 
-        return Inertia::render('Services/ServicesGroup/Create', [
+        return Inertia::render('Admin/Services/ServicesGroup/Create', [
             'edit' => false,
             'title' => 'Add Single Service',
             'routeResourceName' => $this->routeResourceName,
@@ -151,7 +151,7 @@ class ServicesGroupsController extends Controller
         $Services->load(['groups:id']); 
 
 
-        return Inertia::render('Services/ServicesGroup/Create', [
+        return Inertia::render('Admin/Services/ServicesGroup/Create', [
             'edit' => true,
             'title' => 'Edit Services Group',
             'item' => new ServicesGroupResource($group),

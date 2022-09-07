@@ -1,0 +1,153 @@
+<script setup>
+import { Head, useForm } from "@inertiajs/inertia-vue3";
+import Layout from "@/Layouts/Authenticated.vue";
+import Container from "@/Components/Container.vue";
+import Card from "@/Components/Card/Card.vue";
+import Button from "@/Components/Button.vue";
+import InputGroup from "@/Components/InputGroup.vue";
+import SelectGroup from "@/Components/SelectGroup.vue";
+import CheckboxGroup from "@/Components/CheckboxGroup.vue";
+
+
+const props = defineProps({
+    edit: {
+        type: Boolean,
+        default: false,
+    },
+    title: {
+        type: String,
+    },
+    item: {
+        type: Object,
+        default: () => ({}), 
+    },
+    routeResourceName: {
+        type: String,
+        required: true,
+    },
+
+    sections: {
+        type: Array,
+        required: true, 
+    },
+    appointments: {
+        type: Array,
+        required: false, 
+    },
+});
+
+const form = useForm({
+    // name: props.item.name ?? "",
+    name_ar: props.item.name_ar ?? "",
+    name_en: props.item.name_en ?? "", 
+    email: props.item.email ?? "",
+    password: "",
+    passwordConfirmation: "",
+    // roleId: props.item.roles?.[0]?.id ?? "",   /// important   it will work only like this in create and edit cecase of the relation
+    phone: props.item.phone ?? "",
+    section_id: props.item.section?.id ?? "",  /// important   it will work only like this in create and edit cecase of the relation this is diffrent
+    appointments:props.item.appointments ?? "",
+    status: props.item.status ?? "",
+
+
+
+});
+
+const submit = () => {
+    props.edit
+        ? form.put(
+              route(`admin.${props.routeResourceName}.update`, {
+                  id: props.item.id,
+              })
+          )
+        : form.post(route(`admin.${props.routeResourceName}.store`));
+};
+</script>
+
+<template>
+    <Head :title="title" />
+
+    <Layout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ title }}
+            </h2>
+        </template>
+
+        <Container>
+            <Card>
+                <form @submit.prevent="submit">
+                    <div class="grid grid-cols-2 gap-6">
+                        <InputGroup
+                            label="Name ar"
+                            v-model="form.name_ar"
+                            :error-message="form.errors.name"
+                            required
+                        />
+                        <InputGroup
+                            label="Name"
+                            v-model="form.name_en"
+                            :error-message="form.errors.name"
+                            required
+                        />
+
+                        <InputGroup
+                            type="email"
+                            label="Email"
+                            v-model="form.email"
+                            :error-message="form.errors.email"
+                            required
+                        />
+
+                        <InputGroup
+                        minlength="8"
+                            type="password"
+                            label="Password"
+                            v-model="form.password"
+                            :error-message="form.errors.password"
+                            :required="!edit"
+                        />
+
+                        <InputGroup
+                        minlength="8"
+                            type="password"
+                            label="Confirm Password"
+                            v-model="form.passwordConfirmation"
+                            :error-message="form.errors.passwordConfirmation"
+                            :required="!edit"
+                        />
+                        <InputGroup
+                            label="phone"
+                            v-model="form.phone"
+                            :error-message="form.errors.phone"
+                            :required="!edit"
+                        />
+
+                    
+                        <SelectGroup
+                            label="Section"
+                            v-model="form.section_id"
+                            :items="sections"
+                            :error-message="form.errors.section"
+                            required
+                        />
+
+                        <div class="mt-3 mb-4">
+                            <CheckboxGroup
+                                label="Active"
+                                v-model:checked="form.status" 
+                            />
+                        </div>
+                       
+                    </div>
+
+                    <div class="mt-4">
+                        <Button :disabled="form.processing">
+                            {{ form.processing ? "Saving..." : "Save" }}
+                        </Button>
+                    </div>
+                </form>
+            </Card>
+        </Container>
+    </Layout>
+</template>

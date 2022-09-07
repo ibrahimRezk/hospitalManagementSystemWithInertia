@@ -54,7 +54,7 @@ class UsersController extends Controller
             )
             ->latest('id')
             ->paginate(10);
-        return Inertia::render('User/Index', [
+        return Inertia::render('Admin/User/Index', [
             'title' => 'Users',
             'items' => UserResource::collection($users), 
             'headers' => [
@@ -93,7 +93,7 @@ class UsersController extends Controller
 
     public function create() 
     {
-        return Inertia::render('User/Create', [
+        return Inertia::render('Admin/User/Create', [
             'edit' => false,
             'title' => 'Add User',
             'routeResourceName' => $this->routeResourceName,
@@ -118,7 +118,7 @@ class UsersController extends Controller
     {
         $user->load(['roles:roles.id']);
 
-        return Inertia::render('User/Create', [ 
+        return Inertia::render('Admin/User/Create', [ 
             'edit' => true,
             'title' => 'Edit User',
             'item' => new UserResource($user),

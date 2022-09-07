@@ -58,7 +58,7 @@ class SectionsController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Section/Index', [
+        return Inertia::render('Admin/Section/Index', [
             'title' => 'Sections',
             'items' => SectionResource::collection($sections),
             'headers' => [
@@ -92,7 +92,7 @@ class SectionsController extends Controller
 
     public function create()
     {
-        return Inertia::render('Section/Create', [
+        return Inertia::render('Admin/Section/Create', [
             'edit' => false,
             'title' => 'Add section',
             'routeResourceName' => $this->routeResourceName,
@@ -111,7 +111,7 @@ class SectionsController extends Controller
     public function edit(Section $section)
     {
 
-        return Inertia::render('Section/Create', [
+        return Inertia::render('Admin/Section/Create', [
             'edit' => true,
             'title' => 'Edit User',
             'item' => new SectionResource($section),

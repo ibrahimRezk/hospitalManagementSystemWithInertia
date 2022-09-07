@@ -58,7 +58,7 @@ class SingleServicesController extends Controller
             ->latest('id')
             ->paginate(10);
 
-        return Inertia::render('Services/SingleService/Index', [
+        return Inertia::render('Admin/Services/SingleService/Index', [
             'title' => 'Services',
             'items' => ServiceResource::collection($Services),
             'headers' => [
@@ -100,7 +100,7 @@ class SingleServicesController extends Controller
 
     public function create()
     {
-        return Inertia::render('Services/SingleService/Create', [
+        return Inertia::render('Admin/Services/SingleService/Create', [
             'edit' => false,
             'title' => 'Add Single Service',
             'routeResourceName' => $this->routeResourceName,
@@ -118,7 +118,7 @@ class SingleServicesController extends Controller
 
     public function edit(Service $service)
     {
-        return Inertia::render('Services/SingleService/Create', [
+        return Inertia::render('Admin/Services/SingleService/Create', [
             'edit' => true,
             'title' => 'Edit Single Service',
             'item' => new ServiceResource($service),

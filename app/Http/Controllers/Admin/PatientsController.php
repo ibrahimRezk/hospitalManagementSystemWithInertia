@@ -127,15 +127,31 @@ class PatientsController extends Controller
 
     public function show(User $user){
 
-        $patient_invoices = Invoice::where('patient_id', '=' , $user->id)->latest()->paginate(1000);
-        $patient_payments = Payment::query()->where('patient_id', '=' , $user->id)->latest()->paginate(1000);
+        $patient_invoices = Invoice::where('patient_id', '=' , $user->id) 
+        ->select([
+            'id',
+            'invoice_type',
+            'patient_id',
+            'service_id',
+            'group_id',
+            'price',
+            'discount_value',
+            'tax_rate',
+            'tax_value',
+            'total_with_tax',
+            'price',
+            'created_at',
+            ])->latest()->paginate(1000);
+        $patient_payments = Payment::query()->where('patient_id', '=' , $user->id)->latest()->paginate(1000); 
         $patient_receipts = Receipt::where('patient_id', '=' , $user->id)->latest()->paginate(1000);
 
         $patient_account = PatientAccount::where('patient_id' , "=" , $user->id)
         ->select('id','patient_id','invoice_id','receipt_id','payment_id','Debit', 'credit','created_at')
         ->latest()->paginate(1000);
 
-        $patient_invoices->load(['service']);
+        
+
+        $patient_invoices->load(['service']); 
         $patient_invoices->load(['group']);
 
         $patient_account->load(['invoice']);

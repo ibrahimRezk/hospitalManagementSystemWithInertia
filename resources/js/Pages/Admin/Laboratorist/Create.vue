@@ -36,7 +36,7 @@ const form = useForm({
     password: "",
     passwordConfirmation: "",
     phone: props.item.phone ?? "",
-    status: props.item.status ?? "",
+    status: props.item.status ?? true,
 
 
 

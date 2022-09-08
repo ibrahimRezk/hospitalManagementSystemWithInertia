@@ -47,7 +47,7 @@ const form = useForm({
     phone: props.item.phone ?? "",
     section_id: props.item.section?.id ?? "",  /// important   it will work only like this in create and edit cecase of the relation this is diffrent
     appointments:props.item.appointments ?? "",
-    status: props.item.status ?? "",
+    status: props.item.status ?? true,
 
 
 

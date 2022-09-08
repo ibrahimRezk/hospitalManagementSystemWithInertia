@@ -28,7 +28,7 @@ class ServiceResource extends JsonResource
             
             'description' => $this->when($this->name, $this->description),
             'description_ar' => $this->whenNotNull($this->translate('ar')->description), 
-            'description_en' => $this->whenNotNull($this->translate('en')->description),
+            'description_en' => $this->whenNotNull($this->translate('en')->description), 
 
 
             'price' => $this->whenNotNull($this->price), 

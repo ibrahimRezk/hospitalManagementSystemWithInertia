@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\ServicesGroupsController;
 use App\Http\Controllers\Admin\SingleInvoicesController;
 use App\Http\Controllers\Admin\SingleServiceInvoicesController;
 use App\Http\Controllers\Admin\SingleServicesController;
+use App\Http\Controllers\Doctor\DiagnosisController;
+use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
@@ -53,7 +55,8 @@ Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authS
 
 Route::middleware(['auth', 'Lang'])->group(function () {
 
-    
+    Route::get('dashboard', DoctorDashboardController::class)->name('dashboard');
+    Route::resource('diagnoses', DiagnosisController::class);
 
 
 

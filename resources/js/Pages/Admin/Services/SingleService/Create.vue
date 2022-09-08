@@ -38,7 +38,7 @@ const form = useForm({
     description_ar: props.item.description_ar ?? "",
     description_en: props.item.description_en ?? "",
     price: props.item.price ?? "",
-    status: props.item.status ?? "",
+    status: props.item.status ?? true,
 });
 
 const submit = () => {

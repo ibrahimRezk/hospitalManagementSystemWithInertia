@@ -16,7 +16,7 @@ import Input from "@/Components/Input.vue";
 import AddNew from "@/Components/AddNew.vue";
 import Filters from "./Filters.vue";
 
-import useDeleteItem from "@/Composables/useDeleteItem.js";
+import useDeleteItem from "@/Composables/useDeleteItem.js"; 
 import useFilters from "@/Composables/useFilters.js";
 
 const props = defineProps({
@@ -363,7 +363,7 @@ const NetTotal = computed(() => {
                 </div>
                 <!-- //// main tabs  end ////// -->
 
-                <!-- /////// patient information ///////////////// -->
+                <!-- /////// patient information ///////////////// --> 
 
                 <table
                     v-show="tab === 1"

@@ -107,6 +107,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create radiologist']);
         Permission::create(['name' => 'edit radiologist']);
         Permission::create(['name' => 'delete radiologist']); 
-
+        
+        Permission::create(['name' => 'view diagnoses module']);
+        Permission::create(['name' => 'view diagnoses list']);
+        Permission::create(['name' => 'create diagnosis']);
+        Permission::create(['name' => 'edit diagnosis']);
+        Permission::create(['name' => 'delete diagnosis']); 
     }// remember to add main munus witch has submenus
 }

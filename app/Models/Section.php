@@ -15,6 +15,7 @@ class Section extends Model
     // 3. To define which attributes needs to be translated
     public $translatedAttributes = ['name','description'];
     use HasFactory;
+    public $with =['translations'];
 
 
     public function doctors(): HasMany

@@ -50,19 +50,37 @@ class HandleInertiaDoctorRequests extends Middleware
             'menus' => [
                 [
                     'label' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
-                    'isActive' => $request->routeIs('admin.dashboard'),
+                    'url' => route('doctor.dashboard'),
+                    'isActive' => $request->routeIs('doctor.dashboard'),
                     'isVisible' => true,
                     'hasSubmenu' => false,
                 ],
                 [
-                    'label' => 'Profile',
-                    'url' => route('admin.profile.show'),
-                    'isActive' => $request->routeIs('admin.profile.show'),    // check if it is work
-                    'isVisible' => true,
-                    'hasSubmenu' => false,
-
+                    'label' => 'Doctor diagnoses',
+                    'isActive' => $request->routeIs('doctor.diagnoses.*'),
+                    // 'isVisible' => $request->user()?->can('view diagnoses module'),
+                    'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
+                    'hasSubmenu' => true,
+                    'open'=>false,
+                    'subMenus' => [
+                        [
+                            'label' => 'diagnoses List',
+                            'url' => route('doctor.diagnoses.index'),
+                            'isActive' => $request->routeIs('doctor.diagnoses*'),
+                            // 'isVisible' => $request->user()?->can('view diagnoses module'),
+                            'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
+                        ],
+                    ],
                 ],
+               
+                // [
+                //     'label' => 'Profile',
+                //     'url' => route('admin.profile.show'),
+                //     'isActive' => $request->routeIs('admin.profile.show'),    // check if it is work
+                //     'isVisible' => true,
+                //     'hasSubmenu' => false,
+
+                // ],
                 
 
 

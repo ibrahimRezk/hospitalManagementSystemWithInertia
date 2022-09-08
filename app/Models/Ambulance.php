@@ -12,6 +12,7 @@ class Ambulance extends Model
     use HasFactory;
     public $translatedAttributes = ['driver_name','notes'];
     public $fillable= ['car_number','car_model','car_year_made','driver_license_number','driver_phone','is_available','car_type'];
+    public $with =['translations'];
 
 
     public function scopeActive($builder)

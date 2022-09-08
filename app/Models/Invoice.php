@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\InvoiceTypeCast;
+use App\Casts\InvoiceTypeStatusCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,8 @@ class Invoice extends Model
     protected $fillable = ['invoice_status'];
 
     protected $casts = [
-        'type'=> InvoiceTypeCast::class
+        'type'=> InvoiceTypeCast::class,
+        'invoice_type'=> InvoiceTypeStatusCast::class
     ];
     protected $with =['group','service' , 'patient' ,'doctor' ,'section'];
 

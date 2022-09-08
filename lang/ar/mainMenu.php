@@ -24,6 +24,8 @@ return [
     'Payments'  => 'سندات الصرف',
     'Radiologists'  => 'أخصائيي الآشعة',
     'Laboratorists'  => 'أخصائيي المختبر',
+    'Doctor diagnoses'=> 'كشوفات الدكتور' ,
+    'diagnoses List'=> 'قائمة الكشوفات' 
 
 
 

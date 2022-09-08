@@ -12,6 +12,8 @@ class Service extends Model
     use HasFactory;
     public $translatedAttributes = ['name','description'];
     public $fillable= ['price','status'];
+    public $with =['translations'];
+
 
 
     public function scopeActive($builder)

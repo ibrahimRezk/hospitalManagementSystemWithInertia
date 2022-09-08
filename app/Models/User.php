@@ -25,6 +25,7 @@ class User extends Authenticatable
     use Translatable;
 
     public $translatedAttributes =[ 'name', 'address'];
+    public $with =['translations'];
 
 
 

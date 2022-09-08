@@ -23,6 +23,8 @@ return [
     'Payments'  => 'Payments',
     'Radiologists'  => 'Radiologists',
     'Laboratorists'  => 'Laboratorists',
+    'Doctor diagnoses'  => 'Doctor diagnoses',
+    'diagnoses List'  => 'diagnoses List',
 
 
 

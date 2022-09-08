@@ -49,7 +49,7 @@
     
         discount_percentage:props.item.discount_percentage ?? "",
         Company_rate:props.item.Company_rate ?? "",
-        status:props.item.status ?? ""
+        status:props.item.status ??true
     
     
     });

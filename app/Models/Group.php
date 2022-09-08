@@ -13,6 +13,7 @@ class Group extends Model
     public $translatedAttributes = ['name','notes'];
     public $fillable= ['Total_before_discount','discount_value','Total_after_discount','tax_rate','Total_with_tax','status'];
     //public $guarded=[];
+    public $with =['translations'];
 
     public function scopeActive($builder)
     {

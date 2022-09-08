@@ -12,6 +12,7 @@ class Insurance extends Model
     use HasFactory;
     public $translatedAttributes = ['name','notes'];
     public $fillable= ['insurance_code','discount_percentage','Company_rate','status'];
+    public $with =['translations'];
 
 
     public function scopeActive($builder)

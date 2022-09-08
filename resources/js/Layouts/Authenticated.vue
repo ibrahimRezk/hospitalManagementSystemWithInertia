@@ -92,7 +92,7 @@ const showHideClass = computed(() => {
                         class="mr-1 font-semibold transition-all duration-200 ease-nav-brand"
                         classrtl="mr-1"
                         classltr="ml-1">
-                        >Soft UI Dashboard</span
+                        >Soft UI Dashboard</span 
                     > -->
                 </a>
             </div>

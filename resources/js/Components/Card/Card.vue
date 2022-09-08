@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template> 
-    <div
+    <div class=""
     
     >
         <div v-if="isLoading" class="w-full bg-gray-200 h-1">
@@ -26,7 +26,7 @@ defineProps({
             <slot name="header"></slot>
         </div>
 
-        <div :class="[noPadding ? '' : 'p-6']">
+        <div class="" :class="[noPadding ? '' : 'p-6']">
             <slot />
         </div>
     </div>

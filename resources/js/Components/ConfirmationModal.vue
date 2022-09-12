@@ -50,7 +50,7 @@ const close = () => {
 
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 class="text-lg">
-                        <slot name="title" />
+                        <slot name="title" /> 
                     </h3>
 
                     <div class="mt-2">

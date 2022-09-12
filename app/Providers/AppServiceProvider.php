@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+      
+
         // if (request()->is(['admin', 'admin/*'])) {
         //     Inertia::setRootView('admin.app');
         // }
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         JsonResource::withoutWrapping();
 
         Model::unguard();

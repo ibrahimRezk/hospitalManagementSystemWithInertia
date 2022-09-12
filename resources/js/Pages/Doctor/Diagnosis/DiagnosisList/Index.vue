@@ -1,6 +1,6 @@
 <script setup>
+    import { Head , useForm } from "@inertiajs/inertia-vue3";
 import { onMounted, ref, watch } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import Layout from "@/Layouts/Authenticated.vue";
 import Container from "@/Components/Container.vue";
@@ -10,8 +10,10 @@ import Td from "@/Components/Table/Td.vue";
 import Actions from "@/Components/Table/Actions.vue";
 import Button from "@/Components/Button.vue";
 import Modal from "@/Components/ConfirmationModal.vue";
+import DialogModal from "@/Components/DialogModal.vue";
 import JetDropdown from "@/components/Dropdown.vue";
 import JetDropdownLink from "@/components/DropdownLink.vue";
+import InputError from "@/Components/InputError.vue";
 
 
 import Label from "@/Components/Label.vue";
@@ -21,9 +23,11 @@ import YesNoLabel from "@/Components/YesNoLabel.vue";
 // import Filters from "./Filters.vue";
 
 import useDeleteItem from "@/Composables/useDeleteItem.js";
+import useDialogModal from "@/Composables/useDialogModal.js";
 import useFilters from "@/Composables/useFilters.js";
 
 const props = defineProps({
+    errors: Object,
     title: {
         type: String,
         required: true,
@@ -50,28 +54,11 @@ const props = defineProps({
     ActionMenu: Array,
 });
 
-const {
-    close,
-    deleteModal,
-    itemToDelete,
-    isDeleting,
-    showDeleteModal,
-    handleDeleteItem,
-} = useDeleteItem({
-    routeResourceName: props.routeResourceName,
-});
 
-const { filters, isLoading, isFilled } = useFilters({
-    filters: props.filters,
-    routeResourceName: props.routeResourceName,
-    method: props.method,
-});
-
-
-const fireShowDeleteModal =(item)=>{
-    showDeleteModal(item)
-    hideMenu()
-}
+const fireShowDeleteModal = (item) => {
+    showDeleteModal(item);
+    hideMenu();
+};
 
 ////// open actions menu /////////////////////////
 const openMenu = (id) => {
@@ -82,13 +69,64 @@ const opened = ref(0);
 ////// open actions menu end ////////////////////
 
 
+const showScreenExeptSubmenu = ref(false);
 
-const showScreenExeptSubmenu = ref(false)
+const hideMenu = () => {
+    showScreenExeptSubmenu.value = false;
+    return (opened.value = 0);
+};
 
-const hideMenu = ()=>{
-    showScreenExeptSubmenu.value = false
-    return opened.value = 0
+const method = 'store'
+
+
+
+const form = useForm({
+        diagnosis: '',
+        medicine: '',
+    });
+
+
+const {
+    closeDialogModal,
+    dialogModal,
+    itemToSave,
+    isSaving,
+    showDialogModal,
+    handleSavingItem
+} = useDialogModal ({routeResourceName: props.routeResourceName,
+    form : form , opened ,showScreenExeptSubmenu , method})
+
+
+
+
+    const {
+    close,
+    deleteModal,
+    itemToDelete,
+    isDeleting,
+    showDeleteModal,
+    handleDeleteItem,
+} = useDeleteItem({
+    routeResourceName: props.routeResourceName,
+});
+
+
+const { filters, isLoading, isFilled } = useFilters({
+    filters: props.filters,
+    routeResourceName: props.routeResourceName,
+    method: props.method,
+});
+
+// if you want to make color changed at once make the function in a new page not a modal
+const color = (item)=>{
+  return  item.invoice_type == 'completed' ? 'green' :(item.invoice_type ==  'reviewing'? 'yellow' : 'red')
+
 }
+
+
+
+
+
 
 </script>
 
@@ -109,7 +147,7 @@ const hideMenu = ()=>{
                 </AddNew> -->
 
             <Card class="mt-4" :is-loading="isLoading" no-padding>
-                <Table :headers="headers" :items="items" class=" relative">
+                <Table :headers="headers" :items="items" >
                     <template #section>
                         <div
                             class="p-6 pb-0 mb-0 bg-gray-300 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
@@ -133,7 +171,6 @@ const hideMenu = ()=>{
                         <Td>
                             <Button color="blue" small>
                                 {{ item.service.name }}
-
                             </Button>
                         </Td>
 
@@ -168,22 +205,22 @@ const hideMenu = ()=>{
                         </Td>
 
                         <Td>
-                            <Button color="red" small>
+                            <Button  small
+                            :color="color(item)" >
                                 {{ item.invoice_type }}
                             </Button>
                         </Td>
 
                         <!-- <Td  >  -->
-                        <Td NoShadow  > 
+                        <Td NoShadow>
                             <!-- This example requires Tailwind CSS v2.0+ -->
                             <div class="inline-block text-left  ">
                                 <!-- <div class=" inline-block text-left overflow-visible"> -->
                                 <div>
                                     <button
                                         @click="openMenu(item.id)"
-                                        
                                         type="button"
-                                        class=" inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                        class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                                         id="menu-button"
                                         aria-expanded="true"
                                         aria-haspopup="true"
@@ -216,12 +253,15 @@ const hideMenu = ()=>{
       From: "transform opacity-100 scale-100"
       To: "transform opacity-0 scale-95"
   -->
-                               
-                                    <!-- // to add functionality of close submenu on click out side we added ref  -->
+
+                                <!-- // to add functionality of close submenu on click out side we added ref  -->
+                                <!-- class="rtl:left-5 ltr:right-5 -translate-x-0 transform origin-top-right mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" -->
                                 <div
                                     v-show="item.id == opened"
-                                    class=" rtl:left-5 ltr:right-5 -translate-x-0 transform  origin-top-right   mt-2  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-                                    :class="{' absolute z-10' : item.id == opened}"
+                                    class="rtl:left-7 ltr:right-7 -translate-x-0 transform origin-top-right mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                                    :class="{
+                                        ' absolute z-10': item.id == opened,
+                                    }"
                                     role="menu"
                                     aria-orientation="vertical"
                                     aria-labelledby="menu-button"
@@ -230,6 +270,7 @@ const hideMenu = ()=>{
                                     <div class="py-1" role="none">
                                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                                         <a
+                                        @click="showDialogModal(item)"
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -253,7 +294,7 @@ const hideMenu = ()=>{
                                                     clip-rule="evenodd"
                                                 />
                                             </svg>
-                                            {{ $t('doctor.Add Diagnosis') }}
+                                            {{ $t("doctor.Add Diagnosis") }}
                                         </a>
                                         <a
                                             href="#"
@@ -277,7 +318,7 @@ const hideMenu = ()=>{
                                                     d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"
                                                 />
                                             </svg>
-                                            {{ $t('doctor.Add Review') }}
+                                            {{ $t("doctor.Add Review") }}
                                         </a>
                                     </div>
                                     <div class="py-1" role="none">
@@ -305,7 +346,7 @@ const hideMenu = ()=>{
                                                     clip-rule="evenodd"
                                                 />
                                             </svg>
-                                            {{ $t('doctor.To Radiology') }}
+                                            {{ $t("doctor.To Radiology") }}
                                         </a>
                                         <a
                                             href="#"
@@ -328,13 +369,16 @@ const hideMenu = ()=>{
                                                     clip-rule="evenodd"
                                                 />
                                             </svg>
-                                            {{ $t('doctor.To Laboratory') }}
+                                            {{ $t("doctor.To Laboratory") }}
                                         </a>
                                     </div>
-                                    
-                                    <div class="py-1" role="none" @click="fireShowDeleteModal(item)">
+
+                                    <div
+                                        class="py-1"
+                                        role="none"
+                                        @click="fireShowDeleteModal(item)"
+                                    >
                                         <a
-                                        
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -355,75 +399,99 @@ const hideMenu = ()=>{
                                                     clip-rule="evenodd"
                                                 />
                                             </svg>
-                                
-                                    
-                                
 
-
-                                            {{ $t('doctor.Delete') }}
+                                            {{ $t("doctor.Delete") }}
                                         </a>
                                     </div>
                                 </div>
-
-                               
                             </div>
                         </Td>
-
-                     
-
-                        <!-- <Td>
-                                <Actions
-                                    :edit-link="
-                                        route(`doctor.${routeResourceName}.edit`, {
-                                            id: item.id,
-                                        })
-                                    "
-                                    :show-edit="item.can.edit"
-                                    :show-delete="item.can.delete"
-                                    @deleteClicked="showDeleteModal(item)"
-                                />
-                            </Td> -->
                     </template>
                 </Table>
-
-          
             </Card>
         </Container>
     </Layout>
 
-
-    <div v-show="showScreenExeptSubmenu"  class="fixed inset-0 transform transition-all" @click="hideMenu">
-        <div class="absolute inset-0  opacity-95" />
+    <!-- //// importan when click on actions menu and submenu appears it suppose to disappear when clickin away this dive is for this with hideMenu function -->
+    <div
+        v-show="showScreenExeptSubmenu"
+        class="fixed inset-0 transform transition-all"
+        @click="hideMenu"
+    >
+        <div class="absolute inset-0 opacity-95" />
     </div>
+<!-- /////////////////////////////////////////////////////////// -->
+    <Modal
+        :title="`Delete ${itemToDelete.name}`"
+        :show="deleteModal"
+        @close="close"
+    >
+        <template #title> Delete </template>
+        <template #content>
+            Are you sure you want to delete this item?
+        </template>
+        <template #footer>
+            <Button @click="handleDeleteItem" :disabled="isDeleting">
+                <span v-if="isDeleting">Deleting</span>
+                <span v-else>Delete</span>
+            </Button>
+        </template>
+    </Modal>
+
+    <!-- //////////////////////////Dialog Modal/////////////////////////////////////// -->
+
+    <DialogModal
+    :title="`Add ${itemToSave.name}`"
+    :show="dialogModal"
+    @close="closeDialogModal" >
+
+    <template #title> 
+        <div class=" bg-gray-800 px-4 py-2 text-white shadow-lg">add new diagnosis</div>
+         
+    </template>
+
+        <template #content>
+<form  @submit.prevent="handleSavingItem">
 
 
+            <label class=" mb-2 mx-4 bg-red-200 px-5 py1 rounded-lg shadow-md">diagnosis</label>
+            <textarea v-model="form.diagnosis" class=" w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm " name="Text1" cols="40" rows="5"/>
+            <div> 
+            <InputError class="mt-1" :message="props.errors.diagnosis" />  
+        </div>       
+             <br>
+             <hr class=" mt-5 h-px  bg-black" />
 
-    
-    
-        <Modal
-            :title="`Delete ${itemToDelete.name}`"
-            :show="deleteModal"
-            @close="close"
-        >
-            <template #title> Delete </template>
-            <template #content>
-                Are you sure you want to delete this item?
-            </template>
-            <template #footer>
-                <Button @click="handleDeleteItem" :disabled="isDeleting">
-                    <span v-if="isDeleting">Deleting</span>
-                    <span v-else>Delete</span>
-                </Button>
-            </template>
-        </Modal>
+            <label class=" mt-5 mb-2 mx-4 bg-green-200 px-5 py1 rounded-lg shadow-md">medicine</label>
+            <textarea v-model="form.medicine" class=" w-full resize  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm  " name="Text1" cols="40" rows="5"/>
+            <div> 
+                <InputError class="mt-1" :message="props.errors.medicine" />  
+            </div>   
+   
+            <hr class=" mt-5 h-px  bg-black" />
+
+            <br>
+
+
+            <!-- <input type="hidden" v-model="form.patient_id">
+            <input type="hidden" v-model="form.doctor_id" >
+            <input type="hidden" v-model="form.patient_id"> -->
+            
+            <Button  :disabled="form.processing">
+                {{ form.processing ? "Saving..." : "Save" }}
+            </Button>
+        </form>
+        </template>
+
+        <template #footer>
+            
+        </template>
+
+    </DialogModal>
+
 </template>
 
-
-
-
-
-
-<!-- heroicons  -->
+<!-- extract heroicons  -->
 <!-- 
 <div class="py-1" role="none">
     <a
@@ -433,36 +501,36 @@ const hideMenu = ()=>{
         tabindex="-1"
         id="menu-item-4"
     > -->
-        <!-- Heroicon name: solid/user-add -->
-        <!-- <svg
+<!-- Heroicon name: solid/user-add -->
+<!-- <svg
             class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden="true"
         > -->
-            <!-- <path
+<!-- <path
                 d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
             />
         </svg>
         Share
     </a> -->
-    <!-- <a
+<!-- <a
         href="#"
         class="text-gray-700 group flex items-center px-4 py-2 text-sm"
         role="menuitem"
         tabindex="-1"
         id="menu-item-5"
     > -->
-        <!-- Heroicon name: solid/heart -->
-        <!-- <svg
+<!-- Heroicon name: solid/heart -->
+<!-- <svg
             class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden="true"
         > -->
-            <!-- <path
+<!-- <path
                 fill-rule="evenodd"
                 d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
                 clip-rule="evenodd"

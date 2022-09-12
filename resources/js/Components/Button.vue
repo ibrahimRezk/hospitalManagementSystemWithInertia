@@ -25,7 +25,7 @@ const colorClasses = computed(() => {
     return {
         black: "bg-gray-800 hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:shadow-outline-gray text-white  shadow-md",
         red: "bg-red-600 hover:bg-red-500 active:bg-red-700 focus:border-red-700 focus:shadow-outline-red text-white",
-        green: "bg-green-400 hover:bg-green-300 active:bg-green-700 focus:border-green-700 focus:shadow-outline-green text-black shadow-md",
+        green: "bg-green-600 hover:bg-green-300 active:bg-green-700 focus:border-green-700 focus:shadow-outline-green text-white shadow-md",
         blue: "bg-sky-600 hover:bg-blue-500 active:bg-blue-700 focus:border-blue-700 focus:shadow-outline-blue text-white shadow-xl",
         white: "bg-gray-200 hover:bg-gray-50 active:bg-gray-50 focus:border-gray-500 focus:shadow-outline-gray text-black border border-black  font-bold drop-shadow-md",
         yellow: "bg-yellow-200 hover:bg-yellow-50 active:bg-red-500 focus:border-yellow-800 focus:shadow-outline-black text-black font-bold"

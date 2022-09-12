@@ -41,7 +41,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
 
-            Route::middleware(['web', 'inertiaDoctor'])
+            Route::middleware(['web', 'inertiaDoctor' ])
                 ->name('doctor.')
                 ->prefix('doctor')
                 ->group(base_path('routes/doctor.php'));

@@ -4,6 +4,10 @@ import Modal from './Modal.vue';
 const emit = defineEmits(['close']);
 
 defineProps({
+    title: {
+        type: String,
+        default: '',
+    },
     show: {
         type: Boolean,
         default: false,
@@ -30,12 +34,12 @@ const close = () => {
         :closeable="closeable"
         @close="close"
     >
-        <div class="px-6 py-4">
+        <div class=" bg-white"> 
             <div class="text-lg">
                 <slot name="title" />
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 px-3">
                 <slot name="content" />
             </div>
         </div>

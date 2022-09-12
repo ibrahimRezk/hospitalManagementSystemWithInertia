@@ -78,12 +78,7 @@ const submit = () => {
             <Card>
                 <form @submit.prevent="submit">
                     <div class="grid grid-cols-2 gap-6">
-                        <InputGroup
-                            label="Name ar"
-                            v-model="form.name_ar"
-                            :error-message="form.errors.name"
-                            required
-                        />
+
                         <InputGroup
                             label="Name"
                             v-model="form.name_en"
@@ -122,6 +117,7 @@ const submit = () => {
                             :error-message="form.errors.phone"
                             :required="!edit"
                         />
+                        
 
                     
                         <SelectGroup

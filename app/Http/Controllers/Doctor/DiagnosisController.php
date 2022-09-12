@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Doctor\DiagnosesRequest;
 use App\Http\Resources\InvoiceResource;
+use App\Models\Diagnosis;
 use App\Models\Invoice;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -31,6 +33,7 @@ class DiagnosisController extends Controller
             'id',
             'invoice_type',
             'patient_id',
+            'doctor_id',
             'service_id',
             'group_id',
             'price',
@@ -141,6 +144,35 @@ class DiagnosisController extends Controller
             'method'=> 'index',
             ]);
 
+
+    }
+
+    public function create()
+    {
+return Inertia::render('Doctor/Diagnosis/DiagnosisList/Create');
+    }
+
+    public function store(DiagnosesRequest $request)
+    {
+// dd($request);
+
+        // change invoice type to 3  to be completed 
+        $invoice = Invoice::find($request->id);
+        $invoice->update(['invoice_type' => 3]);
+        // because mass assignment we put it like this  // to be changed
+        $diagnosis = new Diagnosis();
+        $diagnosis->date = date('Y-m-d');
+        $diagnosis->diagnosis = $request->diagnosis;
+        $diagnosis->medicine = $request->medicine; 
+        $diagnosis->invoice_id = $request['data']['id'];
+        $diagnosis->patient_id = $request['data']['patient']['id'];
+        $diagnosis->doctor_id = $request['data']['doctor']['id'];
+        $diagnosis->save();
+    }
+
+
+    public function addReview()
+    {
 
     }
 }

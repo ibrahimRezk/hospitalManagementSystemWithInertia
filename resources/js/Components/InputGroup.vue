@@ -22,7 +22,7 @@ defineProps({
 
 <template>
     <div>
-        <Label v-if="label" :value="label" />
+        <Label v-if="label" :value="label" /> 
         <Input
             :type="type"
             class="mt-1 block w-full"

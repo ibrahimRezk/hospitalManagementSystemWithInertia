@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\UploadImagesController;
 use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
-use App\Http\Controllers\Admin\LaboratoristsController;
 use App\Http\Controllers\Admin\PatientsController;
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\RadiologistsController;
@@ -23,12 +22,10 @@ use App\Http\Controllers\Admin\ServicesGroupsController;
 use App\Http\Controllers\Admin\SingleInvoicesController;
 use App\Http\Controllers\Admin\SingleServiceInvoicesController;
 use App\Http\Controllers\Admin\SingleServicesController;
-use App\Http\Controllers\Doctor\DiagnosesController;
-use App\Http\Controllers\Doctor\DoctorDashboardController;
-use App\Http\Controllers\Doctor\InvoicesController;
-use App\Http\Controllers\Doctor\LaboratoriesController;
-use App\Http\Controllers\Doctor\PatientDetailsController;
-use App\Http\Controllers\Doctor\RadiologiesController;
+use App\Http\Controllers\Laboratorist\LaboratoriesController;
+use App\Http\Controllers\Laboratorist\LaboratoristsDashboardController;
+use App\Http\Controllers\Radiologist\RadiologiesController;
+use App\Http\Controllers\Radiologist\RadiologistsDashboardController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
@@ -59,21 +56,11 @@ Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authS
 
 Route::middleware(['auth', 'Lang'])->group(function () {
 
-    Route::get('dashboard', DoctorDashboardController::class)->name('dashboard');
+    Route::get('dashboard', LaboratoristsDashboardController::class)->name('dashboard');
 
-
-    Route::get('completed_invoices', [InvoicesController::class,'completedInvoices'])->name('completedInvoices');
-    Route::get('review_invoices', [InvoicesController::class,'reviewInvoices'])->name('reviewInvoices');
-    Route::get('patient_details/{id}', [PatientDetailsController::class,'index'])->name('patient_details');
-    Route::resource('invoices' , InvoicesController::class);
-    
-    
-    Route::post('addReview', [DiagnosesController::class , 'addReview'])->name('diagnoses.addReview');
-    Route::resource('diagnoses', DiagnosesController::class);
-
-
-    Route::resource('radiologies' , RadiologiesController::class);
+    Route::get('completed_invoices' , [LaboratoriesController::class , 'completedInvoices'])->name('completedInvoices');
     Route::resource('laboratories', LaboratoriesController::class);
+
 
 
 

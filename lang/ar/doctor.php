@@ -5,4 +5,5 @@ return [
     'To Radiology'=>'تحويل للآشعة',
     'To Laboratory'=>'تحويل للمختبر',
     'Delete'=>'حذف',
+    'Delete'=>'حذف',
 ];

@@ -25,6 +25,10 @@ return [
     'Laboratorists'  => 'Laboratorists',
     'Doctor diagnoses'  => 'Doctor diagnoses',
     'diagnoses List'  => 'diagnoses List',
+    'completed diagnoses List'  => 'completed diagnoses List',
+    'Review diagnoses List'  => 'Review diagnoses List',
+    'Radiologies list'  => 'Radiologies list',
+    'Laboratories list'  => 'Laboratories list',
 
 
 

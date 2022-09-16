@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('diagnoses', function (Blueprint $table) { 
+        Schema::create('laboratories', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->dateTime('review_date')->nullable();
-            $table->longText('diagnose');
-            $table->longText('medicine');
+            $table->longText('description');
             $table->foreignId('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->foreignId('patient_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('doctor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('employee_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->longText('employee_description')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('diagnoses');
+        Schema::dropIfExists('laboratories');
     }
 };

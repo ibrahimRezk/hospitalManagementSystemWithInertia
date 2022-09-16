@@ -8,4 +8,5 @@ return [
     'Statement' => 'كشف حساب',
     'Radiology' => 'الآشعة',
     'Laboratory' => 'المختبر',
+    'Patient Record' => 'سجل المريض',
 ];

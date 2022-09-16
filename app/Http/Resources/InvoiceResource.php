@@ -24,6 +24,8 @@ class InvoiceResource extends JsonResource
             'section'   => new SectionResource($this->whenLoaded('section')),
             'group'     => new ServicesGroupResource($this->whenLoaded('group')),
 
+            'diagnose' => new DiagnoseResource( $this->whenLoaded('diagnose')),
+
     
             'invoice_type' => $this->whenNotNull($this->invoice_type), 
             'discount_value' => $this->whenNotNull($this->discount_value), 

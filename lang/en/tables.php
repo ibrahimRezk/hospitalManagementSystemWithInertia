@@ -8,5 +8,7 @@ return [
     'Statement' => 'Statement',
     'Radiology' => 'Radiology',
     'Laboratory' => 'Laboratory',
+    'Patient Record' => 'Patient Record',
+
 
 ];

@@ -16,7 +16,7 @@ class Invoice extends Model
 
     protected $casts = [
         'type'=> InvoiceTypeCast::class,
-        'invoice_type'=> InvoiceTypeStatusCast::class
+        'invoice_status'=> InvoiceTypeStatusCast::class
     ];
     protected $with =['group','service' , 'patient' ,'doctor' ,'section'];
 
@@ -44,5 +44,9 @@ class Invoice extends Model
     public function section()
     {
         return $this->belongsTo(Section::class, 'section_id');
+    }
+
+    public function diagnose(){
+        return $this->hasOne(Diagnose::class);
     }
 }

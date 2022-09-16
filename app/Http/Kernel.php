@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'inertia' =>  \App\Http\Middleware\HandleInertiaRequests::class,
         'inertiaDoctor' =>  \App\Http\Middleware\HandleInertiaDoctorRequests::class,
+        'inertiaRadiologist' =>  \App\Http\Middleware\HandleInertiaRadiologistRequests::class,
+        'inertiaLaboratorist' =>  \App\Http\Middleware\HandleInertiaLaboratoristRequests::class,
         'Lang' =>\App\Http\Middleware\Lang::class,
 
     ];

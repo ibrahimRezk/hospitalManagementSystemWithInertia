@@ -25,7 +25,11 @@ return [
     'Radiologists'  => 'أخصائيي الآشعة',
     'Laboratorists'  => 'أخصائيي المختبر',
     'Doctor diagnoses'=> 'كشوفات الدكتور' ,
-    'diagnoses List'=> 'قائمة الكشوفات' 
+    'diagnoses List'=> 'قائمة الكشوفات' ,
+    'completed diagnoses List'=> ' قائمة الكشوفات المكتملة' ,
+    'Review diagnoses List'=> ' قائمة  المراجعات', 
+    'Radiologies list'  => 'قائمة فحوصات الآشعة',
+    'Laboratories list'  => 'قائمة فحوصات المعمل',
 
 
 

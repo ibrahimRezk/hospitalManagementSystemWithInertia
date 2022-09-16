@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\App;
 
-class HandleInertiaDoctorRequests extends Middleware
+class HandleInertiaRadiologistRequests extends Middleware
 {
     /**
      * The root template that's loaded on the first page visit.
@@ -50,14 +50,14 @@ class HandleInertiaDoctorRequests extends Middleware
             'menus' => [
                 [
                     'label' => 'Dashboard',
-                    'url' => route('doctor.dashboard'),
-                    'isActive' => $request->routeIs('doctor.dashboard'),
+                    'url' => route('radiologist.dashboard'),
+                    'isActive' => $request->routeIs('radiologist.dashboard'),
                     'isVisible' => true,
                     'hasSubmenu' => false,
                 ],
                 [
-                    'label' => 'Doctor diagnoses',
-                    'isActive' => $request->routeIs('doctor.invoices.*'),
+                    'label' => 'Radiologies list',
+                    'isActive' => $request->routeIs('radiologist.radiologies.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),
                     'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
                     'hasSubmenu' => true,
@@ -65,26 +65,19 @@ class HandleInertiaDoctorRequests extends Middleware
                     'subMenus' => [
                         [
                             'label' => 'diagnoses List',
-                            'url' => route('doctor.invoices.index'),
-                            'isActive' => $request->routeIs('doctor.invoices*'),
+                            'url' => route('radiologist.radiologies.index'),
+                            'isActive' => $request->routeIs('radiologist.radiologies*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                         [
                             'label' => 'completed diagnoses List',
-                            'url' => route('doctor.completedInvoices'),
-                            'isActive' => $request->routeIs('doctor.completedInvoices*'),
+                            'url' => route('radiologist.completedInvoices'),
+                            'isActive' => $request->routeIs('radiologist.completedInvoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                     
-                        [
-                            'label' => 'Review diagnoses List',
-                            'url' => route('doctor.reviewInvoices'),
-                            'isActive' => $request->routeIs('doctor.reviewInvoices*'),
-                            // 'isVisible' => $request->user()?->can('view diagnoses module'),
-                            'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
-                        ],
                     ],
                 ],
                

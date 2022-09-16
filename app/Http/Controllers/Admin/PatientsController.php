@@ -26,54 +26,58 @@ class PatientsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:view patients list')->only(['index' ,'show']);
+        $this->middleware('can:view patients list')->only(['index', 'show']);
         $this->middleware('can:create patient')->only(['create', 'store']);
         $this->middleware('can:edit patient')->only(['edit', 'update']);
         $this->middleware('can:delete patient')->only('destroy');
     }
 
     // important note 
-// we use resourcename collection when date will come as an array of objects but we use new resourceName if it is only one object
+    // we use resourcename collection when date will come as an array of objects but we use new resourceName if it is only one object
 
     public function index(Request $request)
     {
         // dd($request);
 
         $patients = User::query()
-        
-        
-        ->select([
-            'id',
-            // 'name',
-            'email',
-            'birth_date',
-            'phone',
-            'gender',
-            'blood_group',
-            'created_at'
+
+
+            ->select([
+                'id',
+                // 'name',
+                'email',
+                'birth_date',
+                'phone',
+                'gender',
+                'blood_group',
+                'created_at'
             ])
             // to get only one kind of user depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
 
-/////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
-             ->whereHas('translations' , fn ($query) => 
+            /////////// very important her to add wherehas translation to call astrotomic translations /////////////////////////
+            ->whereHas(
+                'translations',
+                fn ($query) =>
 
-             $query->when($request->name, fn (Builder $builder, $name) => $builder->where( 'name' , 'like', "%{$name}%"))
-             )
-             ->whereHas('translations' , fn ($query) => 
+                $query->when($request->name, fn (Builder $builder, $name) => $builder->where('name', 'like', "%{$name}%"))
+            )
+            ->whereHas(
+                'translations',
+                fn ($query) =>
 
-             $query->when($request->address, fn (Builder $builder, $address) => $builder->where( 'address' , 'like', "%{$address}%"))
-             )
- ////////////////////////////////////////////////////////////////////////////////////
+                $query->when($request->address, fn (Builder $builder, $address) => $builder->where('address', 'like', "%{$address}%"))
+            )
+            ////////////////////////////////////////////////////////////////////////////////////
 
             ->when($request->email, fn (Builder $builder, $email) => $builder->where('email', 'like', "%{$email}%"))
             ->when($request->phone, fn (Builder $builder, $phone) => $builder->where('phone', 'like', "%{$phone}%"))
             ->when($request->gender, fn (Builder $builder, $gender) => $builder->where('gender', 'like', "%{$gender}%"))
             ->when($request->blood_group, fn (Builder $builder, $blood_group) => $builder->where('blood_group', 'like', "%{$blood_group}%"))
-    
+
             ->latest('id')
             ->paginate(10);
-            // dd($patients); 
+        // dd($patients); 
 
         return Inertia::render('Admin/Patient/Index', [
             'title' => 'Patients',
@@ -119,46 +123,47 @@ class PatientsController extends Controller
             'can' => [
                 'create' => $request->user()->can('create patient'),
             ],
-            'method'=> 'index',
+            'method' => 'index',
 
         ]);
     }
 
 
-    public function show(User $user){
+    public function show(User $user)
+    {
 
-        $patient_invoices = Invoice::where('patient_id', '=' , $user->id) 
-        ->select([
-            'id',
-            'invoice_type',
-            'patient_id',
-            'service_id',
-            'group_id',
-            'price',
-            'discount_value',
-            'tax_rate',
-            'tax_value',
-            'total_with_tax',
-            'price',
-            'created_at',
+        $patient_invoices = Invoice::where('patient_id', '=', $user->id)
+            ->select([
+                'id',
+                'invoice_type',
+                'patient_id',
+                'service_id',
+                'group_id',
+                'price',
+                'discount_value',
+                'tax_rate',
+                'tax_value',
+                'total_with_tax',
+                'price',
+                'created_at',
             ])->latest()->paginate(1000);
-        $patient_payments = Payment::query()->where('patient_id', '=' , $user->id)->latest()->paginate(1000); 
-        $patient_receipts = Receipt::where('patient_id', '=' , $user->id)->latest()->paginate(1000);
+        $patient_payments = Payment::query()->where('patient_id', '=', $user->id)->latest()->paginate(1000);
+        $patient_receipts = Receipt::where('patient_id', '=', $user->id)->latest()->paginate(1000);
 
-        $patient_account = PatientAccount::where('patient_id' , "=" , $user->id)
-        ->select('id','patient_id','invoice_id','receipt_id','payment_id','Debit', 'credit','created_at')
-        ->latest()->paginate(1000);
+        $patient_account = PatientAccount::where('patient_id', "=", $user->id)
+            ->select('id', 'patient_id', 'invoice_id', 'receipt_id', 'payment_id', 'Debit', 'credit', 'created_at')
+            ->latest()->paginate(1000);
 
-        
 
-        $patient_invoices->load(['service']); 
+
+        $patient_invoices->load(['service']);
         $patient_invoices->load(['group']);
 
         $patient_account->load(['invoice']);
         $patient_account->load(['receipt']);
         $patient_account->load(['payment']);
 
-// we have to send data with all relations in invoice model to be recieved here   up  invoice_id  with invoice  and in invoice model we send all relations to get all data including names
+        // we have to send data with all relations in invoice model to be recieved here   up  invoice_id  with invoice  and in invoice model we send all relations to get all data including names
 
         return Inertia::render('Admin/Patient/Show', [
             // 'title' => 'Patient Details',
@@ -167,7 +172,7 @@ class PatientsController extends Controller
             'payments' => PaymentResource::collection($patient_payments),
             'invoices' => InvoiceResource::collection($patient_invoices),
             'receipts' => ReceiptResource::collection($patient_receipts),
-            'statement'=> PatientAccountResource::collection($patient_account),
+            'statement' => PatientAccountResource::collection($patient_account),
 
             'headers' => [
                 [
@@ -197,25 +202,24 @@ class PatientsController extends Controller
                 ],
             ],
         ]);
-        
     }
 
 
-    public function create() 
+    public function create()
     {
         return Inertia::render('Admin/Patient/Create', [
             'edit' => false,
             'title' => 'Add Patient',
             'routeResourceName' => $this->routeResourceName,
-            
+
         ]);
     }
 
-    public function store(UsersRequest $request) 
+    public function store(UsersRequest $request)
     {
 
         // $data = $request->safe()->only(['email', 'password' ,'phone']);
-        $data = $request->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
+        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group', 'password']);
 
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;
@@ -226,35 +230,35 @@ class PatientsController extends Controller
         // $data['section_id'] = $request->section; 
 
         $user = User::create($data);
-        
+
         $user->assignRole($this->role);  // to be changed
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
 
 
-// // very important here we don't use route model binding becase we are looking in user table but url is doctor and it has to be the same so we search for the id 
-//     // public function edit($id)
-//     // $user= User::find($id);
+    // // very important here we don't use route model binding becase we are looking in user table but url is doctor and it has to be the same so we search for the id 
+    //     // public function edit($id)
+    //     // $user= User::find($id);
 
 
 
     public function edit(User $user)
     {
-        return Inertia::render('Admin/Patient/Create', [ 
+        return Inertia::render('Admin/Patient/Create', [
             'edit' => true,
             'title' => 'Edit Patient',
             'item' => new PatientResource($user),
             'routeResourceName' => $this->routeResourceName,
-    
+
         ]);
     }
 
 
     public function update(UsersRequest $request, User $user)
-    { 
+    {
         // user phone number is password phone must be long enoph or it will return an error on updating
-        $data = $request->only(['email', 'birth_date' ,'phone' ,'gender','blood_group','password']);
+        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group', 'password']);
         // dd($data);
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
@@ -265,7 +269,7 @@ class PatientsController extends Controller
 
         $user->syncRoles($this->role);
 
-        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.'); 
+        return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)

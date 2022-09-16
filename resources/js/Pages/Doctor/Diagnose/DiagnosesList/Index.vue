@@ -1,6 +1,6 @@
 <script setup>
-    import { Head , useForm } from "@inertiajs/inertia-vue3";
-import { onMounted, ref, watch } from "vue";
+import { Head, useForm , Link } from "@inertiajs/inertia-vue3";
+import { computed, onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import Layout from "@/Layouts/Authenticated.vue";
 import Container from "@/Components/Container.vue";
@@ -14,7 +14,6 @@ import DialogModal from "@/Components/DialogModal.vue";
 import JetDropdown from "@/components/Dropdown.vue";
 import JetDropdownLink from "@/components/DropdownLink.vue";
 import InputError from "@/Components/InputError.vue";
-
 
 import Label from "@/Components/Label.vue";
 import Input from "@/Components/Input.vue";
@@ -54,6 +53,15 @@ const props = defineProps({
     ActionMenu: Array,
 });
 
+const opened = ref(0);
+const method = ref("store");
+const addReview = ref(false);
+const diagnosOrReview = ref(false);
+const radiologiesOrLaboratories = ref(false);
+const laboratories = ref(false);
+const showScreenExeptSubmenu = ref(false);
+const routeResourceName =ref('');
+const editMode = ref(false);
 
 const fireShowDeleteModal = (item) => {
     showDeleteModal(item);
@@ -63,28 +71,83 @@ const fireShowDeleteModal = (item) => {
 ////// open actions menu /////////////////////////
 const openMenu = (id) => {
     showScreenExeptSubmenu.value = true;
+    addReview.value = false;
+    diagnosOrReview.value = false;
+    radiologiesOrLaboratories.value = false;
+    laboratories.value = false;
+    form.reset();
+    editMode.value = false;
+
     return opened.value != id ? (opened.value = id) : (opened.value = 0);
 };
-const opened = ref(0);
+
 ////// open actions menu end ////////////////////
-
-
-const showScreenExeptSubmenu = ref(false);
 
 const hideMenu = () => {
     showScreenExeptSubmenu.value = false;
-    return (opened.value = 0);
+    opened.value = 0;
 };
-
-const method = 'store'
 
 
 
 const form = useForm({
-        diagnosis: '',
-        medicine: '',
-    });
+    diagnose:  "",
+    medicine: "",
+    description : "",
+    review_date:  null,
+});
 
+const fillForm = (item)=>{
+   
+      
+        form.diagnose = '';
+        form.medicine = '';
+        form.review_date ='';
+    }
+
+// const fillForm = (item)=>{
+//     if(item.diagnose !== null){
+//         editMode.value = true;
+//         form.diagnose = item.diagnose.diagnose ?? form.diagnose;
+//         form.medicine = item.diagnose.medicine ?? form.medicine;
+//         form.review_date = item.diagnose.review_date ?? form.review_date;
+//     }
+// }
+
+
+const fireAddDiagnosisModal = (item) => {
+    fillForm(item);
+    // method.value = "store";
+    diagnosOrReview.value = true;
+    routeResourceName.value = 'diagnoses';
+    hideMenu();
+    return showDialogModal(item);
+};
+
+const fireAddReviewModal = (item) => {
+    fillForm(item);
+    addReview.value = true;
+    diagnosOrReview.value = true;
+    method.value = "addReview";
+    routeResourceName.value = 'diagnoses';
+    hideMenu();
+    return showDialogModal(item);
+};
+
+const fireToRadiologyModal = (item)=> {
+    radiologiesOrLaboratories.value = true
+    method.value = "store";
+    routeResourceName.value = 'radiologies';
+    hideMenu();
+    return showDialogModal(item);
+}
+const fireToLaboratoryModal = (item)=> {
+    radiologiesOrLaboratories.value = true
+    method.value = "store";
+    routeResourceName.value = 'laboratories';
+    hideMenu();
+    return showDialogModal(item);
+}
 
 const {
     closeDialogModal,
@@ -92,14 +155,18 @@ const {
     itemToSave,
     isSaving,
     showDialogModal,
-    handleSavingItem
-} = useDialogModal ({routeResourceName: props.routeResourceName,
-    form : form , opened ,showScreenExeptSubmenu , method})
+    handleSavingItem,
+} = useDialogModal({
+    routeResourceName: routeResourceName,
+    form: form,
+    opened,
+    showScreenExeptSubmenu,
+    method,
+    editMode
+    
+});
 
-
-
-
-    const {
+const {
     close,
     deleteModal,
     itemToDelete,
@@ -110,7 +177,6 @@ const {
     routeResourceName: props.routeResourceName,
 });
 
-
 const { filters, isLoading, isFilled } = useFilters({
     filters: props.filters,
     routeResourceName: props.routeResourceName,
@@ -118,16 +184,13 @@ const { filters, isLoading, isFilled } = useFilters({
 });
 
 // if you want to make color changed at once make the function in a new page not a modal
-const color = (item)=>{
-  return  item.invoice_type == 'completed' ? 'green' :(item.invoice_type ==  'reviewing'? 'yellow' : 'red')
-
-}
-
-
-
-
-
-
+const color = (item) => {
+    return item.invoice_status == "completed"
+        ? "green"
+        : item.invoice_status == "reviewing"
+        ? "yellow"
+        : "red";
+};
 </script>
 
 <template>
@@ -147,7 +210,7 @@ const color = (item)=>{
                 </AddNew> -->
 
             <Card class="mt-4" :is-loading="isLoading" no-padding>
-                <Table :headers="headers" :items="items" >
+                <Table :headers="headers" :items="items">
                     <template #section>
                         <div
                             class="p-6 pb-0 mb-0 bg-gray-300 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
@@ -156,7 +219,9 @@ const color = (item)=>{
                         </div>
                     </template>
                     <template v-slot="{ item }">
-                        <Td>
+                        <Td >
+                            <Link  class=" text-blue-600"
+                            :href=" route(`doctor.patient_details`, { id: item.patient.id }) ">
                             <template #image>
                                 <div class="w-8 h-8 mx-1">
                                     <img
@@ -167,6 +232,7 @@ const color = (item)=>{
                                 </div>
                             </template>
                             {{ item.patient.name }}
+                        </Link>
                         </Td>
                         <Td>
                             <Button color="blue" small>
@@ -205,16 +271,15 @@ const color = (item)=>{
                         </Td>
 
                         <Td>
-                            <Button  small
-                            :color="color(item)" >
-                                {{ item.invoice_type }}
+                            <Button small :color="color(item)">
+                                {{ item.invoice_status }}
                             </Button>
                         </Td>
 
                         <!-- <Td  >  -->
                         <Td NoShadow>
                             <!-- This example requires Tailwind CSS v2.0+ -->
-                            <div class="inline-block text-left  ">
+                            <div class="inline-block text-left">
                                 <!-- <div class=" inline-block text-left overflow-visible"> -->
                                 <div>
                                     <button
@@ -270,7 +335,7 @@ const color = (item)=>{
                                     <div class="py-1" role="none">
                                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                                         <a
-                                        @click="showDialogModal(item)"
+                                            @click="fireAddDiagnosisModal(item)"
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -297,6 +362,7 @@ const color = (item)=>{
                                             {{ $t("doctor.Add Diagnosis") }}
                                         </a>
                                         <a
+                                            @click="fireAddReviewModal(item)"
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -323,6 +389,8 @@ const color = (item)=>{
                                     </div>
                                     <div class="py-1" role="none">
                                         <a
+                                        @click="fireToRadiologyModal(item)"
+                                        
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -349,6 +417,7 @@ const color = (item)=>{
                                             {{ $t("doctor.To Radiology") }}
                                         </a>
                                         <a
+                                        @click="fireToLaboratoryModal(item)"
                                             href="#"
                                             class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
                                             role="menuitem"
@@ -373,36 +442,7 @@ const color = (item)=>{
                                         </a>
                                     </div>
 
-                                    <div
-                                        class="py-1"
-                                        role="none"
-                                        @click="fireShowDeleteModal(item)"
-                                    >
-                                        <a
-                                            href="#"
-                                            class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
-                                            role="menuitem"
-                                            tabindex="-1"
-                                            id="menu-item-6"
-                                        >
-                                            <!-- Heroicon name: solid/trash -->
-                                            <svg
-                                                class="mx-2 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-
-                                            {{ $t("doctor.Delete") }}
-                                        </a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </Td>
@@ -420,7 +460,7 @@ const color = (item)=>{
     >
         <div class="absolute inset-0 opacity-95" />
     </div>
-<!-- /////////////////////////////////////////////////////////// -->
+    <!-- /////////////////////////////////////////////////////////// -->
     <Modal
         :title="`Delete ${itemToDelete.name}`"
         :show="deleteModal"
@@ -441,53 +481,106 @@ const color = (item)=>{
     <!-- //////////////////////////Dialog Modal/////////////////////////////////////// -->
 
     <DialogModal
-    :title="`Add ${itemToSave.name}`"
-    :show="dialogModal"
-    @close="closeDialogModal" >
-
-    <template #title> 
-        <div class=" bg-gray-800 px-4 py-2 text-white shadow-lg">add new diagnosis</div>
-         
-    </template>
+        :title="`Add ${itemToSave.name}`"
+        :show="dialogModal"
+        @close="closeDialogModal"
+    >
+        <template #title>
+            <div class="bg-gray-800 px-4 py-2 text-white shadow-lg">
+                add new diagnose
+            </div>
+        </template>
 
         <template #content>
-<form  @submit.prevent="handleSavingItem">
+            <form @submit.prevent="handleSavingItem">
+                <div  v-if="radiologiesOrLaboratories">
+                <label
+                    class="mb-2 mx-4 bg-red-200 px-5 py1 rounded-lg shadow-md"
+                    >description</label
+                >
+                <textarea
+                    v-model="form.description"
+                    class="w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="Text1"
+                    cols="40"
+                    rows="5"
+                />
+                <div>
+                    <InputError class="mt-1" :message="props.errors.description" />
+                </div>
+                <br />
 
+            </div>
+            <div  v-if="diagnosOrReview">
+                <label
+                    class="mb-2 mx-4 bg-red-200 px-5 py1 rounded-lg shadow-md"
+                    >diagnose</label
+                >
+                <textarea
+                    v-model="form.diagnose"
+                    class="w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="Text1"
+                    cols="40"
+                    rows="5"
+                />
+                <div>
+                    <InputError class="mt-1" :message="props.errors.diagnose" />
+                </div>
+                <br />
+                <hr class="mt-5 h-px bg-black" />
 
-            <label class=" mb-2 mx-4 bg-red-200 px-5 py1 rounded-lg shadow-md">diagnosis</label>
-            <textarea v-model="form.diagnosis" class=" w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm " name="Text1" cols="40" rows="5"/>
-            <div> 
-            <InputError class="mt-1" :message="props.errors.diagnosis" />  
-        </div>       
-             <br>
-             <hr class=" mt-5 h-px  bg-black" />
+            </div>
+            <div  v-if="diagnosOrReview">
+                <label
+                    class="mt-5 mb-2 mx-4 bg-green-200 px-5 py1 rounded-lg shadow-md"
+                    >medicine</label
+                >
+                <textarea 
+                    v-model="form.medicine"
+                    class="w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="Text1"
+                    cols="40"
+                    rows="5"
+                />
+                <div>
+                    <InputError class="mt-1" :message="props.errors.medicine" />
+                </div>
 
-            <label class=" mt-5 mb-2 mx-4 bg-green-200 px-5 py1 rounded-lg shadow-md">medicine</label>
-            <textarea v-model="form.medicine" class=" w-full resize  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm  " name="Text1" cols="40" rows="5"/>
-            <div> 
-                <InputError class="mt-1" :message="props.errors.medicine" />  
-            </div>   
-   
-            <hr class=" mt-5 h-px  bg-black" />
+                <hr class="mt-5 h-px bg-black" />
 
-            <br>
+                <br />
+            </div>
 
+                <div v-if="addReview">
+                    <input
+                        type="date"
+                        v-model="form.review_date"
+                        class="w-1/2 mb-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    />
+                    <div>
+                        <InputError
+                            class="mt-1"
+                            :message="props.errors.review_date"
+                        />
+                    </div>
 
-            <!-- <input type="hidden" v-model="form.patient_id">
+                    <br />
+                </div>
+
+                <!-- <input type="hidden" v-model="form.patient_id">
             <input type="hidden" v-model="form.doctor_id" >
             <input type="hidden" v-model="form.patient_id"> -->
-            
-            <Button  :disabled="form.processing">
-                {{ form.processing ? "Saving..." : "Save" }}
-            </Button>
-        </form>
+
+                <Button :disabled="form.processing">
+                    {{ form.processing ? "Saving..." : "Save" }}
+                </Button>
+            </form>
         </template>
 
-        <template #footer>
-            
-        </template>
-
+        <template #footer> </template>
     </DialogModal>
+
+
 
 </template>
 
@@ -539,3 +632,43 @@ const color = (item)=>{
         Add to favorites
     </a> -->
 <!-- </div> -->
+
+
+
+
+
+
+
+
+
+<!-- // delete icon in sub <menu>
+    <div
+                                        class="py-1"
+                                        role="none"
+                                        @click="fireShowDeleteModal(item)"
+                                    >
+                                        <a
+                                            href="#"
+                                            class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100"
+                                            role="menuitem"
+                                            tabindex="-1"
+                                            id="menu-item-6"
+                                        >
+                                            <-- Heroicon name: solid/trash -->
+                                            <!-- <svg
+                                                class="mx-2 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+
+                                            {{ $t("doctor.Delete") }}
+                                        </a>
+                                    </div>  -->

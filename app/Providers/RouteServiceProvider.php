@@ -45,6 +45,16 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('doctor.')
                 ->prefix('doctor')
                 ->group(base_path('routes/doctor.php'));
+
+            Route::middleware(['web', 'inertiaRadiologist' ])
+                ->name('radiologist.')
+                ->prefix('radiologist')
+                ->group(base_path('routes/radiologist.php'));
+
+            Route::middleware(['web', 'inertiaLaboratorist' ])
+                ->name('laboratorist.')
+                ->prefix('laboratorist')
+                ->group(base_path('routes/laboratorist.php'));
         });
     }
 

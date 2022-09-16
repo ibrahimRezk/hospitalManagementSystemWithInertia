@@ -202,6 +202,8 @@ class HandleInertiaRequests extends Middleware
                         ],
                     ]
                 ],
+
+                // add options to doctor completed and review to edit or add new things
                 
 // remember filters in accounts and invoices
 
@@ -211,6 +213,8 @@ class HandleInertiaRequests extends Middleware
 // add status to services
 
 // important review patient show   very interesting
+
+// // resource collection  is important to get meta field in props.patient_radiology
 
             ],
         ]);

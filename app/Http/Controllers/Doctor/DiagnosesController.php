@@ -30,14 +30,16 @@ class DiagnosesController extends Controller
 
     public function store(DiagnosesRequest $request)
     {
-dd($request);
+// dd($request);
 
         // change invoice type to 3  to be completed 
         $invoice = Invoice::find($request->id);
-        $invoice->update(['invoice_status' => 3]);
+        $invoice->update(['invoice_status' => $request->invoice_status]);
         // because mass assignment we put it like this  // to be changed
         $diagnose = new Diagnose();
         $diagnose->date = date('Y-m-d');
+        $diagnose->review_date = $request->review_date ?? null;
+
         $diagnose->diagnose = $request->diagnose;
         $diagnose->medicine = $request->medicine; 
         $diagnose->invoice_id = $request['data']['id'];
@@ -47,30 +49,17 @@ dd($request);
     }
 
     public function update(Request $request , $id){
-        // dd($request);
+        // dd($id);
         $diagnose =Diagnose::find($id);
-        $diagnose->update($request->all());
-    }
-
-
-    public function addReview(AddReviewsRequest $request)
-    {
-        // dd($request);
-
-         // change invoice type to 3  to be add review 
-         $invoice = Invoice::find($request->id);
-         $invoice->update(['invoice_status' => 2]);
-         // because mass assignment we put it like this  // to be changed
-         $diagnose = new Diagnose();
-         $diagnose->date = date('Y-m-d');
-         $diagnose->review_date = $request->review_date;
-         $diagnose->diagnose = $request->diagnose;
-         $diagnose->medicine = $request->medicine; 
-         $diagnose->invoice_id = $request['data']['id'];
-         $diagnose->patient_id = $request['data']['patient']['id'];
-         $diagnose->doctor_id = $request['data']['doctor']['id'];
-         $diagnose->save();
-
+        $invoice = Invoice::where('id', $diagnose->invoice_id); // to update state of invoice
+        $invoice->update(['invoice_status' => $request->invoice_status]);
+        $diagnose->date = date('Y-m-d');
+        $diagnose->diagnose = $request->diagnose;
+        $diagnose->medicine = $request->medicine; 
+        $diagnose->invoice_id = $request['data']['id'];
+        $diagnose->patient_id = $request['data']['patient']['id'];
+        $diagnose->doctor_id = $request['data']['doctor']['id'];
+        $diagnose->save();
     }
 
 

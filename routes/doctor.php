@@ -68,16 +68,13 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('invoices' , InvoicesController::class);
     
     
-    Route::post('addReview', [DiagnosesController::class , 'addReview'])->name('diagnoses.addReview');
     Route::resource('diagnoses', DiagnosesController::class);
-
-
     Route::resource('radiologies' , RadiologiesController::class);
     Route::resource('laboratories', LaboratoriesController::class);
 
 
 
-
+// remains   : edit radiology and laboratory request if the the checkup is not added yet 
 
 
 

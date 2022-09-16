@@ -62,6 +62,7 @@ const laboratories = ref(false);
 const showScreenExeptSubmenu = ref(false);
 const routeResourceName =ref('');
 const editMode = ref(false);
+const invoice_status = ref()
 
 const fireShowDeleteModal = (item) => {
     showDeleteModal(item);
@@ -97,27 +98,32 @@ const form = useForm({
     review_date:  null,
 });
 
-const fillForm = (item)=>{
-   
-      
-        form.diagnose = '';
-        form.medicine = '';
-        form.review_date ='';
-    }
-
 // const fillForm = (item)=>{
-//     if(item.diagnose !== null){
-//         editMode.value = true;
-//         form.diagnose = item.diagnose.diagnose ?? form.diagnose;
-//         form.medicine = item.diagnose.medicine ?? form.medicine;
-//         form.review_date = item.diagnose.review_date ?? form.review_date;
+
+//         form.diagnose = '';
+//         form.medicine = '';
+//         form.review_date ='';
 //     }
-// }
+
+const fillForm = (item)=>{
+    if(item.diagnose !== null){
+        editMode.value = true;
+        form.diagnose = item.diagnose.diagnose ;
+        form.medicine = item.diagnose.medicine;
+        form.review_date = item.diagnose.review_date ;
+    }else{
+        editMode.value = false;
+        form.diagnose ='';
+        form.medicine = '';
+        form.review_date = null;
+    }
+}
 
 
 const fireAddDiagnosisModal = (item) => {
     fillForm(item);
-    // method.value = "store";
+    invoice_status.value = 3;
+    editMode.value == true ? method.value = "update" : 'store';
     diagnosOrReview.value = true;
     routeResourceName.value = 'diagnoses';
     hideMenu();
@@ -126,6 +132,8 @@ const fireAddDiagnosisModal = (item) => {
 
 const fireAddReviewModal = (item) => {
     fillForm(item);
+    invoice_status.value = 2;
+    editMode.value == true ? method.value = "update" : 'store';
     addReview.value = true;
     diagnosOrReview.value = true;
     method.value = "addReview";
@@ -162,7 +170,8 @@ const {
     opened,
     showScreenExeptSubmenu,
     method,
-    editMode
+    editMode,
+    invoice_status
     
 });
 

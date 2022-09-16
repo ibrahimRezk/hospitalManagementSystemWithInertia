@@ -8,7 +8,8 @@ export default function (params) {
         opened: openedMenu,
         showScreenExeptSubmenu, 
         method : calledMethod,
-        editMode : editModeValue
+        editMode : editModeValue,
+        invoice_status: invoice_status_value
 
     } = params;
     const form = ref(formItems)
@@ -16,6 +17,7 @@ export default function (params) {
     const method = ref(calledMethod)
     const routeResourceName = ref(theRouteResourceName)
     const editMode = ref(editModeValue)
+    const invoice_status = ref(invoice_status_value)
 
  
     const dialogModal = ref(false);
@@ -35,42 +37,51 @@ export default function (params) {
     }
 
  // here we use inertia.post not form.post because we send extra data and we check for errors with another way  with props.errors
+ // important   ,in update  we put route with id in section 1 () and data in section 2 {} and options in section 3
     function handleSavingItem() {
-        // if(editMode) 
-        // {
-        //     Inertia.put(
-        //         route(`doctor.${routeResourceName.value}.update`, {
-        //             id: itemToSave.value.id,
-        //             ...form.value,
-        //              data: itemToSave.value
-        //         }, {
-        //             preserveScroll: true,
-        //             preserveState: true,
-        //             onBefore: () => {
-        //                 isSaving.value = true;
-        //             },
-        //             onSuccess: () => {
-        //                 dialogModal.value = false;
-        //                 itemToSave.value = {};
-        //                 // opened.value = 0;  // to close   // no need any more
-        //                 showScreenExeptSubmenu.value =false;
-        //                 form.value.reset() // important to clear all form data
+        if(editMode.value == true ) 
+        {
+            console.log(true)
+            Inertia.put(
+                route(`doctor.${routeResourceName.value}.${method.value}`, {
+                    id: itemToSave.value.diagnose.id,   //// important  we save here in diagnose not invoice so we have to put it like this
+                }), 
+                    {
+                    ...form.value,
+                    data: itemToSave.value, 
+                    invoice_status : invoice_status.value
+                    },
+                    {
+                    preserveScroll: true,
+                    preserveState: true,
+                    onBefore: () => {
+                        isSaving.value = true;
+                    },
+                    onSuccess: () => {
+                        dialogModal.value = false;
+                        itemToSave.value = {};
+                        opened.value = 0;  // to close   // no need any more
+                        showScreenExeptSubmenu.value =false;
+                        form.value.reset() // important to clear all form data
     
-        //             },
-        //             onFinish: () => {
-        //                 isSaving.value = false;
+                    },
+                    onFinish: () => {
+                        isSaving.value = false;
     
-        //             },
-        //         }
-        //     )
-        //     )
+                    },
+                }
+            )
+            
 
-        // }else{
+        }else{
+            console.log(false)
             Inertia.post(
-                route(`doctor.${routeResourceName.value}.store`), {
+                route(`doctor.${routeResourceName.value}.${method.value}`), {
                     id: itemToSave.value.id,
                     ...form.value,
-                     data: itemToSave.value
+                     data: itemToSave.value,
+                     invoice_status : invoice_status.value
+
                 }, {
                     preserveScroll: true,
                     preserveState: true,
@@ -91,7 +102,7 @@ export default function (params) {
                     },
                 }
             );
-        // }
+        }
         
     }
 

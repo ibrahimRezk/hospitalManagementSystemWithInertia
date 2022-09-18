@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\LaboratoryResource;
+use App\Http\Resources\RadiologyResource;
 use App\Models\Invoice;
+use App\Models\Laboratory;
+use App\Models\Radiology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -130,11 +134,220 @@ class PatientsController extends Controller
 
     }
 
-    public function report($id)
+
+
+
+
+    public function laboratories(Request $request)
+    {
+        $laboratories = Laboratory::query()
+        ->select([
+            'id',
+            'doctor_id',
+            'employee_id',
+            'description',
+            'employee_description',
+            'patient_id',
+            'created_at',
+            ])
+
+            ->where('patient_id',  Auth::user()->id) 
+            ->with(['doctor','employee'])
+
+            // ->with(['service'])
+            // ->with(['patient'])
+
+            // ->when( 
+            //     $request->patient_id,
+            //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
+            //     )
+
+            // ->when( 
+            //     $request->invoice_status,
+            //     fn (Builder $builder, $invoice_status) =>  $builder->where( 'invoice_status', $invoice_status)
+            //     )
+            
+            
+            ->latest('id')
+            ->paginate(10);
+            
+            // 'invoices' => InvoiceResource::collection($patient_invoices),
+// dd($invoices);
+
+// $diagnose = Diagnose::find()
+        
+// dd($laboratories);
+            return Inertia::render('Patient/Laboratories', [
+                // 'title' => 'Patient Details',
+                
+                'items' => LaboratoryResource::collection($laboratories),                
+                
+                'headers' => [
+                    [
+                        'label' => 'created at',
+                        'name' => 'created_at',
+                    ],
+                    
+                
+                    [
+                        'label' => 'doctor',
+                        'name' => 'doctor',
+                    ],
+                    [
+                        'label' => 'description',
+                        'name' => 'description',
+                    ],
+    
+                    [
+                        'label' => 'employee',
+                        'name' => 'employee',
+                    ],
+                    [
+                        'label' => 'employee description',
+                        'name' => 'employee_description',
+                    ],
+                 
+                 
+                
+                  
+                    [
+                        'label' => 'Actions',
+                        'name' => 'actions',
+                    ],
+                ],
+                
+                'filters' => (object) $request->all(),
+            'routeResourceName' => $this->routeResourceName,
+            'can' => [
+                // 'create' => $request->user()->can('create diagnose'),
+            ],
+            'method'=> 'laboratories',
+            ]);
+    }
+
+    // public function report($id)
+    // {
+    //     // dd($id);
+    //     $invoice = Invoice::find($id);
+    //     $report = $invoice->diagnose()->first();
+    //     return  $report;
+    // }
+
+
+    public function labResult($id)
     {
         // dd($id);
-        $invoice = Invoice::find($id);
-        $report = $invoice->diagnose()->first();
-        return  $report;
+        $labResult = Laboratory::find($id);
+
+        return Inertia::render('Patient/Result', [
+            // 'title' => 'Patient Details',
+            
+            'result' => new LaboratoryResource($labResult),        
+        ]
+        );
+
+    }
+
+
+    public function radiologies(Request $request)
+    {
+        $radiologies = Radiology::query()
+        ->select([
+            'id',
+            'doctor_id',
+            'employee_id',
+            'description',
+            'employee_description',
+            'patient_id',
+            'created_at',
+            ])
+
+            ->where('patient_id',  Auth::user()->id) 
+            ->with(['doctor','employee'])
+
+            // ->with(['service'])
+            // ->with(['patient'])
+
+            // ->when( 
+            //     $request->patient_id,
+            //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
+            //     )
+
+            // ->when( 
+            //     $request->invoice_status,
+            //     fn (Builder $builder, $invoice_status) =>  $builder->where( 'invoice_status', $invoice_status)
+            //     )
+            
+            
+            ->latest('id')
+            ->paginate(10);
+            
+            // 'invoices' => InvoiceResource::collection($patient_invoices),
+// dd($invoices);
+
+// $diagnose = Diagnose::find()
+        
+// dd($laboratories);
+            return Inertia::render('Patient/Radiologies', [
+                // 'title' => 'Patient Details',
+                
+                'items' => RadiologyResource::collection($radiologies),                
+                
+                'headers' => [
+                    [
+                        'label' => 'created at',
+                        'name' => 'created_at',
+                    ],
+                    
+                
+                    [
+                        'label' => 'doctor',
+                        'name' => 'doctor',
+                    ],
+                    [
+                        'label' => 'description',
+                        'name' => 'description',
+                    ],
+    
+                    [
+                        'label' => 'employee',
+                        'name' => 'employee',
+                    ],
+                    [
+                        'label' => 'employee description',
+                        'name' => 'employee_description',
+                    ],
+                 
+                 
+                
+                  
+                    [
+                        'label' => 'Actions',
+                        'name' => 'actions',
+                    ],
+                ],
+                
+                'filters' => (object) $request->all(),
+            'routeResourceName' => $this->routeResourceName,
+            'can' => [
+                // 'create' => $request->user()->can('create diagnose'),
+            ],
+            'method'=> 'radiologies',
+            ]);
+
+    }
+
+    public function radiologyResult($id)
+    {
+        // dd($id);
+        $radiology_result = Radiology::find($id);
+
+        return Inertia::render('Patient/Result', [
+            // 'title' => 'Patient Details',
+            
+            'result' => new RadiologyResource($radiology_result),        
+        ]
+        );
+
     }
 }

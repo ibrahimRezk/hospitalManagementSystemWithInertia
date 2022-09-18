@@ -35,11 +35,9 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::get('invoices' , [PatientsController::class , 'invoices'] )->name('invoices');
     Route::get('report/{id}' , [PatientsController::class , 'report'] )->name('report');
     Route::get('laboratories' , [PatientsController::class , 'laboratories'] )->name('laboratories');
+    Route::get('lab_result/{id}' , [PatientsController::class , 'labResult'] )->name('labResult');
     Route::get('radiologies' , [PatientsController::class , 'radiologies'] )->name('radiologies');
-
-
-
-
+    Route::get('radiology_result/{id}' , [PatientsController::class , 'radiologyResult'] )->name('RadiologyResult');
 
 
 

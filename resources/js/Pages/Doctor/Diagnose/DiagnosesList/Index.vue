@@ -63,7 +63,6 @@ const showScreenExeptSubmenu = ref(false);
 const routeResourceName =ref('');
 const editMode = ref(false);
 const invoice_status = ref()
-const editItemId = ref() /// when edit the link may be different so we pass it from important  we save here in diagnose not invoice so we have to put it like thishere
 
 const fireShowDeleteModal = (item) => {
     showDeleteModal(item);
@@ -127,7 +126,6 @@ const fireAddDiagnosisModal = (item) => {
     editMode.value == true ? method.value = "update" : 'store';
     diagnosOrReview.value = true;
     routeResourceName.value = 'diagnoses';
-    editItemId.value = item.diagnose?.id
     hideMenu();
     return showDialogModal(item);
 };
@@ -173,7 +171,6 @@ const {
     method,
     editMode,
     invoice_status,
-    editItemId
     
 });
 

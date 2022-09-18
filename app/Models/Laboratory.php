@@ -26,7 +26,8 @@ class Laboratory extends Model
     public function employee()
     {
         return $this->belongsTo(User::class,'employee_id')
-            ->withDefault(['name'=>'noEmployee']);
+            ->withDefault(['name'=>'']);
+            // ->withDefault(['name'=>'noEmployee']);
     }
 
     public function patient()

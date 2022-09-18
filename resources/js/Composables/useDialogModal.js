@@ -10,7 +10,6 @@ export default function (params) {
         method : calledMethod,
         editMode : editModeValue,
         invoice_status: invoice_status_value,
-        editItemId : editItemIdValue
 
     } = params;
     const form = ref(formItems)
@@ -19,7 +18,6 @@ export default function (params) {
     const routeResourceName = ref(theRouteResourceName)
     const editMode = ref(editModeValue)
     const invoice_status = ref(invoice_status_value)
-    const editItemId = ref(editItemIdValue)
 
  
     const dialogModal = ref(false);
@@ -45,9 +43,7 @@ export default function (params) {
         {
             Inertia.put(
                 route(`doctor.${routeResourceName.value}.${method.value}`, {
-                    // id: itemToSave.value.id,
-                    // id: itemToSave.value.diagnose.id ,   //// 
-                    id: editItemId.value,   //// important  we save here in diagnose not invoice so we have to put it like this
+                    id: itemToSave.value.id,
                 }), 
                     {
                     ...form.value,

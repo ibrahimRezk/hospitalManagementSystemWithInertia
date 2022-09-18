@@ -50,8 +50,11 @@ class DiagnosesController extends Controller
 
     public function update(Request $request , $id){
         // dd($id);
-        $diagnose =Diagnose::find($id);
-        $invoice = Invoice::where('id', $diagnose->invoice_id); // to update state of invoice
+        $invoice =Invoice::find($id);
+        $diagnose = $invoice->diagnose;
+
+        // $diagnose =Diagnose::find($id);
+        // $invoice = Invoice::where('id', $diagnose->invoice_id); // to update state of invoice
         $invoice->update(['invoice_status' => $request->invoice_status]);
         $diagnose->date = date('Y-m-d');
         $diagnose->diagnose = $request->diagnose;

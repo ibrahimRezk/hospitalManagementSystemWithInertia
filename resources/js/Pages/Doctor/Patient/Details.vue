@@ -105,7 +105,6 @@ const editMode = ref()
 const method = ref("");
 const routeResourceName = ref('')
 const showScreenExeptSubmenu = ref()
-const editItemId = ref()
 
 
 const form = useForm({
@@ -118,7 +117,6 @@ const fillForm = (item)=>{
 
 const fireEditRadiologyModal = (item)=> {
     fillForm(item);
-    editItemId.value = item.id
     editMode.value = true;
     radiologiesOrLaboratories.value = true
     method.value = "update";
@@ -128,7 +126,6 @@ const fireEditRadiologyModal = (item)=> {
 /////////////////////////// end edit radiology ////////////////////
 const fireEditLaboratoryModal = (item)=> {
     fillForm(item);
-    editItemId.value = item.id
     editMode.value = true;
     radiologiesOrLaboratories.value = true
     method.value = "update";
@@ -147,12 +144,9 @@ const {
 } = useDialogModal({
     routeResourceName: routeResourceName,
     form: form,
-    // opened,
     showScreenExeptSubmenu,
     method,
     editMode,
-    editItemId,
-    // invoice_status
     
 });
     
@@ -528,7 +522,7 @@ const {
                                 </Td>
     
                                 <Td>
-                                    {{ item.employee_name ?? '--' }}
+                                    {{ item.employee.name ?? '--' }}
                                 </Td>
                                 <Td>
                                 <Button small :color="color(item)">
@@ -541,15 +535,16 @@ const {
                                     id: item.id,
                                 })
                             ">
+                            <Button small>
                             view result
-                          
+                        </Button>
                             </Link>
 
                            <span v-else>
-                            <button  @click="fireEditRadiologyModal(item)">
+                            <Button small  color="blue"  @click="fireEditRadiologyModal(item)">
 
                                 Edit
-                            </button>
+                            </Button>
                           
                            </span>
                                             </Td>
@@ -578,7 +573,7 @@ const {
                                 </Td>
     
                                 <Td>
-                                    {{ item.employee_name ?? '--' }}
+                                    {{ item.employee.name ?? '--' }}
                                 </Td>
                                 <Td>
                                 <Button small :color="color(item)">
@@ -591,15 +586,17 @@ const {
                                             id: item.id,
                                         })
                                     ">
-                                    view result
+                                    <Button small  color="blue">
+                                        view results
+                                    </Button>
                                   
                                     </Link>
         
                                    <span v-else>
-                                    <button  @click="fireEditLaboratoryModal(item)">
+                                    <Button small  @click="fireEditLaboratoryModal(item)">
         
                                         Edit
-                                    </button>
+                                    </Button>
                                   
                                    </span>
                         </Td>

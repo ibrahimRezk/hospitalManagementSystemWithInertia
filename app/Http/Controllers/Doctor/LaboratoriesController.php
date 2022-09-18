@@ -27,7 +27,7 @@ class LaboratoriesController extends Controller
         // }
     }
 
-    public function update($request, $id)
+    public function update(Request $request, $id)
     {
         // try {
             $radiologies = Laboratory::findOrFail($id);

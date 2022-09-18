@@ -203,6 +203,9 @@ class HandleInertiaRequests extends Middleware
                     ]
                 ],
 
+
+                // when getting data inside vue page we use axios.get instead of inertia.get   refere to patient invoices page
+
                 // add options to doctor completed and review to edit or add new things
                 
 // remember filters in accounts and invoices

@@ -29,6 +29,12 @@ class LoginResponse implements LoginResponseContract
         if (auth()->user()->hasRole('Radiologist')) {
             return redirect()->route('radiologist.dashboard');
         }
+        if (auth()->user()->hasRole('Laboratorist')) {
+            return redirect()->route('laboratorist.dashboard');
+        }
+        if (auth()->user()->hasRole('Patient')) {
+            return redirect()->route('patient.dashboard');
+        }
 
         // if (auth()->user()->hasRole('Editor')) {
         //     return redirect()->route('admin.dashboard');

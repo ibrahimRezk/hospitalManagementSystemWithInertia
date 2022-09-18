@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref, watch, computed } from "vue";
-    import { Head, Link } from "@inertiajs/inertia-vue3";
+    import { Head, Link , useForm} from "@inertiajs/inertia-vue3";
     import { Inertia } from "@inertiajs/inertia";
     import Layout from "@/Layouts/Authenticated.vue";
     import Container from "@/Components/Container.vue";
@@ -16,7 +16,10 @@
     import AddNew from "@/Components/AddNew.vue";
     
     import useDeleteItem from "@/Composables/useDeleteItem.js"; 
-    
+    import useDialogModal from "@/Composables/useDialogModal.js";
+    import DialogModal from "@/Components/DialogModal.vue";
+
+
     const props = defineProps({
         patient: {
             type: Object,
@@ -95,6 +98,63 @@
         ? "green"
         : "red";
 };
+
+/////////////////////////// to edit radiology ////////////////////
+const radiologiesOrLaboratories = ref(false);
+const editMode = ref()
+const method = ref("");
+const routeResourceName = ref('')
+const showScreenExeptSubmenu = ref()
+const editItemId = ref()
+
+
+const form = useForm({
+    description : "",
+});
+
+const fillForm = (item)=>{
+        form.description = item.description;
+}
+
+const fireEditRadiologyModal = (item)=> {
+    fillForm(item);
+    editItemId.value = item.id
+    editMode.value = true;
+    radiologiesOrLaboratories.value = true
+    method.value = "update";
+    routeResourceName.value = 'radiologies';
+    return showDialogModal(item);
+}
+/////////////////////////// end edit radiology ////////////////////
+const fireEditLaboratoryModal = (item)=> {
+    fillForm(item);
+    editItemId.value = item.id
+    editMode.value = true;
+    radiologiesOrLaboratories.value = true
+    method.value = "update";
+    routeResourceName.value = 'laboratories';
+    return showDialogModal(item);
+}
+
+
+const {
+    closeDialogModal,
+    dialogModal,
+    itemToSave,
+    isSaving,
+    showDialogModal,
+    handleSavingItem,
+} = useDialogModal({
+    routeResourceName: routeResourceName,
+    form: form,
+    // opened,
+    showScreenExeptSubmenu,
+    method,
+    editMode,
+    editItemId,
+    // invoice_status
+    
+});
     
     </script>
     <!-- {{ $t('Welcome') }} -->
@@ -315,6 +375,7 @@
                                                 class="mb-0 leading-normal text-size-sm"
                                             >
                                                 {{ props.patient.phone }}
+                                                
                                             </h6>
                                         </div>
                                     </div>
@@ -475,7 +536,7 @@
                                 </Button>
                             </Td>
                             <Td>
-                            <Link :href="
+                            <Link v-if="item.employee_description !== null" :href="
                                 route(`doctor.radiologies.show`, {
                                     id: item.id,
                                 })
@@ -483,7 +544,15 @@
                             view result
                           
                             </Link>
-                        </Td>
+
+                           <span v-else>
+                            <button  @click="fireEditRadiologyModal(item)">
+
+                                Edit
+                            </button>
+                          
+                           </span>
+                                            </Td>
                             </template>
                         </Table>
     
@@ -517,14 +586,22 @@
                                 </Button>
                             </Td>
                             <Td>
-                            <Link :href="
-                                route(`doctor.laboratories.show`, {
-                                    id: item.id,
-                                })
-                            ">
-                            view result
-                          
-                            </Link>
+                                    <Link v-if="item.employee_description !== null" :href="
+                                        route(`doctor.laboratories.show`, {
+                                            id: item.id,
+                                        })
+                                    ">
+                                    view result
+                                  
+                                    </Link>
+        
+                                   <span v-else>
+                                    <button  @click="fireEditLaboratoryModal(item)">
+        
+                                        Edit
+                                    </button>
+                                  
+                                   </span>
                         </Td>
                             </template>
                         </Table>
@@ -539,5 +616,54 @@
                 </Card>
             </Container>
         </Layout>
+
+        <DialogModal
+        :title="`Edit`"
+        :show="dialogModal"
+        @close="closeDialogModal"
+    >
+        <template #title>
+            <div class="bg-gray-800 px-4 py-2 text-white shadow-lg">
+                add new diagnose
+            </div>
+        </template>
+
+        <template #content>
+            <form @submit.prevent="handleSavingItem">
+                <div  v-if="radiologiesOrLaboratories">
+                <label
+                    class="mb-2 mx-4 bg-red-200 px-5 py1 rounded-lg shadow-md"
+                    >description</label
+                >
+                <textarea
+                    v-model="form.description"
+                    class="w-full resize border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="Text1"
+                    cols="40"
+                    rows="5"
+                />
+                <div>
+                    <!-- <InputError class="mt-1" :message="props.errors.description" /> -->
+                </div>
+                <br />
+
+            </div>
+        
+       
+
+        
+
+                <!-- <input type="hidden" v-model="form.patient_id">
+            <input type="hidden" v-model="form.doctor_id" >
+            <input type="hidden" v-model="form.patient_id"> -->
+
+                <Button :disabled="form.processing">
+                    {{ form.processing ? "Saving..." : "Save" }}
+                </Button>
+            </form>
+        </template>
+
+        <template #footer> </template>
+    </DialogModal>
     </template>
     

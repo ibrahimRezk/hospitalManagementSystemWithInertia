@@ -30,6 +30,10 @@ return [
     'Review diagnoses List'=> ' قائمة  المراجعات', 
     'Radiologies list'  => 'قائمة فحوصات الآشعة',
     'Laboratories list'  => 'قائمة فحوصات المعمل',
+    'Patient List' => 'عمليات المريض' ,
+    'Invoices List' => 'قائمة الفواتير' ,
+    'Laboratory' => 'المختبر' ,
+    'Radiology' => 'المعمل' ,
 
 
 

@@ -40,6 +40,14 @@ class UserSeeder extends Seeder
             'password' => '55555sssss',
             'name' => 'Laboratorist',
         ]);
+
+        User::factory()->create([
+            'email' => 'patient@gmail.com',
+            'password' => '55555sssss',
+            'name' => 'Patient',
+        ]);
+
+
         $user =  User::factory()->count(10)->create();
 
     }

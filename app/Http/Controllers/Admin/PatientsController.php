@@ -219,8 +219,10 @@ class PatientsController extends Controller
     {
 
         // $data = $request->safe()->only(['email', 'password' ,'phone']);
-        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group', 'password']);
+        // $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group', 'password']);
+        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group']);
 
+        $data['password'] = $request->phone; /// to let patient log in to his account with his email and phone number as a password
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;
         $data["ar"]["address"] = $request->address_ar;
@@ -229,6 +231,7 @@ class PatientsController extends Controller
         // we can use it like this 
         // $data['section_id'] = $request->section; 
 
+        // dd($data);
         $user = User::create($data);
 
         $user->assignRole($this->role);  // to be changed

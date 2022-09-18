@@ -13,7 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PatientDetailsController extends Controller
+class PatientDetailsController extends Controller 
 {
     public function index($id){ 
 

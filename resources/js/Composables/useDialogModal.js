@@ -9,7 +9,8 @@ export default function (params) {
         showScreenExeptSubmenu, 
         method : calledMethod,
         editMode : editModeValue,
-        invoice_status: invoice_status_value
+        invoice_status: invoice_status_value,
+        editItemId : editItemIdValue
 
     } = params;
     const form = ref(formItems)
@@ -18,6 +19,7 @@ export default function (params) {
     const routeResourceName = ref(theRouteResourceName)
     const editMode = ref(editModeValue)
     const invoice_status = ref(invoice_status_value)
+    const editItemId = ref(editItemIdValue)
 
  
     const dialogModal = ref(false);
@@ -28,7 +30,7 @@ export default function (params) {
         dialogModal.value = false;
         itemToSave.value = {};
         opened.value = 0
-        showScreenExeptSubmenu.value =false
+        showScreenExeptSubmenu.value = false
     }
 
     function showDialogModal(item) {
@@ -41,10 +43,11 @@ export default function (params) {
     function handleSavingItem() {
         if(editMode.value == true ) 
         {
-            console.log(true)
             Inertia.put(
                 route(`doctor.${routeResourceName.value}.${method.value}`, {
-                    id: itemToSave.value.diagnose.id,   //// important  we save here in diagnose not invoice so we have to put it like this
+                    // id: itemToSave.value.id,
+                    // id: itemToSave.value.diagnose.id ,   //// 
+                    id: editItemId.value,   //// important  we save here in diagnose not invoice so we have to put it like this
                 }), 
                     {
                     ...form.value,

@@ -27,8 +27,9 @@ class RadiologiesController extends Controller
         // }
     }
 
-    public function update($request, $id)
+    public function update(Request  $request, $id )
     {
+        // dd($request);
         // try {
             $radiologies = Radiology::findOrFail($id);
             $radiologies->update([

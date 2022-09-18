@@ -32,6 +32,7 @@ class RolesSeeder extends Seeder
         User::find(4)->assignRole($laboratorist);
 
         $patient     = Role::create(['name' =>'Patient']);
+        User::find(5)->assignRole($patient);
 
         Permission::create(['name' => 'view permissions module']);
         Permission::create(['name' => 'view permissions list']);

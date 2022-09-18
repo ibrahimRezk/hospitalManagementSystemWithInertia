@@ -1,36 +1,8 @@
 <?php
-
-use App\Http\Controllers\Admin\AmbulancesController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\RolesController;
-use App\Http\Controllers\Admin\PermissionsController;
-use App\Http\Controllers\Admin\AttachPermissionToRoleController;
-use App\Http\Controllers\Admin\DetachPermissionFromRoleController;
-use App\Http\Controllers\Admin\UploadImagesController;
-use App\Http\Controllers\Admin\DeleteImageController;
-use App\Http\Controllers\Admin\DoctorsController;
-use App\Http\Controllers\Admin\InsurancesController;
-use App\Http\Controllers\Admin\PatientsController;
-use App\Http\Controllers\Admin\PaymentsController;
-use App\Http\Controllers\Admin\RadiologistsController;
-use App\Http\Controllers\Admin\ReceiptsController;
-use App\Http\Controllers\Admin\SectionsController;
-use App\Http\Controllers\Admin\ServicesController;
-use App\Http\Controllers\Admin\ServicesGroupInvoicesController;
-use App\Http\Controllers\Admin\ServicesGroupsController;
-use App\Http\Controllers\Admin\SingleInvoicesController;
-use App\Http\Controllers\Admin\SingleServiceInvoicesController;
-use App\Http\Controllers\Admin\SingleServicesController;
 use App\Http\Controllers\Laboratorist\LaboratoriesController;
-use App\Http\Controllers\Laboratorist\LaboratoristsDashboardController;
-use App\Http\Controllers\Radiologist\RadiologiesController;
-use App\Http\Controllers\Radiologist\RadiologistsDashboardController;
-use App\Models\User;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Laboratorist\LaboratoristDashboardController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 
 
@@ -56,7 +28,7 @@ Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authS
 
 Route::middleware(['auth', 'Lang'])->group(function () {
 
-    Route::get('dashboard', LaboratoristsDashboardController::class)->name('dashboard');
+    Route::get('dashboard', LaboratoristDashboardController::class)->name('dashboard');
 
     Route::get('completed_invoices' , [LaboratoriesController::class , 'completedInvoices'])->name('completedInvoices');
     Route::resource('laboratories', LaboratoriesController::class);

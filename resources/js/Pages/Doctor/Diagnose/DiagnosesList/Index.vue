@@ -63,6 +63,7 @@ const showScreenExeptSubmenu = ref(false);
 const routeResourceName =ref('');
 const editMode = ref(false);
 const invoice_status = ref()
+const editItemId = ref() /// when edit the link may be different so we pass it from important  we save here in diagnose not invoice so we have to put it like thishere
 
 const fireShowDeleteModal = (item) => {
     showDeleteModal(item);
@@ -126,6 +127,7 @@ const fireAddDiagnosisModal = (item) => {
     editMode.value == true ? method.value = "update" : 'store';
     diagnosOrReview.value = true;
     routeResourceName.value = 'diagnoses';
+    editItemId.value = item.diagnose?.id
     hideMenu();
     return showDialogModal(item);
 };
@@ -136,7 +138,6 @@ const fireAddReviewModal = (item) => {
     editMode.value == true ? method.value = "update" : 'store';
     addReview.value = true;
     diagnosOrReview.value = true;
-    method.value = "addReview";
     routeResourceName.value = 'diagnoses';
     hideMenu();
     return showDialogModal(item);
@@ -171,7 +172,8 @@ const {
     showScreenExeptSubmenu,
     method,
     editMode,
-    invoice_status
+    invoice_status,
+    editItemId
     
 });
 
@@ -470,7 +472,7 @@ const color = (item) => {
         <div class="absolute inset-0 opacity-95" />
     </div>
     <!-- /////////////////////////////////////////////////////////// -->
-    <Modal
+    <!-- <Modal
         :title="`Delete ${itemToDelete.name}`"
         :show="deleteModal"
         @close="close"
@@ -485,7 +487,7 @@ const color = (item) => {
                 <span v-else>Delete</span>
             </Button>
         </template>
-    </Modal>
+    </Modal> -->
 
     <!-- //////////////////////////Dialog Modal/////////////////////////////////////// -->
 

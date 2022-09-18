@@ -1,6 +1,7 @@
 <?php
-use App\Http\Controllers\Radiologist\RadiologiesController;
-use App\Http\Controllers\Radiologist\RadiologistDashboardController;
+
+use App\Http\Controllers\Patient\PatientDashboardController;
+use App\Http\Controllers\Patient\PatientsController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
@@ -28,10 +29,13 @@ Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authS
 
 Route::middleware(['auth', 'Lang'])->group(function () {
 
-    Route::get('dashboard', RadiologistDashboardController::class)->name('dashboard');
+    Route::get('dashboard', PatientDashboardController::class)->name('dashboard');
 
-    Route::get('completed_invoices' , [RadiologiesController::class , 'completedInvoices'])->name('completedInvoices');
-    Route::resource('radiologies', RadiologiesController::class);
+
+    Route::get('invoices' , [PatientsController::class , 'invoices'] )->name('invoices');
+    Route::get('report/{id}' , [PatientsController::class , 'report'] )->name('report');
+    Route::get('laboratories' , [PatientsController::class , 'laboratories'] )->name('laboratories');
+    Route::get('radiologies' , [PatientsController::class , 'radiologies'] )->name('radiologies');
 
 
 

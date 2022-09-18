@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'inertiaDoctor' =>  \App\Http\Middleware\HandleInertiaDoctorRequests::class,
         'inertiaRadiologist' =>  \App\Http\Middleware\HandleInertiaRadiologistRequests::class,
         'inertiaLaboratorist' =>  \App\Http\Middleware\HandleInertiaLaboratoristRequests::class,
+        'inertiaPatient' =>  \App\Http\Middleware\HandleInertiaPatientRequests::class,
         'Lang' =>\App\Http\Middleware\Lang::class,
 
     ];

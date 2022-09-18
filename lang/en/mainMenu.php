@@ -29,6 +29,10 @@ return [
     'Review diagnoses List'  => 'Review diagnoses List',
     'Radiologies list'  => 'Radiologies list',
     'Laboratories list'  => 'Laboratories list',
+    'Patient List' => 'Patient List',
+    'Invoices List' => 'Invoices List',
+    'Laboratory' => 'Laboratory',
+    'Radiology' => 'Radiology',
 
 
 

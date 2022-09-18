@@ -38,7 +38,7 @@ class InvoiceResource extends JsonResource
             
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
-            }),
+            }), 
             'can' => [
                 'edit' => $request->user()?->can('edit invoice'),
                 'delete' => $request->user()?->can('delete invoice'), 

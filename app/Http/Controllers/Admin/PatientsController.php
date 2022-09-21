@@ -261,8 +261,9 @@ class PatientsController extends Controller
     public function update(UsersRequest $request, User $user)
     {
         // user phone number is password phone must be long enoph or it will return an error on updating
-        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group', 'password']);
+        $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group']);
         // dd($data);
+        $data['password'] = $request->phone; /// to let patient log in to his account with his email and phone number as a password
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
         $data["ar"]["address"] = $request->address_ar;

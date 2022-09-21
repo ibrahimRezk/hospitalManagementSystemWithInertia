@@ -7,6 +7,8 @@ import Button from "@/Components/Button.vue";
 import InputGroup from "@/Components/InputGroup.vue";
 import SelectGroup from "@/Components/SelectGroup.vue";
 import CheckboxGroup from "@/Components/CheckboxGroup.vue";
+import ImageUpload from "@/Components/ImageUpload.vue";
+
 
 
 const props = defineProps({
@@ -35,6 +37,8 @@ const props = defineProps({
         required: false, 
     },
 });
+const maxUploadImageCount = 1 ;
+
 
 const form = useForm({
     // name: props.item.name ?? "",
@@ -53,7 +57,7 @@ const form = useForm({
 
 });
 
-const submit = () => {
+const submit = () => { 
     props.edit
         ? form.put(
               route(`admin.${props.routeResourceName}.update`, {
@@ -136,6 +140,8 @@ const submit = () => {
                         </div>
                        
                     </div>
+                   
+                    
 
                     <div class="mt-4">
                         <Button :disabled="form.processing">

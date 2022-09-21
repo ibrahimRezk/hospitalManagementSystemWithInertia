@@ -5,11 +5,15 @@ namespace App\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Group extends Model
+class Group extends Model implements HasMedia
 {
     use Translatable;
     use HasFactory;
+    use InteractsWithMedia;
+
     public $translatedAttributes = ['name','notes'];
     public $fillable= ['Total_before_discount','discount_value','Total_after_discount','tax_rate','Total_with_tax','status'];
     //public $guarded=[];

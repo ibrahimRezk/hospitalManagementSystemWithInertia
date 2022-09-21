@@ -5,11 +5,15 @@ namespace App\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Service extends Model
+class Service extends Model implements HasMedia
 {
     use Translatable;
     use HasFactory;
+    use InteractsWithMedia;
+
     public $translatedAttributes = ['name','description'];
     public $fillable= ['price','status'];
     public $with =['translations'];

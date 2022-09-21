@@ -55,6 +55,7 @@ class LaboratoriesController extends Controller
             'invoice_id',
             'patient_id',
             'doctor_id',
+            'employee_id',
             'status',
             'created_at',
             ])
@@ -140,9 +141,10 @@ class LaboratoriesController extends Controller
     public function create(Request $request){
         // dd($request);
         $laboratory_details = Laboratory::find($request->id);
+        $laboratory_details->load('media');
 
         return Inertia::render('Laboratorist/DiagnosisList/Create', [
-            'item' => new LaboratoryResource($laboratory_details),
+            'item' => new LaboratoryResource($laboratory_details), 
             'edit' => false,
             'title' => 'Add Laboratory Report',
             'routeResourceName' => $this->routeResourceName,

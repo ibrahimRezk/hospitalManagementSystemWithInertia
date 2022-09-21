@@ -13,8 +13,10 @@ use Spatie\Permission\Traits\HasRoles;
 use Astrotomic\Translatable\Translatable;
 use App\Casts\PasswordCast;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
     use HasFactory;
@@ -23,6 +25,8 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use HasRoles;
     use Translatable;
+    use InteractsWithMedia;
+
 
     public $translatedAttributes =[ 'name', 'address'];
     public $with =['translations'];

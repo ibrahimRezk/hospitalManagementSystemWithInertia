@@ -4,15 +4,19 @@ namespace App\Models;
 
 use App\Casts\LaboratoryCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Laboratory extends Model
+class Laboratory extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
+
 
     protected $guarded=[];
 
-    public $with =['doctor' , 'employee' , 'patient'];
+    public $with =['doctor' , 'employee' , 'patient' , 'invoice'];
 
     protected $casts = [
         'status'=> LaboratoryCast::class
@@ -35,8 +39,15 @@ class Laboratory extends Model
         return $this->belongsTo(User::class,'patient_id');
     }
 
-    public function images()
+    public function invoice()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->belongsTo(Invoice::class,'invoice_id');
     }
+
+
+
+    // public function images()
+    // {
+    //     return $this->morphMany(Image::class, 'imageable');
+    // }
 }

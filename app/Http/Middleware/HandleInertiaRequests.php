@@ -203,15 +203,20 @@ class HandleInertiaRequests extends Middleware
                     ]
                 ],
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// remains :  dashboard pages for every section ,  images , appointments , notifications , roles and permissions , other enhancements
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-                // when getting data inside vue page we use axios.get instead of inertia.get   refere to patient invoices page
 
-                // add options to doctor completed and review to edit or add new things
+// when getting data inside vue page we use axios.get instead of inertia.get   refere to patient invoices page
+
+ // add options to doctor completed and review to edit or add new things
                 
 // remember filters in accounts and invoices
 
 // create new section in main menu for checkups for doctors and radiology section
-
 
 // add status to services
 

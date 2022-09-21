@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\AmbulancesController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\ServicesGroupInvoicesController;
 use App\Http\Controllers\Admin\ServicesGroupsController;
 use App\Http\Controllers\Admin\SingleServiceInvoicesController;
 use App\Http\Controllers\Admin\SingleServicesController;
+use App\Http\Controllers\Admin\UploadImagesController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -74,6 +76,11 @@ Route::middleware(['auth', 'Lang'])->group(function () {
     Route::resource('servicesGroupInvoices', ServicesGroupInvoicesController::class)->parameters(['servicesGroupInvoices' => 'invoice']);
     Route::resource('receipts', ReceiptsController::class); 
     Route::resource('payments', PaymentsController::class); 
+
+
+    Route::post('upload-images' , UploadImagesController::class )->name('images.store');
+    Route::delete('delete-image/{id}' ,DeleteImageController::class)->name('images.destroy');
+
 
 
 

@@ -6,6 +6,8 @@ import Card from "@/Components/Card/Card.vue";
 import Button from "@/Components/Button.vue";
 import InputGroup from "@/Components/InputGroup.vue";
 import SelectGroup from "@/Components/SelectGroup.vue";
+import ImageUpload from "@/Components/ImageUpload.vue";
+
 
 const props = defineProps({
     edit: {
@@ -63,6 +65,13 @@ const submit = () => {
 
         <Container>
             <Card>
+                <div class="col-span-2">
+                    <ImageUpload
+                                model-type="product"
+                                :model-id="item.id"
+                                
+                            />
+                                                            </div>
                 <form @submit.prevent="submit">
                     <div class="grid grid-cols-2 gap-6">
                         <InputGroup

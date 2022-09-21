@@ -6,10 +6,14 @@ use App\Casts\InvoiceTypeCast;
 use App\Casts\InvoiceTypeStatusCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Invoice extends Model
+class Invoice extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
+
 
     // protected $guarded=[];
     protected $fillable = ['invoice_status'];

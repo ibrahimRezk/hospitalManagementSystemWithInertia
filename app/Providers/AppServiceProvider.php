@@ -54,6 +54,8 @@ class AppServiceProvider extends ServiceProvider
         //         ? $rule->mixedCase()->number()->symbols()->uncompromised()
         //         : $rule;
         // });
+
+        
         // Relation::enforceMorphMap([
         //     'category' => Category::class,
         //     'category_product' => CategoryProduct::class,
@@ -61,5 +63,5 @@ class AppServiceProvider extends ServiceProvider
         //     'user' => User::class,
         //     'permission'=>Permission::class,
         // ]);
-    }
+    }  
 }

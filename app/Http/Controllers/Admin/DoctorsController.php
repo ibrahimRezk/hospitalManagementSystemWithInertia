@@ -179,6 +179,7 @@ class DoctorsController extends Controller
 
     public function edit(User $user)
     {
+        $user->load('media');
         $user->load(['roles:roles.id']);
         $user->load(['section:id']);
 

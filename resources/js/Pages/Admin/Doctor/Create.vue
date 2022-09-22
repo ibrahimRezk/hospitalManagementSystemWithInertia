@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm} from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Authenticated.vue";
 import Container from "@/Components/Container.vue";
 import Card from "@/Components/Card/Card.vue";
@@ -8,7 +8,7 @@ import InputGroup from "@/Components/InputGroup.vue";
 import SelectGroup from "@/Components/SelectGroup.vue";
 import CheckboxGroup from "@/Components/CheckboxGroup.vue";
 import ImageUpload from "@/Components/ImageUpload.vue";
-import { watch } from "@vue/runtime-core";
+import { watch  , ref } from "@vue/runtime-core";
 
 const props = defineProps({
     edit: {
@@ -37,6 +37,7 @@ const props = defineProps({
     },
 });
 const maxUploadImageCount = 1;
+const currentImage =  ref(props.item.images?.[0]?.img.original_url ?? null)
 
 const form = useForm({
     // name: props.item.name ?? "",
@@ -50,26 +51,35 @@ const form = useForm({
     section_id: props.item.section?.id ?? "", /// important   it will work only like this in create and edit cecase of the relation this is diffrent
     appointments: props.item.appointments ?? "",
     status: props.item.status ?? true,
-    image: null,
+    image:null,
 });
 
 
 var loadFile = function (event) {
     var output = document.getElementById("output");
-    console.log(output);
     output.src = URL.createObjectURL(event.target.files[0]);
     output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
     };
 };
 
+// Inertia.post(`/users/${user.id}`, {
+//   _method: 'put',
+//   avatar: form.avatar,
+// })
+
 
 const submit = () => {
     props.edit
-        ? form.put(
-              route(`admin.${props.routeResourceName}.update`, {
-                  id: props.item.id,
-              })
+            ? form.post(
+                //   route(`admin.${props.routeResourceName}.update`, {  // not working with multipart/formData   can not update files or images
+              route(`admin.${props.routeResourceName}.updateDoctor`, {
+                _method: 'put',  // we use it like this and modify route to be post not put and re enter _mothod :put because when uploading files like images it is not supported in inetia  ,, remember to create new put route in routes 
+                id: props.item.id,
+            }),{
+                preserveState: true
+
+              }
           )
         : form.post(route(`admin.${props.routeResourceName}.store`));
 };
@@ -151,12 +161,12 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <div></div>
                     <div class="my-5">
                         <input
                             type="file"
-                            @input="form.image = $event.target.files[0]"
+                            @input="form.image = $event.target.files[0]" 
                             @change="loadFile($event)"
+
                         />
                         <progress
                             v-if="form.progress"
@@ -172,6 +182,7 @@ const submit = () => {
                             style="border-radius: 10%"
                             width="400"
                             id="output"
+                            :src="currentImage"
                             class="shadow-lg rounded p-1 "
                         />
                     </div>

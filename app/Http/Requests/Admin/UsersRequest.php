@@ -41,8 +41,8 @@ class UsersRequest extends FormRequest
             'address_ar' => ['bail', 'nullable', 'string', 'max:255'],
             'address_en' => ['bail', 'nullable', 'string', 'max:255'],
 
-            'email' => ['bail', 'required', 'email', 'max:255', Rule::unique(User::class)->ignore($model->id ?? null)],
-            // 'email' => 'bail|required|email|max:255|unique:users,email,'.$model,
+            // 'email' => ['bail', 'required', 'email', 'max:255', Rule::unique(User::class)->ignore($model->id ?? null)],
+            'email' => 'bail|required|email|max:255|unique:users,email,'.$this->id,   /// it workin only like this because we don't use route model binding in editing
             // 'password' => ['bail', ...$passwordRule, Password::defaults()],
             // 'passwordConfirmation' => ['bail', ...$passwordRule, 'same:password'], 
             'phone'=> ['bail', 'nullable', 'string', 'max:255'],

@@ -191,7 +191,7 @@ class DoctorsController extends Controller
         return Inertia::render('Admin/Doctor/Create', [ 
             'edit' => true,
             'title' => 'Edit User',
-            'item' => new UserResource($user),
+            'item' => new DoctorResource($user),
             'routeResourceName' => $this->routeResourceName,
             'roles' => RoleResource::collection(Role::get(['id', 'name'])),
             'sections' => SectionResource::collection(Section::get(['id'])),
@@ -201,14 +201,25 @@ class DoctorsController extends Controller
         ]);
     } 
 
-    public function update(UsersRequest $request, User $user)
+    public function updateDoctor(UsersRequest $request,  $id)
     {
+        // dd($request);
+        $user = User::find($id);
         // review samir gamal method to make password nullable on update and update userRequest file
         $data = $request->safe()->only(['email', 'password' ,'phone' ,'section_id','status']);
         
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
         $user->update($data);
+
+        if($request->hasFile('image')){
+
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
+        
 
         $user->syncRoles($this->role);
 

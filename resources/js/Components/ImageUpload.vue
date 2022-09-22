@@ -71,13 +71,18 @@ dictRemoveFile : "حذف",
         init: function () {
             props.item.images?.forEach((image, index) => {
                 var mock = {
-                    name: image.name,
-                    image_id: image.id,
-                    size: image.size,
-                    type: image.mime_type,
+                    name: image.img.name,
+                    image_id: image.img.id,
+                    size: image.img.size,
+                    type: image.img.mime_type,
                 };
                 this.emit("addedfile", mock);
-                this.options.thumbnail.call(this, mock, image.img.original_url);  // images.img comming from laboratory resource
+
+                // images.img comming from laboratory resource
+                // this line below will bring the smallest image size
+                // let imgUrl = image.img.original_url.split('/').slice(0,-1).join('/')+'/responsive-images/'+image.img.responsive_images.media_library_original.urls[3];
+                // this.options.thumbnail.call(this, mock, imgUrl);  
+                this.options.thumbnail.call(this, mock, image.img.original_url);   // this will get the original image 
 
                 let dzProgress = document.getElementsByClassName('dz-progress');
                 dzProgress[0].classList.remove('dz-progress')

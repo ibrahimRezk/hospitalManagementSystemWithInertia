@@ -48,6 +48,7 @@ class DoctorsController extends Controller
             ])
 
             ->with(['section:id'])
+            ->with('media')
             
             // to get only one kind of userd depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
@@ -151,6 +152,7 @@ class DoctorsController extends Controller
 
     public function store(UsersRequest $request) 
     {
+        // dd($request);
 
         //remember to use section_id not section because in database column name is section_id
 
@@ -165,6 +167,9 @@ class DoctorsController extends Controller
 
         $user = User::create($data);
         $user->assignRole($this->role);
+        $user->addMediaFromRequest('image')
+            ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+            ->toMediaCollection();
         // $appointments // to be done
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');

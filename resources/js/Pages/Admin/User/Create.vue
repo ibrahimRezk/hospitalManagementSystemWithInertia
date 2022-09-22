@@ -66,11 +66,7 @@ const submit = () => {
         <Container>
             <Card>
                 <div class="col-span-2">
-                    <ImageUpload
-                                model-type="product"
-                                :model-id="item.id"
-                                
-                            />
+            
                                                             </div>
                 <form @submit.prevent="submit">
                     <div class="grid grid-cols-2 gap-6">

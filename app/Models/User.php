@@ -31,6 +31,10 @@ class User extends Authenticatable implements HasMedia
     public $translatedAttributes =[ 'name', 'address'];
     public $with =['translations'];
 
+    public static function last()
+    {
+        return static::all()->last();
+    }
 
 
     /**

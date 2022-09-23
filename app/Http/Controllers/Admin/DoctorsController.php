@@ -216,7 +216,7 @@ class DoctorsController extends Controller
 
             $user->media()->delete();
             $user->addMediaFromRequest('image')
-                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                // ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
                 ->toMediaCollection();
         }
         

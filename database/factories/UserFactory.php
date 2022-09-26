@@ -36,7 +36,7 @@ class UserFactory extends Factory
 
         static $counter = 1;
 
-        $locales = ['ar', 'en'];
+        $locales = ['ar', 'en']; 
 
         $data = array(
             'email' => $this->faker->unique()->safeEmail(),

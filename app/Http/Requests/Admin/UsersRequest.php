@@ -50,7 +50,7 @@ class UsersRequest extends FormRequest
             'passwordConfirmation' => ['bail','required', 'same:password'],
             'roleId' => ['bail',  'nullable', Rule::exists(Role::class, 'id')], 
             'section_id' => ['bail', 'nullable', Rule::exists(Section::class, 'id')], 
-            'appointments'=> ['bail', 'nullable', 'string', 'max:255'],
+            'appointments'=> ['bail', 'nullable', 'array', 'max:255'],
             'status'=> ['bail', 'nullable'],
 
             'birth_date' =>  ['bail', 'nullable', 'date', 'max:255'],

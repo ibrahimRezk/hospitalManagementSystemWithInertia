@@ -33,7 +33,7 @@ defineProps({
 <template>
     <div>
         <Label v-if="label"
-               :value="label" />
+               :value="label" /> 
 
         <Select class="mt-1"
                 :model-value="modelValue" 

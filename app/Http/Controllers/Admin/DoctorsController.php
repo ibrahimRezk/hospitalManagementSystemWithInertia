@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DoctorsRequest;
 use App\Http\Requests\Admin\UsersRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\UserResource;
+use App\Models\Appointment;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Builder; 
 use Illuminate\Http\Request;
@@ -49,6 +51,7 @@ class DoctorsController extends Controller
 
             ->with(['section:id'])
             ->with('media')
+            ->with('doctors_appointments')
             
             // to get only one kind of userd depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
@@ -146,13 +149,13 @@ class DoctorsController extends Controller
             // 'roles' => RoleResource::collection(Role::get(['id', 'name'])),
 
             'sections' => SectionResource::collection(Section::get(['id'])),
-            // 'appointments' =>
+            'appointments' => AppointmentResource::collection(Appointment::get(['id']))
         ]);
     }
 
     public function store(UsersRequest $request) 
     {
-        // dd($request);
+        dd($request);
 
         //remember to use section_id not section because in database column name is section_id
 
@@ -166,11 +169,17 @@ class DoctorsController extends Controller
         // $data['section_id'] = $request->section; 
 
         $user = User::create($data);
+
+        if($request->hasFile('image')){
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
         $user->assignRole($this->role);
-        $user->addMediaFromRequest('image')
-            ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
-            ->toMediaCollection();
+
         // $appointments // to be done
+
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
@@ -213,10 +222,9 @@ class DoctorsController extends Controller
         $user->update($data);
 
         if($request->hasFile('image')){
-
             $user->media()->delete();
             $user->addMediaFromRequest('image')
-                // ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
                 ->toMediaCollection();
         }
         

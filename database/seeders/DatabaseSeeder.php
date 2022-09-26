@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RolesSeeder::class,
             DoctorSeeder::class,
+            AppointmentSeeder::class,
             
         ]);
         

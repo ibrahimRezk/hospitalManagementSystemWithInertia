@@ -29,7 +29,7 @@ class User extends Authenticatable implements HasMedia
 
 
     public $translatedAttributes =[ 'name', 'address'];
-    public $with =['translations'];
+    public $with =['translations' ,'doctors_appointments'];
 
 
 
@@ -101,10 +101,10 @@ class User extends Authenticatable implements HasMedia
     // }
 
     
-    // public function doctorappointments()
-    // {
-    //     return $this->belongsToMany(Appointment::class,'appointment_doctor');
-    // }
+    public function doctors_appointments()
+    {
+        return $this->belongsToMany(Appointment::class,'doctors_appointments' , 'appointment_id' , 'doctor_id');
+    }
 
 
     public function doctor()

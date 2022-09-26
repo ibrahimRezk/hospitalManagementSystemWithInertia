@@ -80,19 +80,13 @@ dictRemoveFile : "حذف",
                 this.emit("addedfile", mock);
                 
                 // images.img comming from laboratory resourcey
-                // this line below will bring the smallest image size
-                // let imgUrl = image.img.original_url.split('/').slice(0,-1).join('/')+'/responsive-images/'+image.img.responsive_images.media_library_original.urls[3];
-                // this.options.thumbnail.call(this, mock, imgUrl);  
                 this.options.thumbnail.call(this, mock, image.img.original_url);   // this will get the original image 
                 
                 let dzProgress = document.getElementsByClassName('dz-progress');
-                dzProgress[0].classList.remove('dz-progress')
-                
-                
-                
+                dzProgress[0].classList.remove('dz-progress')    
             },
 
-// this must be inside forEach but must be out side the callback function of foreach
+// this must be inside forEach but must be outside the callback function of foreach    .... basicaly between }, of the callback function  and ) of the foreach;
             this.on("addedfile", function(file) {
                 console.log(file)
                 file.previewElement.addEventListener("click", function() {
@@ -100,7 +94,6 @@ dictRemoveFile : "حذف",
                             window.open(file.previewElement.children[0].children[0].currentSrc,'_blank');
                         });
                     })
-            
             );
             
         },

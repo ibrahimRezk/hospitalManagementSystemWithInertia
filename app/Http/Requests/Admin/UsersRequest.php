@@ -28,12 +28,13 @@ class UsersRequest extends FormRequest
      */
     public function rules() 
     {
-        $model = $this->route('user');
+        // $model = $this->route('user');
         // $model = ( $this->user->id ) ?? null ; 
+        $model = $this->id;
 
 
 
-        // $passwordRule = $model ? ['nullable'] : ['required'];
+        $passwordRule = $model ? ['nullable'] : ['required'];
 
         return [
             'name_ar' => ['bail', 'required', 'string', 'max:255'],
@@ -43,11 +44,11 @@ class UsersRequest extends FormRequest
 
             // 'email' => ['bail', 'required', 'email', 'max:255', Rule::unique(User::class)->ignore($model->id ?? null)],
             'email' => 'bail|required|email|max:255|unique:users,email,'.$this->id,   /// it workin only like this because we don't use route model binding in editing
-            // 'password' => ['bail', ...$passwordRule, Password::defaults()],
-            // 'passwordConfirmation' => ['bail', ...$passwordRule, 'same:password'], 
+            'password' => ['bail', ...$passwordRule, Password::defaults()],
+            'passwordConfirmation' => ['bail', ...$passwordRule, 'same:password'], 
             'phone'=> ['bail', 'nullable', 'string', 'max:255'],
-            'password' => ['bail', 'required', Password::defaults()],
-            'passwordConfirmation' => ['bail','required', 'same:password'],
+            // 'password' => ['bail', 'required', Password::defaults()],
+            // 'passwordConfirmation' => ['bail','required', 'same:password'],
             'roleId' => ['bail',  'nullable', Rule::exists(Role::class, 'id')], 
             'section_id' => ['bail', 'nullable', Rule::exists(Section::class, 'id')], 
             'appointments'=> ['bail', 'nullable', 'array', 'max:255'],

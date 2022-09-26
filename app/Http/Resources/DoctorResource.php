@@ -29,7 +29,7 @@ class DoctorResource extends JsonResource
             'section' => new SectionResource($this->whenLoaded('section')),
             'phone' => $this->when($this->phone, $this->phone),
             'status' => $this->when($this->status, $this->status),
-            'appointements' => AppointmentResource::collection( $this->whenLoaded('doctors_appointments')),     
+            'appointments' => AppointmentResource::collection( $this->whenLoaded('doctors_appointments')),     
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),

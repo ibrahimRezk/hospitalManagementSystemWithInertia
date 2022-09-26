@@ -103,7 +103,7 @@ class User extends Authenticatable implements HasMedia
     
     public function doctors_appointments()
     {
-        return $this->belongsToMany(Appointment::class,'doctors_appointments' , 'appointment_id' , 'doctor_id');
+        return $this->belongsToMany(Appointment::class,'doctors_appointments' , 'doctor_id'  , 'appointment_id');
     }
 
 

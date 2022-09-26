@@ -155,7 +155,7 @@ class DoctorsController extends Controller
 
     public function store(UsersRequest $request) 
     {
-        dd($request);
+        // dd($request);
 
         //remember to use section_id not section because in database column name is section_id
 
@@ -169,6 +169,7 @@ class DoctorsController extends Controller
         // $data['section_id'] = $request->section; 
 
         $user = User::create($data);
+        $user->doctors_appointments()->attach($request->appointments);
 
         if($request->hasFile('image')){
             $user->media()->delete();
@@ -204,7 +205,7 @@ class DoctorsController extends Controller
             'routeResourceName' => $this->routeResourceName,
             'roles' => RoleResource::collection(Role::get(['id', 'name'])),
             'sections' => SectionResource::collection(Section::get(['id'])),
-            // 'appointments' =>
+            'appointments' => AppointmentResource::collection(Appointment::get(['id']))
 
             
         ]);
@@ -227,7 +228,8 @@ class DoctorsController extends Controller
                 ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
                 ->toMediaCollection();
         }
-        
+
+        $user->doctors_appointments()->sync($request->appointments);
 
         $user->syncRoles($this->role);
 

@@ -65,6 +65,16 @@ const { filters, isLoading, isFilled } = useFilters({
     method:props.method
 
 });
+
+
+const doctorAppointments = (doctor)=>{
+    const allAppointments = ref([])
+    doctor.appointments.forEach((day)=>
+    allAppointments.value.push(day.name)
+    
+    );
+    return allAppointments.value.join(', ')  // to remove braces from the array an add comma between items 
+}
 </script>
 
 <template>
@@ -137,7 +147,8 @@ const { filters, isLoading, isFilled } = useFilters({
                             </Button>
                         </Td>
                         <Td >
-                            {{ item.appointements }}
+                            {{ doctorAppointments(item) }}
+                            <!-- {{ allAppointments }} -->
                         </Td>
                         <Td>
                             <YesNoLabel :active="item.status" />

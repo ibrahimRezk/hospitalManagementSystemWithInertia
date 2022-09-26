@@ -1,8 +1,0 @@
-  <select multiple  v-model="form.appointments">
-
-                            <option v-for="appointment in appointments" class=" text-slate-900"
-                            :key="appointment.id"
-                            :value="appointment.id">
-                            {{ appointment.name}}
-                            </option>
-                                    </select>

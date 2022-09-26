@@ -7,8 +7,10 @@ import Button from "@/Components/Button.vue";
 import InputGroup from "@/Components/InputGroup.vue";
 import SelectGroup from "@/Components/SelectGroup.vue";
 import CheckboxGroup from "@/Components/CheckboxGroup.vue";
+import Checkbox from "@/Components/Checkbox.vue";
+
 import ImageUpload from "@/Components/ImageUpload.vue";
-import { watch, ref } from "@vue/runtime-core";
+import { watch, ref, computed , onMounted } from "@vue/runtime-core";
 
 const props = defineProps({
     edit: {
@@ -39,6 +41,20 @@ const props = defineProps({
 const maxUploadImageCount = 1;
 const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
 
+
+
+/// to make doctor appointments checked on edit , in input  we add 
+ //:checked="doctorAppointments.includes(appointment.id)"
+
+const doctorAppointments = ref([]);
+
+onMounted(()=>{
+    props.item.appointments.map((appointment)=>{
+        doctorAppointments.value.push(appointment.id)
+        })
+})
+////////////////////////////////////////
+
 const form = useForm({
     // name: props.item.name ?? "",
     name_ar: props.item.name_ar ?? "",
@@ -49,10 +65,12 @@ const form = useForm({
     // roleId: props.item.roles?.[0]?.id ?? "",   /// important   it will work only like this in create and edit cecase of the relation
     phone: props.item.phone ?? "",
     section_id: props.item.section?.id ?? "", /// important   it will work only like this in create and edit cecase of the relation this is diffrent
-    appointments: props.item.appointments ?? [],
+    appointments: doctorAppointments.value  ?? [],
     status: props.item.status ?? true,
     image: null,
 });
+
+
 
 var loadFile = function (event) {
     var output = document.getElementById("output");
@@ -62,10 +80,7 @@ var loadFile = function (event) {
     };
 };
 
-// Inertia.post(`/users/${user.id}`, {
-//   _method: 'put',
-//   avatar: form.avatar,
-// })
+
 
 const submit = () => {
     props.edit
@@ -80,7 +95,12 @@ const submit = () => {
               }
           )
         : form.post(route(`admin.${props.routeResourceName}.store`));
+
+
+
+
 };
+
 </script>
 
 <template>
@@ -182,7 +202,7 @@ const submit = () => {
                         </div>
                         <div class="grid grid-cols-2 gap-6">
 
-                            <div class="rtl:mr-6 ltr:ml-6">
+                            <div class="rtl:mr-7 ltr:ml-7  ">
                             <label 
                                 >Appointments
                             </label>
@@ -192,15 +212,20 @@ const submit = () => {
                                             appointment, index
                                         ) in appointments"
                                         :key="index"
-                                        class="bg-blue-300 rounded-lg mt-1 w-28"
+                                        class="bg-blue-200 hover:bg-blue-300 outline outline-1 outline-gray-400 rounded-lg mt-2 w-28"
                                     >
+                                    
                                         <input
                                             type="checkbox"
                                             :id="appointment.id"
                                             :value="appointment.id"
                                             v-model="form.appointments"
-                                            class="mx-1 rounded-xl"
+                                            :checked="doctorAppointments.includes(appointment.id)"
+                                            class="mx-1 rounded-full"
+
                                         />
+
+
                                         <label :for="appointment.id">{{
                                             appointment.name
                                         }}</label>
@@ -211,7 +236,7 @@ const submit = () => {
                             <div class="mx-auto">
                                 <img
                                     style="border-radius: 10%"
-                                    width="200"
+                                    width="300"
                                     id="output"
                                     :src="currentImage"
                                     class="shadow-lg rounded p-1"

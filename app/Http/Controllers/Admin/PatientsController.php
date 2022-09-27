@@ -52,6 +52,9 @@ class PatientsController extends Controller
                 'blood_group',
                 'created_at'
             ])
+
+            ->with('media')
+
             // to get only one kind of user depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
 
@@ -146,7 +149,10 @@ class PatientsController extends Controller
                 'total_with_tax',
                 'price',
                 'created_at',
-            ])->latest()->paginate(1000);
+            ])
+            ->with('media')
+            
+            ->latest()->paginate(1000);
         $patient_payments = Payment::query()->where('patient_id', '=', $user->id)->latest()->paginate(1000);
         $patient_receipts = Receipt::where('patient_id', '=', $user->id)->latest()->paginate(1000);
 
@@ -236,6 +242,13 @@ class PatientsController extends Controller
 
         $user->assignRole($this->role);  // to be changed
 
+        if($request->hasFile('image')){
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
+
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
 
@@ -248,6 +261,8 @@ class PatientsController extends Controller
 
     public function edit(User $user)
     {
+        $user->load('media');
+
         return Inertia::render('Admin/Patient/Create', [
             'edit' => true,
             'title' => 'Edit Patient',
@@ -258,8 +273,10 @@ class PatientsController extends Controller
     }
 
 
-    public function update(UsersRequest $request, User $user)
+    public function updatePatient(UsersRequest $request,  $id)
     {
+        $user = User::find($id);
+
         // user phone number is password phone must be long enoph or it will return an error on updating
         $data = $request->only(['email', 'birth_date', 'phone', 'gender', 'blood_group']);
         // dd($data);
@@ -270,6 +287,13 @@ class PatientsController extends Controller
         $data["en"]["address"] = $request->address_en;
 
         $user->update($data);
+
+        if($request->hasFile('image')){
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
 
         $user->syncRoles($this->role);
 

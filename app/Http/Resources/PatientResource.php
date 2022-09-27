@@ -27,7 +27,7 @@ class PatientResource extends JsonResource
             'address_ar' => $this->whenNotNull($this->translate('ar')->address), // this with return null if database doesn't hav data in arabic
             'address_en' => $this->whenNotNull($this->translate('en')->address),
             
-
+ 
             'email' => $this->when($this->email, $this->email),
             'birth_date' => $this->when($this->birth_date, $this->birth_date),
             'phone' => $this->when($this->phone, $this->phone),
@@ -39,6 +39,16 @@ class PatientResource extends JsonResource
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
+            'images' => $this->whenLoaded(
+                'media',
+                fn () => $this->getMedia()->map(      /////////////////// important  to get images collection
+                    fn ($media) => [
+                        'id' => $media->id,
+                        'html' => $media->toHtml(),
+                        'img' => $media,
+                    ]
+                )
+            ),
             'can' => [
                 'edit' => $request->user()?->can('edit patient'),
                 'delete' => $request->user()?->can('delete patient'), 

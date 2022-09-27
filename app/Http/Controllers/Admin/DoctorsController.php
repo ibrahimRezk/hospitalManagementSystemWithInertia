@@ -109,8 +109,8 @@ class DoctorsController extends Controller
                     'name' => 'phone_number',
                 ],
                 [
-                    'label' => 'dates',
-                    'name' => 'dates',
+                    'label' => 'appointments',
+                    'name' => 'appointments',
                 ],
                 [
                     'label' => 'status',
@@ -170,6 +170,8 @@ class DoctorsController extends Controller
 
         $user = User::create($data);
         $user->doctors_appointments()->attach($request->appointments);
+        
+        $user->assignRole($this->role);
 
         if($request->hasFile('image')){
             $user->media()->delete();
@@ -177,7 +179,6 @@ class DoctorsController extends Controller
                 ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
                 ->toMediaCollection();
         }
-        $user->assignRole($this->role);
 
         // $appointments // to be done
 

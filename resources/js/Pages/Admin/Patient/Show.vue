@@ -19,6 +19,8 @@ import Filters from "./Filters.vue";
 import useDeleteItem from "@/Composables/useDeleteItem.js"; 
 import useFilters from "@/Composables/useFilters.js";
 
+
+
 const props = defineProps({
     patient: {
         type: Object,
@@ -51,7 +53,19 @@ const props = defineProps({
     },
 });
 
-const invoicesHeders = ref([
+const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
+
+
+var loadFile = function (event) {
+    var output = document.getElementById("output");
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function () {
+        URL.revokeObjectURL(output.src); // free memory
+    };
+};
+
+
+const invoicesHeaders = ref([
     { label: "Service Name" },
     { label: "Invoice Date" },
     { label: "Total With Tax" },
@@ -73,7 +87,7 @@ const statementHeaders = ref([
     {label: "Debit"},
     {label: "Credit"},
 
-])
+]) 
 
 
 /////// to show tabs with it's number so easy way ////////
@@ -364,9 +378,10 @@ const NetTotal = computed(() => {
                 <!-- //// main tabs  end ////// -->
 
                 <!-- /////// patient information ///////////////// --> 
-
+                <div class="flex flex-row  "  v-show="tab === 1">
+<div>
                 <table
-                    v-show="tab === 1"
+                   
                     class="flex rtl:justify-right ltr:justify-left items-center w-full align-top border-gray-200 text-slate-500 my-6"
                 >
                     <thead class="align-bottom bg-gray-600">
@@ -507,12 +522,23 @@ const NetTotal = computed(() => {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+                <div class=" mx-5 ">
+                                <img
+                                    style="border-radius: 10%"
+                                    width="300"
+                                    id="output"
+                                    :src="currentImage"
+                                    class="shadow-lg rounded p-1"
+                                />
+                            </div>
+                            </div>
 
                 <!-- /////// patient information end ///////////////// -->
 
                 <!-- /////////////////////////// invoices //////////////////////////////////////// -->
                 <div class=" mt-2" v-show="tab === 2">
-                    <Table :headers="invoicesHeders" :items="invoices">
+                    <Table :headers="invoicesHeaders" :items="invoices">
                         <template v-slot="{ item }">
                             <Td>
                                 {{ item.service?.name ?? item.group?.name }}

@@ -1,108 +1,112 @@
 <script setup>
-    import { Head, useForm } from "@inertiajs/inertia-vue3";
-    import Layout from "@/Layouts/Authenticated.vue";
-    import Container from "@/Components/Container.vue";
-    import Card from "@/Components/Card/Card.vue";
-    import Button from "@/Components/Button.vue";
-    import InputGroup from "@/Components/InputGroup.vue";
-    import SelectGroup from "@/Components/SelectGroup.vue";
-    
-    const props = defineProps({
-        edit: {
-            type: Boolean,
-            default: false,
-        },
-        title: {
-            type: String,
-        },
-        item: {
-            type: Object,
-            default: () => ({}), 
-        },
-        routeResourceName: {
-            type: String,
-            required: true,
-        },
+import { Head, useForm } from "@inertiajs/inertia-vue3";
+import Layout from "@/Layouts/Authenticated.vue";
+import Container from "@/Components/Container.vue";
+import Card from "@/Components/Card/Card.vue";
+import Button from "@/Components/Button.vue";
+import InputGroup from "@/Components/InputGroup.vue";
+import SelectGroup from "@/Components/SelectGroup.vue";
 
-        appointments: {
-            type: Array,
-            required: false, 
-        },
-    });
-    
-    const form = useForm({
-        // name: props.item.name ?? "",
-        name_ar: props.item.name_ar ?? "",
-        name_en: props.item.name_en ?? "", 
-        address_ar: props.item.address_ar ?? "",
-        address_en: props.item.address_en ?? "", 
-        email: props.item.email ?? "",
+import ImageUpload from "@/Components/ImageUpload.vue";
+import { watch, ref, computed, onMounted } from "@vue/runtime-core";
 
-        
+const maxUploadImageCount = 1;
+const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
 
+const props = defineProps({
+    edit: {
+        type: Boolean,
+        default: false,
+    },
+    title: {
+        type: String,
+    },
+    item: {
+        type: Object,
+        default: () => ({}),
+    },
+    routeResourceName: {
+        type: String,
+        required: true,
+    },
 
-        birth_date: props.item.birth_date ?? "",
-        phone: props.item.phone ?? "",
-        blood_group: props.item.blood_group ?? "",
-        gender: props.item.gender ?? "",
-        
-        roleId:4,
-        password:props.item.phone ?? 'password',
-        passwordConfirmation : props.item.phone ?? 'password',
-    
-    });
-    
-    const submit = () => {
-        props.edit
-            ? form.put(
-                  route(`admin.${props.routeResourceName}.update`, {
-                      id: props.item.id,
-                  })
-              )
-            : form.post(route(`admin.${props.routeResourceName}.store`));
+    appointments: {
+        type: Array,
+        required: false,
+    },
+});
+
+const form = useForm({
+    // name: props.item.name ?? "",
+    name_ar: props.item.name_ar ?? "",
+    name_en: props.item.name_en ?? "",
+    address_ar: props.item.address_ar ?? "",
+    address_en: props.item.address_en ?? "",
+    email: props.item.email ?? "",
+
+    birth_date: props.item.birth_date ?? "",
+    phone: props.item.phone ?? "",
+    blood_group: props.item.blood_group ?? "",
+    gender: props.item.gender ?? "",
+
+    roleId: 4,
+    password: props.item.phone ?? "password",
+    passwordConfirmation: props.item.phone ?? "password",
+
+    image: null,
+});
+
+var loadFile = function (event) {
+    var output = document.getElementById("output");
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function () {
+        URL.revokeObjectURL(output.src); // free memory
     };
-    </script>
-    
-    <template>
-        <Head :title="title" />
-    
-        <Layout>
-            <template #header>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ title }}
-                </h2>
-            </template>
-    
-            <Container>
-                <Card>
-                    <form @submit.prevent="submit">
-                        <div class="grid grid-cols-2 gap-6">
+};
+
+const submit = () => {
+    props.edit
+        ? form.post(
+              //   route(`admin.${props.routeResourceName}.update`, {  // not working with multipart/formData   can not update files or images
+              route(`admin.${props.routeResourceName}.updatePatient`, {
+                  _method: "put", // we use it like this and modify route to be post not put and re enter _mothod :put because when uploading files like images it is not supported in inetia  ,, remember to create new put route in routes
+                  id: props.item.id,
+              }),
+              {
+                  preserveState: true,
+              }
+          )
+        : form.post(route(`admin.${props.routeResourceName}.store`));
+};
+</script>
+<template>
+    <Head :title="title" />
+
+    <Layout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ title }}
+            </h2>
+        </template>
+
+        <Container>
+            <Card>
+                <form @submit.prevent="submit">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="grid grid-cols-2 col-span-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
                                 :error-message="form.errors.name"
                                 required
                             />
+
                             <InputGroup
-                                label="Name"
+                                label="Name en"
                                 v-model="form.name_en"
                                 :error-message="form.errors.name"
                                 required
                             />
-                            <InputGroup
-                                label="Address ar"
-                                v-model="form.address_ar"
-                                :error-message="form.errors.address_ar"
-                                required
-                            />
-                            <InputGroup
-                                label="Address en"
-                                v-model="form.address_en"
-                                :error-message="form.errors.address_en"
-                                required
-                            />
-                            </div>
-                            <div class="grid grid-cols-3 gap-6">
 
                             <InputGroup
                                 type="email"
@@ -111,61 +115,85 @@
                                 :error-message="form.errors.email"
                                 required
                             />
-    
+
                             <InputGroup
                                 type="date"
                                 label="birth date"
                                 v-model="form.birth_date"
                                 :error-message="form.errors.birth_date"
                             />
-    
-                        
+
                             <InputGroup
                                 label="phone"
                                 v-model="form.phone"
                                 :error-message="form.errors.phone"
+                                :required="!edit"
                             />
+
                             <div class="grid grid-cols-2 gap-6">
+                                <SelectGroup
+                                    label="Gender"
+                                    v-model="form.gender"
+                                    :items="[
+                                        { id: 'Male', name: 'Male' },
+                                        { id: 'Female', name: 'Female' },
+                                    ]"
+                                />
 
-                            <SelectGroup
-                label="Gender"
-                v-model="form.gender"
-                :items="[
-                    { id: 'Male', name: 'Male' },
-                    { id: 'Female', name: 'Female' },
-                ]"
-            />
-
-                <SelectGroup
-                label="Blood Groups"
-                v-model="form.blood_group"
-                :items="[
-                    { id: 'A+',  name: 'A+' },
-                    { id: 'B+',  name: 'B+' },
-                    { id: 'AB+', name: 'AB+' },
-                    { id: 'O+',  name: 'O+' },
-                    { id: 'A-',  name: 'A-' },
-                    { id: 'B-',  name: 'B-' },
-                    { id: 'AB-', name: 'AB-' },
-                    { id: '0-',  name: '0-' },
-                ]"
-            /> 
-    
-                           
-                            </div>       
+                                <SelectGroup
+                                    label="Blood Groups"
+                                    v-model="form.blood_group"
+                                    :items="[
+                                        { id: 'A+', name: 'A+' },
+                                        { id: 'B+', name: 'B+' },
+                                        { id: 'AB+', name: 'AB+' },
+                                        { id: 'O+', name: 'O+' },
+                                        { id: 'A-', name: 'A-' },
+                                        { id: 'B-', name: 'B-' },
+                                        { id: 'AB-', name: 'AB-' },
+                                        { id: '0-', name: '0-' },
+                                    ]"
+                                />
+                            </div>
+                            <div class="mt-7 mx-3 grid grid-cols-2 gap-6">
+                                <div class="">
+                                    <input
+                                        type="file"
+                                        @input="
+                                            form.image = $event.target.files[0]
+                                        "
+                                        @change="loadFile($event)"
+                                    />
+                                    <progress
+                                        v-if="form.progress"
+                                        :value="form.progress.percentage"
+                                        max="100"
+                                    >
+                                        {{ form.progress.percentage }}%
+                                    </progress>
+                                </div>
+                            </div>
                         </div>
-    
-                        <div class="mt-4">
-                            <Button :disabled="form.processing">
-                                {{ form.processing ? "Saving..." : "Save" }}
-                            </Button>
+
+                        <div class="mx-auto">
+                            <img
+                                style="border-radius: 10%"
+                                width="300"
+                                id="output"
+                                :src="currentImage"
+                                class="shadow-lg rounded p-1"
+                            />
                         </div>
-                    </form>
-                </Card>
-            </Container>
-        </Layout>
-    </template>
-    
+                    </div>
+                    <div class="mt-6">
+                        <Button :disabled="form.processing">
+                            {{ form.processing ? "Saving..." : "Save" }}
+                        </Button>
+                    </div>
+                </form>
+            </Card>
+        </Container>
+    </Layout>
+</template>
 
-
-    
+///////////////////////////////////////

@@ -99,15 +99,7 @@
                         <template v-slot="{ item }">
 
                             <Td>
-                                <template #image>
-                                    <div class="w-8 h-8 mx-1">
-                                        <img
-                                        src="../../../../../../public/admin/assets/img/team-3.jpg"
-                                        class="inline-flex items-center justify-center text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                        alt="user1"
-                                        />
-                                    </div>
-                                </template>
+                                
                                 {{ item.name }}
                                 <template #second-line>
                                     {{ item.notes }}

@@ -10,7 +10,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RadiologistsController extends Controller
+class RadiologistsController extends Controller 
 {
     private string $routeResourceName = 'radiologists';
     private string $role = 'Radiologist';
@@ -36,6 +36,9 @@ class RadiologistsController extends Controller
             'phone',
             'status',
             ])
+
+            ->with('media')
+
             // to get only one kind of userd depends on a role such as (admin , doctor , patient , ray empoyee  ..... )
             ->role($this->role)
 
@@ -126,6 +129,13 @@ class RadiologistsController extends Controller
         $user = User::create($data);
         $user->assignRole($this->role);
 
+        if($request->hasFile('image')){
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
+
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }
 
@@ -139,6 +149,7 @@ class RadiologistsController extends Controller
     public function edit(User $user)
     {
  
+        $user->load('media');
 
         return Inertia::render('Admin/Radiologist/Create', [ 
             'edit' => true,
@@ -150,14 +161,24 @@ class RadiologistsController extends Controller
         ]);
     }
 
-    public function update(UsersRequest $request, User $user)
+    public function updateRadiologist(UsersRequest $request,  $id)
     {
+
+        $user = User::find($id);
+
         // review samir gamal method to make password nullable on update and update userRequest file
         $data = $request->safe()->only(['email', 'password' ,'phone']);
         
         $data["ar"]['name'] = $request->name_ar;
         $data["en"]['name'] = $request->name_en;
         $user->update($data);
+
+        if($request->hasFile('image')){
+            $user->media()->delete();
+            $user->addMediaFromRequest('image')
+                ->withResponsiveImages() // this will create multipe sizes of the same image but it will take time on creating
+                ->toMediaCollection();
+        }
 
         $user->syncRoles($this->role);
 

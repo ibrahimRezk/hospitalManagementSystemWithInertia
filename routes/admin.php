@@ -63,19 +63,20 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
-    // Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
+
+    Route::put('update_user/{id}',[UsersController::class,'updateUser'])->name('users.updateUser');
     Route::resource('users', UsersController::class);
 
     Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
     Route::resource('doctors', DoctorsController::class)->parameters(['doctors' => 'user']);  // parameters to allow rout model binding in different controllers with one model and solve user request validation unique problems 'doctors' for the resource name  and 'user' for the model name
 
-        // Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
+        Route::put('update_radiologist/{id}',[RadiologistsController::class,'updateRadiologist'])->name('radiologists.updateRadiologist');
     Route::resource('radiologists', RadiologistsController::class)->parameters(['radiologists' => 'user']);
 
-        // Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
+        Route::put('update_laboratorist/{id}',[LaboratoristsController::class,'updateLaboratorist'])->name('laboratorists.updateLaboratorist');
     Route::resource('laboratorists', LaboratoristsController::class)->parameters(['laboratorists' => 'user']);
 
-        // Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
+        Route::put('update_patient/{id}',[PatientsController::class,'updatePatient'])->name('patients.updatePatient');
     Route::resource('patients', PatientsController::class)->parameters(['patients' => 'user']);
     
 

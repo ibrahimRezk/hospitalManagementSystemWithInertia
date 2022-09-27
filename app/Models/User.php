@@ -29,7 +29,7 @@ class User extends Authenticatable implements HasMedia
 
 
     public $translatedAttributes =[ 'name', 'address'];
-    public $with =['translations' ,'doctors_appointments'];
+    public $with =['translations' ,'doctors_appointments', 'media'];
 
 
 

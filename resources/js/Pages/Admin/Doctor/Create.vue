@@ -96,9 +96,6 @@ const submit = () => {
           )
         : form.post(route(`admin.${props.routeResourceName}.store`));
 
-
-
-
 };
 
 </script>

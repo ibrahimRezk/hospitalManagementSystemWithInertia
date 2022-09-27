@@ -1,7 +1,7 @@
 <script setup>
     import { onMounted, ref, watch } from "vue";
     import { Head, Link } from "@inertiajs/inertia-vue3";
-    import { Inertia } from "@inertiajs/inertia";
+    import { Inertia } from "@inertiajs/inertia"; 
     import Layout from "@/Layouts/Authenticated.vue";
     import Container from "@/Components/Container.vue";
     import Card from "@/Components/Card/Card.vue";
@@ -99,12 +99,15 @@
                         <template v-slot="{ item }">
                             <Td>
                                 <template #image>
-                                    <div class="w-8 h-8 mx-1">
-                                        <img
-                                            src="../../../../../public/admin/assets/img/team-3.jpg"
-                                            class="inline-flex items-center justify-center text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                            alt="user1"
-                                        />
+                                    <div class="w-8 h-8  rtl:ml-1 ltr:mr-1">
+    
+    
+                                        <div
+                                        v-for="(image, index) in item.images" :key="index"
+                                        v-html="image.html"
+                                        class="[&_img]:h-full [&_img]:w-full [&_img]:object-contain shadow-xl "
+                                    >
+                                    </div>
                                     </div>
                                 </template>
                                 <Link 

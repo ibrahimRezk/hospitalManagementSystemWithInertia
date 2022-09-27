@@ -30,8 +30,8 @@ class Laboratory extends Model implements HasMedia
     public function employee()
     {
         return $this->belongsTo(User::class,'employee_id')
-            ->withDefault(['name'=>'']);
-            // ->withDefault(['name'=>'noEmployee']);
+            // ->withDefault(['name'=>'']);
+            ->withDefault(['name'=>'noEmployee']);
     }
 
     public function patient()

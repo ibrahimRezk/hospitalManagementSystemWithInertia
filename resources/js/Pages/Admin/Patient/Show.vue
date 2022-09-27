@@ -16,10 +16,8 @@ import Input from "@/Components/Input.vue";
 import AddNew from "@/Components/AddNew.vue";
 import Filters from "./Filters.vue";
 
-import useDeleteItem from "@/Composables/useDeleteItem.js"; 
+import useDeleteItem from "@/Composables/useDeleteItem.js";
 import useFilters from "@/Composables/useFilters.js";
-
-
 
 const props = defineProps({
     patient: {
@@ -56,14 +54,6 @@ const props = defineProps({
 const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
 
 
-var loadFile = function (event) {
-    var output = document.getElementById("output");
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-    };
-};
-
 
 const invoicesHeaders = ref([
     { label: "Service Name" },
@@ -72,23 +62,20 @@ const invoicesHeaders = ref([
     { label: "Type" },
 ]);
 
-
-const paymentsReceiptsHeaders = ref ([
-    {label: "#"},
-    {label: "Payment Data"},
-    {label: "Amount"},
-    {label: "description"},
-])
+const paymentsReceiptsHeaders = ref([
+    { label: "#" },
+    { label: "Payment Data" },
+    { label: "Amount" },
+    { label: "description" },
+]);
 
 const statementHeaders = ref([
-    {label: "#"},
-    {label: "Date"},
-    {label: "Description"},
-    {label: "Debit"},
-    {label: "Credit"},
-
-]) 
-
+    { label: "#" },
+    { label: "Date" },
+    { label: "Description" },
+    { label: "Debit" },
+    { label: "Credit" },
+]);
 
 /////// to show tabs with it's number so easy way ////////
 const activeTab = (num) => {
@@ -96,7 +83,6 @@ const activeTab = (num) => {
 };
 const tab = ref(1);
 ////////////////////
-
 
 // get invoices total invoices amount with tax///////
 const InvoicesTotalWithTax = computed(() => {
@@ -108,7 +94,6 @@ const InvoicesTotalWithTax = computed(() => {
     return sum;
 });
 ////////////////////////////////////////////////////////////////////
-
 
 // get invoices total payments amount  ///////
 const TotalReceipts = computed(() => {
@@ -137,16 +122,13 @@ const NetTotal = computed(() => {
     let credit = 0;
     let statement = props.statement;
     statement.data.forEach((item) => {
-    
         Debit += parseInt(item.Debit);
-        credit+= parseInt(item.credit);
-        sum = Debit - credit
+        credit += parseInt(item.credit);
+        sum = Debit - credit;
     });
     return sum;
 });
 ////////////////////////////////////////////////////////////////////
-
-
 </script>
 <!-- {{ $t('Welcome') }} -->
 <template>
@@ -377,167 +359,183 @@ const NetTotal = computed(() => {
                 </div>
                 <!-- //// main tabs  end ////// -->
 
-                <!-- /////// patient information ///////////////// --> 
-                <div class="flex flex-row  "  v-show="tab === 1">
-<div>
-                <table
-                   
-                    class="flex rtl:justify-right ltr:justify-left items-center w-full align-top border-gray-200 text-slate-500 my-6"
-                >
-                    <thead class="align-bottom bg-gray-600">
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bo  ld rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                name
-                            </th>
-                        </tr>
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                phone number
-                            </th>
-                        </tr>
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                email
-                            </th>
-                        </tr>
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                birth date
-                            </th>
-                        </tr>
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                gender
-                            </th>
-                        </tr>
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
-                            >
-                                blood group
-                            </th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody class="px-2 py-2 bg-neutral-300">
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.name }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.phone }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.email }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.birth_date }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.gender }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td
-                                class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div class="flex-col justify-center">
-                                        <h6
-                                            class="mb-0 leading-normal text-size-sm"
-                                        >
-                                            {{ props.patient.blood_group }}
-                                        </h6>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-                <div class=" mx-5 ">
-                                <img
-                                    style="border-radius: 10%"
-                                    width="300"
-                                    id="output"
-                                    :src="currentImage"
-                                    class="shadow-lg rounded p-1"
-                                />
-                            </div>
-                            </div>
+                <!-- /////// patient information ///////////////// -->
+                <div class="flex flex-row" v-show="tab === 1">
+                    <div>
+                        <table
+                            class="flex rtl:justify-right ltr:justify-left items-center w-full align-top border-gray-200 text-slate-500 my-6"
+                        >
+                            <thead class="align-bottom bg-gray-600">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bo ld rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        name
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        phone number
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        email
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        birth date
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        gender
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 font-bold rtl:text-right ltr:text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-200 opacity-90"
+                                    >
+                                        blood group
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="px-2 py-2 bg-neutral-300">
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{ props.patient.name }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{ props.patient.phone }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{ props.patient.email }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{
+                                                        props.patient.birth_date
+                                                    }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{ props.patient.gender }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="hover:bg-neutral-400 px-4 py-1 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-sm text-gray-500 drop-shadow-lg"
+                                    >
+                                        <div class="flex px-2 py-1">
+                                            <div
+                                                class="flex-col justify-center"
+                                            >
+                                                <h6
+                                                    class="mb-0 leading-normal text-size-sm"
+                                                >
+                                                    {{
+                                                        props.patient
+                                                            .blood_group
+                                                    }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mx-5">
+                        <img
+                            style="border-radius: 10%"
+                            width="300"
+                            id="output"
+                            :src="currentImage"
+                            class="shadow-lg rounded p-1"
+                        />
+                    </div>
+                </div>
 
                 <!-- /////// patient information end ///////////////// -->
 
                 <!-- /////////////////////////// invoices //////////////////////////////////////// -->
-                <div class=" mt-2" v-show="tab === 2">
+                <div class="mt-2" v-show="tab === 2">
                     <Table :headers="invoicesHeaders" :items="invoices">
                         <template v-slot="{ item }">
                             <Td>
@@ -560,17 +558,18 @@ const NetTotal = computed(() => {
 
                     <!-- {{ number_format( $invoices->sum('total_with_tax') , 2)}} -->
 
-                    <div class=" bg-gray-500 text-yellow-300 font-bold  py-4 text-xl flex justify-center">
+                    <div
+                        class="bg-gray-500 text-yellow-300 font-bold py-4 text-xl flex justify-center"
+                    >
                         Total With Tax : {{ InvoicesTotalWithTax }}
                     </div>
                 </div>
 
                 <!-- /////////////////////////// invoices end //////////////////////////////////////// -->
 
-
                 <!-- /////////////////////////// payments  //////////////////////////////////////// -->
 
-                <div  class=" mt-2" v-show="tab === 3">
+                <div class="mt-2" v-show="tab === 3">
                     <Table :headers="paymentsReceiptsHeaders" :items="payments">
                         <template v-slot="{ item }">
                             <Td>
@@ -593,7 +592,9 @@ const NetTotal = computed(() => {
 
                     <!-- {{ number_format( $invoices->sum('total_with_tax') , 2)}} -->
 
-                    <div class=" bg-gray-500 text-yellow-300 font-bold  py-4 text-xl flex justify-center">
+                    <div
+                        class="bg-gray-500 text-yellow-300 font-bold py-4 text-xl flex justify-center"
+                    >
                         Total Payments : {{ TotalPayments }}
                     </div>
                 </div>
@@ -601,7 +602,7 @@ const NetTotal = computed(() => {
                 <!-- /////////////////////////// payments end  //////////////////////////////////////// -->
                 <!-- /////////////////////////// Receipts  //////////////////////////////////////// -->
 
-                <div  class=" mt-2" v-show="tab === 4">
+                <div class="mt-2" v-show="tab === 4">
                     <Table :headers="paymentsReceiptsHeaders" :items="receipts">
                         <template v-slot="{ item }">
                             <Td>
@@ -624,48 +625,56 @@ const NetTotal = computed(() => {
 
                     <!-- {{ number_format( $invoices->sum('total_with_tax') , 2)}} -->
 
-                    <div class=" bg-gray-500 text-yellow-300 font-bold  py-4 text-xl flex justify-center">
+                    <div
+                        class="bg-gray-500 text-yellow-300 font-bold py-4 text-xl flex justify-center"
+                    >
                         Total Receipts : {{ TotalReceipts }}
                     </div>
                 </div>
 
                 <!-- /////////////////////////// Receipts end  //////////////////////////////////////// -->
 
-
                 <!-- /////////////////////////// statements  //////////////////////////////////////// -->
 
-                <div  class=" mt-2" v-show="tab === 5">
-                                    <Table :headers="statementHeaders" :items="props.statement">
-                                        <template v-slot="{ item }">
-                                            <Td>
-                                                {{ item.id }}
-                                            </Td>
-                                            <Td>
-                                                {{ item.created_at_formatted }}
-                                            </Td>
-                
-                                            <Td>
-                                                {{  item.invoice?.service?.name ?? item.invoice?.group?.name ??  item.payment?.description ?? item.receipt?.description }}
-                                            </Td>
-                                            <Td>
-                                                {{ item.Debit }}
-                                            </Td>
-                                            <Td>
-                                                {{ item.credit }}
-                                            </Td>
-                
-                                            <tr></tr>
-                                        </template>
-                                    </Table>
-                
-                                    <!-- {{ number_format( $invoices->sum('total_with_tax') , 2)}} -->
-                
-                                    <div class=" bg-gray-500 text-yellow-300 font-bold  py-4 text-xl flex justify-center">
-                                        Net Total  : {{ NetTotal }}
-                                    </div>
+                <div class="mt-2" v-show="tab === 5">
+                    <Table :headers="statementHeaders" :items="props.statement">
+                        <template v-slot="{ item }">
+                            <Td>
+                                {{ item.id }}
+                            </Td>
+                            <Td>
+                                {{ item.created_at_formatted }}
+                            </Td>
+
+                            <Td>
+                                {{
+                                    item.invoice?.service?.name ??
+                                    item.invoice?.group?.name ??
+                                    item.payment?.description ??
+                                    item.receipt?.description
+                                }}
+                            </Td>
+                            <Td>
+                                {{ item.Debit }}
+                            </Td>
+                            <Td>
+                                {{ item.credit }}
+                            </Td>
+
+                            <tr></tr>
+                        </template>
+                    </Table>
+
+                    <!-- {{ number_format( $invoices->sum('total_with_tax') , 2)}} -->
+
+                    <div
+                        class="bg-gray-500 text-yellow-300 font-bold py-4 text-xl flex justify-center"
+                    >
+                        Net Total : {{ NetTotal }}
+                    </div>
                 </div>
-                
-                                <!-- /////////////////////////// statements end  //////////////////////////////////////// -->
+
+                <!-- /////////////////////////// statements end  //////////////////////////////////////// -->
             </Card>
         </Container>
     </Layout>

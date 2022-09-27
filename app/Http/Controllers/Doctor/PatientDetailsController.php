@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DiagnoseResource;
 use App\Http\Resources\LaboratoryResource;
+use App\Http\Resources\PatientResource;
 use App\Http\Resources\RadiologyResource;
 use App\Models\Diagnose;
 use App\Models\Laboratory;
@@ -25,7 +26,7 @@ class PatientDetailsController extends Controller
         return Inertia::render('Doctor/Patient/Details', [
             // 'title' => 'Patient Details',
 
-            'patient' => $patient,
+            'patient' => new PatientResource($patient),
             'patient_records' => DiagnoseResource::collection($patient_records) ,
             'patient_radiologies' =>  RadiologyResource::collection($patient_radiologies),  // resource collection here is important to get meta field in props.patient_radiology
             'patient_laboratories' => LaboratoryResource::collection($patient_laboratories) ,

@@ -66,6 +66,7 @@ class LaboratoriesController extends Controller
             // ->with(['service'])
             // ->with(['patient'])
 
+
             // ->when( 
             //     $request->patient_id,
             //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
@@ -80,7 +81,7 @@ class LaboratoriesController extends Controller
             ->paginate(10);
             
             // 'invoices' => InvoiceResource::collection($patient_invoices),
-// dd($invoices);
+// dd($laboratories);
 
         
 

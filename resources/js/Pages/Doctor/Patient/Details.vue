@@ -45,7 +45,8 @@
        
     });
     
- 
+    const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
+
     
     const patientInformationHeaders = ref([
         {label: "Name"},
@@ -293,7 +294,8 @@ const {
                     <!-- //// main tabs  end ////// -->
     
                     <!-- /////// patient information ///////////////// --> 
-    
+                    <div class="flex flex-row" v-show="tab === 1">
+                    <div>
                     <table
                         v-show="tab === 1"
                         class="flex rtl:justify-right ltr:justify-left items-center w-full align-top border-gray-200 text-slate-500 my-6"
@@ -437,6 +439,19 @@ const {
                             </tr>
                         </tbody>
                     </table>
+
+                    </div>
+
+                    <div class="mx-5">
+                        <img
+                            style="border-radius: 10%"
+                            width="300"
+                            id="output"
+                            :src="currentImage"
+                            class="shadow-lg rounded p-1"
+                        />
+                    </div>
+                    </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->

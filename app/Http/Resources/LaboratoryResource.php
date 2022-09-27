@@ -19,7 +19,7 @@ class LaboratoryResource extends JsonResource
 
             // very important for viewing name in a relation in index    here  and in controller index we put field name like doctor_id and with relation like with(['doctor:id'])
             'doctor'    => new DoctorResource($this->whenLoaded('doctor')),
-            'employee'   => new UserResource($this->whenLoaded('employee')),
+            'employee'   => new LaboratoristResource($this->whenLoaded('employee')),
             'patient'   => new PatientResource($this->whenLoaded('patient')),
             'invoice'   => new InvoiceResource($this->whenLoaded('invoice')),
 

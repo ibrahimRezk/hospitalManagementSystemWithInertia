@@ -56,6 +56,14 @@ class HandleInertiaDoctorRequests extends Middleware
                     'hasSubmenu' => false,
                 ],
                 [
+                    'label' => 'Profile',
+                    'url' => route('doctor.profile.show'),
+                    'isActive' => $request->routeIs('doctor.profile.show'),    // check if it is work
+                    'isVisible' => true,
+                    'hasSubmenu' => false,
+
+                ],
+                [
                     'label' => 'Doctor diagnoses',
                     'isActive' => $request->routeIs('doctor.invoices.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),

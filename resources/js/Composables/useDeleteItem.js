@@ -30,6 +30,18 @@ export default function (params) {
         onSuccess: () => {
           deleteModal.value = false;
           itemToDelete.value = {};
+          
+            Toast.fire({
+                icon: "success",
+                title: "Item Deleted successfully",
+                iconColor: 'white',
+                color:'black',  // text color
+                // background: '#1cac78        ', // green
+                // background: '#00a877       ', // green
+                // background: '#39ff14   ', // lime
+                background: '#dc143c    ', // red
+            });
+          
         },
         onFinish: () => {
           isDeleting.value = false;

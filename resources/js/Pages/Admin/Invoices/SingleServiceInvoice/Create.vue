@@ -114,9 +114,35 @@ const submit = () => {
         ? form.put(
               route(`admin.${props.routeResourceName}.update`, {
                   id: props.item.id,
-              })
+              }),{
+                onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Invoice Updated successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+              }
           )
-        : form.post(route(`admin.${props.routeResourceName}.store`));
+        : form.post(route(`admin.${props.routeResourceName}.store`),{
+            onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Invoice Created successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+        });
 };
 </script>
 

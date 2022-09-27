@@ -59,12 +59,38 @@ const submit = () => {
               route(`admin.${props.routeResourceName}.updateLaboratorist`, {
                   _method: "put", // we use it like this and modify route to be post not put and re enter _mothod :put because when uploading files like images it is not supported in inetia  ,, remember to create new put route in routes
                   id: props.item.id,
-              }),
+              }),{
+                onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Laboratorist Updated successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+              },
               {
                   preserveState: true,
               }
           )
-        : form.post(route(`admin.${props.routeResourceName}.store`));
+        : form.post(route(`admin.${props.routeResourceName}.store`),{
+            onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Laboratorist Created successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+        });
 };
 </script>
 <template>

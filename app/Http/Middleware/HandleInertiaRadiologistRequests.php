@@ -56,6 +56,14 @@ class HandleInertiaRadiologistRequests extends Middleware
                     'hasSubmenu' => false,
                 ],
                 [
+                    'label' => 'Profile',
+                    'url' => route('radiologist.profile.show'),
+                    'isActive' => $request->routeIs('radiologist.profile.show'),    // check if it is work
+                    'isVisible' => true,
+                    'hasSubmenu' => false,
+
+                ],
+                [
                     'label' => 'Radiologies list',
                     'isActive' => $request->routeIs('radiologist.radiologies.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),

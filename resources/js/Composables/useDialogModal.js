@@ -62,7 +62,18 @@ export default function (params) {
                         opened.value = 0;  // to close   // no need any more
                         showScreenExeptSubmenu.value =false;
                         form.value.reset() // important to clear all form data
-    
+
+                        
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Item Updated successfully",
+                                    iconColor: 'white',
+                                    color:'black',  // text color
+                                    background: '#1cac78        ', // green
+                                    // background: '#00a877       ', // green
+                                    // background: '#39ff14   ', // lime
+                                    // background: '#dc143c    ', // red
+                                });
                     },
                     onFinish: () => {
                         isSaving.value = false;
@@ -88,6 +99,17 @@ export default function (params) {
                         isSaving.value = true;
                     },
                     onSuccess: () => {
+                        Toast.fire({
+                            icon: "success",
+                            title: "Item Updated successfully",
+                            iconColor: 'white',
+                            color:'black',  // text color
+                            background: '#1cac78        ', // green
+                            // background: '#00a877       ', // green
+                            // background: '#39ff14   ', // lime
+                            // background: '#dc143c    ', // red
+                        });
+                        
                         dialogModal.value = false;
                         itemToSave.value = {};
                         // opened.value = 0;  // to close   // no need any more

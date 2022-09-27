@@ -56,6 +56,14 @@ class HandleInertiaLaboratoristRequests extends Middleware
                     'hasSubmenu' => false,
                 ],
                 [
+                    'label' => 'Profile',
+                    'url' => route('laboratorist.profile.show'),
+                    'isActive' => $request->routeIs('laboratorist.profile.show'),    // check if it is work
+                    'isVisible' => true,
+                    'hasSubmenu' => false,
+
+                ],
+                [
                     'label' => 'Laboratories list',
                     'isActive' => $request->routeIs('laboratorist.laboratories.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),

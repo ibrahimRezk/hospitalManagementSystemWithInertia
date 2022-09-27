@@ -49,7 +49,7 @@ const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
 const doctorAppointments = ref([]);
 
 onMounted(()=>{
-    props.item.appointments.map((appointment)=>{
+    props.item.appointments?.map((appointment)=>{
         doctorAppointments.value.push(appointment.id)
         })
 })
@@ -92,9 +92,37 @@ const submit = () => {
               }),
               {
                   preserveState: true,
+                  onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Doctor Updated successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
               }
           )
-        : form.post(route(`admin.${props.routeResourceName}.store`));
+        : form.post(route(`admin.${props.routeResourceName}.store`)
+        ,
+        {
+                  preserveState: true,
+                  onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Doctor Created successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+              });
 
 };
 

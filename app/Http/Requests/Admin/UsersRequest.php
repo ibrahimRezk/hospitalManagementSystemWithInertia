@@ -47,6 +47,8 @@ class UsersRequest extends FormRequest
             'password' => ['bail', ...$passwordRule, Password::defaults()],
             'passwordConfirmation' => ['bail', ...$passwordRule, 'same:password'], 
             'phone'=> ['bail', 'nullable', 'string', 'max:255'],
+
+            'image' => ['bail', 'nullable', 'image', 'max:1024'],
             // 'password' => ['bail', 'required', Password::defaults()],
             // 'passwordConfirmation' => ['bail','required', 'same:password'],
             'roleId' => ['bail',  'nullable', Rule::exists(Role::class, 'id')], 

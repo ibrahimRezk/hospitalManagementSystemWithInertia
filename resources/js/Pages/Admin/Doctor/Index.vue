@@ -75,6 +75,9 @@ const doctorAppointments = (doctor)=>{
     );
     return allAppointments.value.join(', ')  // to remove braces from the array an add comma between items 
 }
+
+
+
 </script>
 
 <template>

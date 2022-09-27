@@ -196,9 +196,35 @@ const submit = () => {
         ? form.put(
               route(`admin.${props.routeResourceName}.update`, {
                   id: props.item.id,
-              })
+              }),{
+                onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Service Group Updated successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+              }
           )
-        : form.post(route(`admin.${props.routeResourceName}.store`));
+        : form.post(route(`admin.${props.routeResourceName}.store`),{
+            onSuccess: ()=>{
+                    Toast.fire({
+                        icon: "success",
+                        title: "Service Group Created successfully",
+                        iconColor: 'white',
+                        color:'black',  // text color
+                        background: '#1cac78        ', // green
+                        // background: '#00a877       ', // green
+                        // background: '#39ff14   ', // lime
+                        // background: '#dc143c    ', // red
+                    });
+                  }
+        });
 };
 
 const show = ref(props.edit);
@@ -306,7 +332,7 @@ const show = ref(props.edit);
                                             <tbody
                                                 v-for="(
                                                     service, index
-                                                ) in addedServices"
+                                                ) in addedServices" :key="index"
                                                 class="px-2 py-2 bg-neutral-300 hover:bg-neutral-400"
                                             >
                                                 <tr>

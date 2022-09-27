@@ -64,7 +64,7 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'view doctors list']);
         Permission::create(['name' => 'create doctor']);
         Permission::create(['name' => 'edit doctor']);
-        Permission::create(['name' => 'delete doctor']); 
+        Permission::create(['name' => 'delete doctor']);  
 
 
         Permission::create(['name' => 'view services module']);
@@ -108,12 +108,48 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'create radiologist']);
         Permission::create(['name' => 'edit radiologist']);
         Permission::create(['name' => 'delete radiologist']); 
+
+
+        Permission::create(['name' => 'view laboratorists module']);
+        Permission::create(['name' => 'view laboratorists list']);
+        Permission::create(['name' => 'create laboratorist']);
+        Permission::create(['name' => 'edit laboratorist']);
+        Permission::create(['name' => 'delete laboratorist']); 
         
         Permission::create(['name' => 'view diagnoses module']);
         Permission::create(['name' => 'view diagnoses list']);
         Permission::create(['name' => 'create diagnose']);
         Permission::create(['name' => 'edit diagnose']);
         Permission::create(['name' => 'delete diagnose']); 
+
+        Permission::create(['name' => 'view invoices module']);
+        Permission::create(['name' => 'view invoices list']);
+        Permission::create(['name' => 'create invoice']);
+        Permission::create(['name' => 'edit invoice']);
+        Permission::create(['name' => 'delete invoice']);
+
+        Permission::create(['name' => 'view diagnoses module']);
+        Permission::create(['name' => 'view diagnoses list']);
+        Permission::create(['name' => 'create diagnose']);
+        Permission::create(['name' => 'edit diagnose']);
+        Permission::create(['name' => 'delete diagnose']); 
+
+
+        Permission::create(['name' => 'view laboratories module']);
+        Permission::create(['name' => 'view laboratories list']);
+        Permission::create(['name' => 'create laboratory']);
+        Permission::create(['name' => 'edit laboratory']);
+        Permission::create(['name' => 'delete laboratory']); 
+
+
+        Permission::create(['name' => 'view radiologies module']);
+        Permission::create(['name' => 'view radiologies list']);
+        Permission::create(['name' => 'create radiology']);
+        Permission::create(['name' => 'edit radiology']);
+        Permission::create(['name' => 'delete radiology']); 
+        
+        Permission::create(['name' => 'view patientPage']);
+
 
         
     }// remember to add main munus witch has submenus

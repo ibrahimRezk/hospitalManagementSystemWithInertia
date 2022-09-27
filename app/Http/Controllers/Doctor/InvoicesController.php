@@ -20,13 +20,13 @@ class InvoicesController extends Controller
 
     private string $routeResourceName = 'invoices';
 
-    // public function __construct()
-    // {
-    //     $this->middleware('can:view diagnoses list')->only('index');
-    //     $this->middleware('can:create diagnoses')->only(['create', 'store']);
-    //     $this->middleware('can:edit diagnoses')->only(['edit', 'update']);
-    //     $this->middleware('can:delete diagnoses')->only('destroy');
-    // }
+    public function __construct()
+    {
+        $this->middleware('can:view diagnoses list')->only(['index' , 'reviewInvoices' ,'completedInvoices']);
+        // $this->middleware('can:create diagnose')->only(['create', 'store']);
+        // $this->middleware('can:edit diagnose')->only(['edit', 'update']);
+        // $this->middleware('can:delete diagnose')->only('destroy');
+    }
 
 
         // قائمة الكشوفات تحت الاجراء

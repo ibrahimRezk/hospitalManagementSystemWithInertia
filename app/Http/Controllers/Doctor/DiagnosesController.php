@@ -17,13 +17,13 @@ class DiagnosesController extends Controller
 {
     private string $routeResourceName = 'diagnoses';
 
-    // public function __construct()
-    // {
-    //     $this->middleware('can:view diagnoses list')->only('index');
-    //     $this->middleware('can:create diagnoses')->only(['create', 'store']);
-    //     $this->middleware('can:edit diagnoses')->only(['edit', 'update']);
-    //     $this->middleware('can:delete diagnoses')->only('destroy');
-    // }
+    public function __construct()
+    {
+        // $this->middleware('can:view diagnoses list')->only('index');
+        $this->middleware('can:create diagnose')->only([ 'store']);
+        $this->middleware('can:edit diagnose')->only(['update']);
+        // $this->middleware('can:delete diagnose')->only('destroy');
+    }
 
 
 

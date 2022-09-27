@@ -9,6 +9,15 @@ use Inertia\Inertia;
 
 class LaboratoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:view diagnoses list')->only([ 'show']);
+        $this->middleware('can:create diagnose')->only([ 'store']);
+        $this->middleware('can:edit diagnose')->only([ 'update']);
+        $this->middleware('can:delete diagnose')->only('destroy');
+    }
+
+
     public function store(Request $request)
     {
         // dd($request);

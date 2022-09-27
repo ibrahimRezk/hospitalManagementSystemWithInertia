@@ -15,13 +15,13 @@ class LaboratoriesController extends Controller
     public $underProccessing = 0;
     public $completed = 1;
 
-    // public function __construct()
-    // {
-    //     $this->middleware('can:view diagnoses list')->only('index');
-    //     $this->middleware('can:create diagnoses')->only(['create', 'store']);
-    //     $this->middleware('can:edit diagnoses')->only(['edit', 'update']);
-    //     $this->middleware('can:delete diagnoses')->only('destroy');
-    // }
+    public function __construct()
+    {
+        $this->middleware('can:view laboratories list')->only([ 'index' , 'completedInvoices']);
+        $this->middleware('can:create laboratory')->only([ 'create','store']);
+        // $this->middleware('can:edit laboratory')->only([ 'update']);
+        // $this->middleware('can:delete laboratory')->only('destroy');
+    }
 
 
        // قائمة الكشوفات تحت الاجراء
@@ -130,9 +130,9 @@ class LaboratoriesController extends Controller
 
                 'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
-            // 'can' => [
-            //     'create' => $request->user()->can('create diagnose'),
-            // ],
+            'can' => [
+                'create' => $request->user()->can('create diagnose'),
+            ],
             'method'=> 'index',
             ]);
 

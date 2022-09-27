@@ -17,13 +17,13 @@ class PatientsController extends Controller
 {
     private string $routeResourceName = 'patients';
 
-    // public function __construct()
-    // {
-    //     $this->middleware('can:view diagnoses list')->only('index');
-    //     $this->middleware('can:create diagnoses')->only(['create', 'store']);
-    //     $this->middleware('can:edit diagnoses')->only(['edit', 'update']);
-    //     $this->middleware('can:delete diagnoses')->only('destroy');
-    // }
+    public function __construct()
+    {
+        $this->middleware('can:view patientPage')->only(['invoices','laboratories' ,'labResult' ,'radiologies' ,'radiologyResult']);
+        // $this->middleware('can:create diagnoses')->only(['create', 'store']);
+        // $this->middleware('can:edit diagnoses')->only(['edit', 'update']);
+        // $this->middleware('can:delete diagnoses')->only('destroy');
+    }
 
 
     public function invoices(Request $request)

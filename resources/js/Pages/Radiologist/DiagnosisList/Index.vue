@@ -47,7 +47,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    // can: Object,
+    can: Object,
 
     method: String,
 });
@@ -132,7 +132,7 @@ const color = (item) => {
                             </Button>
                         </Td>
 
-                        <Td>
+                        <Td v-if="can.create">
                             
                             <Link   :href=" route(`radiologist.radiologies.create`, { id: item.id }) ">
                                 <Button small >

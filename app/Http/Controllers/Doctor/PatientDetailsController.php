@@ -16,6 +16,15 @@ use Inertia\Inertia;
 
 class PatientDetailsController extends Controller 
 {
+    public function __construct()
+    {
+        $this->middleware('can:view diagnoses list')->only(['index']);
+        // $this->middleware('can:create diagnose')->only([ 'store']);
+        // $this->middleware('can:edit diagnose')->only([ 'update']);
+        // $this->middleware('can:delete diagnose')->only('destroy');
+    }
+
+
     public function index($id){ 
 
         $patient = User::find($id);

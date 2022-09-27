@@ -47,7 +47,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    // can: Object,
+    can: Object,
 
     method: String,
     ActionMenu: Array,
@@ -289,7 +289,7 @@ const color = (item) => {
                         </Td>
 
                         <!-- <Td  >  -->
-                        <Td NoShadow>
+                        <Td v-if="can.create" NoShadow>
                             <!-- This example requires Tailwind CSS v2.0+ -->
                             <div class="inline-block text-left">
                                 <!-- <div class=" inline-block text-left overflow-visible"> -->

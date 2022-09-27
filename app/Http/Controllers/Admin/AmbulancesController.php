@@ -8,7 +8,7 @@ use App\Http\Resources\AmbulanceResource;
 use App\Models\Ambulance;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Inertia\Inertia; 
 
 class AmbulancesController extends Controller
 {

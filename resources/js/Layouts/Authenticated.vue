@@ -7,7 +7,8 @@ import { getActiveLanguage, isLoaded } from "laravel-vue-i18n";
 import { usePage } from "@inertiajs/inertia-vue3";
 import { loadLanguageAsync } from "laravel-vue-i18n";
 import SidebarIcon from "../Components/Icons/SidebarIcon.vue";
-import JetDropdown from "@/components/Dropdown.vue";
+// import JetDropdown from "@/components/Dropdown.vue";
+import JetDropdown from "../Components/Dropdown.vue";
 import JetDropdownLink from "@/components/DropdownLink.vue";
 import Translations from "@/Components/translations/Translations.vue";
 
@@ -47,6 +48,24 @@ const showHideClass = computed(() => {
         return "";
     }
 });
+
+///////////////////////////////////////// pusher notifications /////////////////////////////////////////////
+const notificationsCount = ref();
+notificationsCount.value = parseInt(usePage().props.value.notificationsCount);
+
+const showNewMessage = ref(false);
+const open = ref(false);
+const items = ref([]);
+
+const userId = usePage().props.value.user.id;
+
+Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
+    showNewMessage.value = true;
+    items.value.push(e);
+    open.value = true;
+    setTimeout(() => (open.value = false), 4000);
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // important
 // z-990 in class in template down can cause apperance of sidebar items in white above all items
@@ -171,15 +190,13 @@ const showHideClass = computed(() => {
 
                                 <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
                                 <div
-
                                     v-show="menu.open"
                                     v-for="submenu in menu.subMenus"
                                     :key="submenu.label"
                                     class="px-4"
                                     id="filter-section-mobile-1"
                                 >
-                                
-                                <Link
+                                    <Link
                                         class="hover:bg-slate-200 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
                                         :class="
                                             submenu.isActive
@@ -204,7 +221,9 @@ const showHideClass = computed(() => {
                                             </span>
                                         </span>
                                     </Link>
-                                    <hr class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark" />
+                                    <hr
+                                        class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                    />
                                 </div>
                                 <hr
                                     class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
@@ -237,7 +256,9 @@ const showHideClass = computed(() => {
                                     </span>
                                 </Link>
                             </div>
-                            <hr class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark" />
+                            <hr
+                                class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                            />
                         </div>
                     </li>
 
@@ -504,11 +525,14 @@ const showHideClass = computed(() => {
                             <!-- notifications -->
 
                             <!-- //////////////////////////////////////////////////////////////// -->
-                            <li class="relative flex items-center pr-2">
+                            <li
+                                class="relative flex items-center pr-2 dropdown-notifications show"
+                            >
                                 <div class="sm:flex sm:items-center sm:ml-6">
                                     <div class="ml-0 relative">
                                         <JetDropdown
                                             :align="direction"
+                                            :open="open"
                                             width="60"
                                         >
                                             <template #trigger>
@@ -556,10 +580,72 @@ const showHideClass = computed(() => {
                                                 >
                                                     Notifications
                                                 </div>
+                                                <div>
+                                                    <h1
+                                                        id="notifications-count"
+                                                    >
+                                                        {{ notificationsCount }}
+                                                    </h1>
+                                                </div>
                                                 <div
                                                     class="border-t border-gray-200"
                                                 />
 
+                                                <JetDropdownLink
+                                                    class="new_message"
+                                                    v-for="(
+                                                        item, index
+                                                    ) in items"
+                                                    :key="index"
+                                                    v-show="showNewMessage"
+                                                >
+                                                    <!-- add show class on dropdown open js -->
+
+                                                    <div class="flex py-1">
+                                                        <div
+                                                            class="my-auto"
+                                                            :href="
+                                                                route(
+                                                                    'profile.show'
+                                                                )
+                                                            "
+                                                        >
+                                                            <img
+                                                                src="../../../public/admin/assets/img/team-2.jpg"
+                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="flex flex-col justify-center"
+                                                        >
+                                                            <a
+                                                                href="/doctor/patient_details/"
+                                                            >
+                                                                <h4
+                                                                    class="notification label mb-1"
+                                                                >
+                                                                    {{
+                                                                        item.message
+                                                                    }}
+                                                                    :
+                                                                    {{
+                                                                        item.patient
+                                                                    }}
+                                                                </h4>
+                                                                <div
+                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
+                                                                >
+                                                                    <i
+                                                                        class="mr-1 fa fa-clock"
+                                                                        >{{
+                                                                            item.created_at
+                                                                        }}</i
+                                                                    >
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </JetDropdownLink>
                                                 <JetDropdownLink
                                                     :href="
                                                         route('profile.show')

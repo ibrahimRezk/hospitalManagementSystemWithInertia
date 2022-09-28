@@ -8,6 +8,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DeleteImageController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('can:edit role');
+    // }
+
+
     public function __invoke( $id )
     {
         $media =   Media::find($id);

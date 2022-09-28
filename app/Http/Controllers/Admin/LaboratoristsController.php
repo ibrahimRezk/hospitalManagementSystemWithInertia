@@ -19,7 +19,7 @@ class LaboratoristsController extends Controller
     {
         $this->middleware('can:view laboratorists list')->only('index');
         $this->middleware('can:create laboratorist')->only(['create', 'store']);
-        $this->middleware('can:edit laboratorist')->only(['edit', 'update']);
+        $this->middleware('can:edit laboratorist')->only(['edit', 'updateLaboratorist']);
         $this->middleware('can:delete laboratorist')->only('destroy');
     }
 

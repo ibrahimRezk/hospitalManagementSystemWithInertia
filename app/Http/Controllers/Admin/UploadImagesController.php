@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class UploadImagesController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware('can:edit role');
+    // }
+
+
     public function __invoke(Request $request)
     {
 

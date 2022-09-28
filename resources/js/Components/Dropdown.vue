@@ -1,7 +1,11 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
+    open:{
+        type: Boolean,
+        default: false
+    },
     align: {
         default: 'right'
     },
@@ -39,7 +43,19 @@ const alignmentClasses = computed(() => {
     }
 });
 
+
 const open = ref(false);
+
+watch(()=> props.open,
+()=>  open.value = props.open)
+
+// const openMenu = computed(()=>{
+//     return open.value = props.open
+// })
+// onMounted(()=>{
+//     return open.value = props.open
+// })
+
 </script>
 
 <template>

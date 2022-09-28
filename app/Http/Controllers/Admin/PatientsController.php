@@ -28,7 +28,7 @@ class PatientsController extends Controller
     {
         $this->middleware('can:view patients list')->only(['index', 'show']);
         $this->middleware('can:create patient')->only(['create', 'store']);
-        $this->middleware('can:edit patient')->only(['edit', 'update']);
+        $this->middleware('can:edit patient')->only(['edit', 'updatePatient']);
         $this->middleware('can:delete patient')->only('destroy');
     }
 

@@ -205,8 +205,9 @@ class HandleInertiaRequests extends Middleware
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
-// remains :  dashboard pages for every section , show validation errors   , roles and permissions , notifications , other enhancements like beginTransactions resource , requests
-// remember to modify roles in every controller construct from update to new name like doctorUpdate  ,,, add role middleware to invoke methods
+// remains :  dashboard pages for every section , show validation errors   , notifications ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests
+// remember to  add role middleware to invoke methods
+// add patient image to patient page in admin section
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

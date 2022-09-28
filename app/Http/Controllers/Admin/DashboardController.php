@@ -8,6 +8,12 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('can:edit role');
+    // }
+
+
     public function __invoke(Request $request)
     {
         

@@ -19,7 +19,7 @@ class RadiologistsController extends Controller
     {
         $this->middleware('can:view radiologists list')->only('index');
         $this->middleware('can:create radiologist')->only(['create', 'store']);
-        $this->middleware('can:edit radiologist')->only(['edit', 'update']);
+        $this->middleware('can:edit radiologist')->only(['edit', 'updateRadiologist']);
         $this->middleware('can:delete radiologist')->only('destroy');
     }
 

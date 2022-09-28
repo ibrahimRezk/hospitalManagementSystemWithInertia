@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin; 
+namespace App\Http\Controllers\Admin;
 
+use App\Events\CreateInvoice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SingleInvoicesRequest;
 use App\Http\Resources\DoctorResource;
@@ -198,6 +199,33 @@ class SingleServiceInvoicesController extends Controller
             $patient_accounts->credit = 0.00;
             $patient_accounts->save();
         }
+        //////////////////////////////////////////////////////////////
+        
+                //   ///////////////get patient name //////////////////
+                //   $patient = Patient::find($this->patient_id);
+                //   $this->patient_name = $patient->name;
+                //   //////////////////////////////////////////////////
+
+                //   ////////////// get doctor name ///////////////////
+                //   $doctor = Doctor::find($this->doctor_id);
+                //   $this->doctor_name = $doctor->name;
+                //   //////////////////////////////////////////////////
+
+                //   $notifications = new Notification(); 
+
+                //   $notifications->username = $this->doctor_name;
+                //   $notifications->message = "كشف جديد : " . $this->patient_name; 
+                //   $notifications->patient_id = $this->patient_id;  //////////// new added to the notification table ---> check the notification migration
+                //   $notifications->save();
+
+                  $data = [
+                      'doctor_id' => $request->doctor,  ///// new  for private channel 
+                      'patient_id' => $request->patient,
+                      'invoice_id' => $singleInvoice->id,
+                  ]; 
+                  event(new CreateInvoice($data));
+          
+        ////////////////////////////////////////////////////////////// 
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
     }

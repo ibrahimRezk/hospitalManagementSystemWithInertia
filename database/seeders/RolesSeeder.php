@@ -128,13 +128,6 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'edit invoice']);
         Permission::create(['name' => 'delete invoice']);
 
-        Permission::create(['name' => 'view diagnoses module']);
-        Permission::create(['name' => 'view diagnoses list']);
-        Permission::create(['name' => 'create diagnose']);
-        Permission::create(['name' => 'edit diagnose']);
-        Permission::create(['name' => 'delete diagnose']); 
-
-
         Permission::create(['name' => 'view laboratories module']);
         Permission::create(['name' => 'view laboratories list']);
         Permission::create(['name' => 'create laboratory']);

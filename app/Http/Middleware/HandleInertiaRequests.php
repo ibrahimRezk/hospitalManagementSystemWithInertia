@@ -77,12 +77,12 @@ class HandleInertiaRequests extends Middleware
                 //     'isActive' => $request->routeIs('admin.permissions.*'),
                 //     'isVisible' => $request->user()?->can('view permissions module'),
                 // ],
-                // [
-                //     'label' => 'Roles',
-                //     'url' => route('admin.roles.index'),
-                //     'isActive' => $request->routeIs('admin.roles.*'),
-                //     'isVisible' => $request->user()?->can('view roles module'),
-                // ],
+                [
+                    'label' => 'Roles',
+                    'url' => route('admin.roles.index'),
+                    'isActive' => $request->routeIs('admin.roles.*'),
+                    'isVisible' => $request->user()?->can('view roles module'),
+                ],
 
                 [
                     'label' => 'Sections',

@@ -1,7 +1,9 @@
 <?php
 use App\Http\Controllers\Admin\AmbulancesController;
+use App\Http\Controllers\Admin\AttachPermissionToRoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeleteImageController;
+use App\Http\Controllers\Admin\DetachPermissionFromRoleController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\DoctorsController;
 use App\Http\Controllers\Admin\InsurancesController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Admin\PatientsController;
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\RadiologistsController;
 use App\Http\Controllers\Admin\ReceiptsController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\ServicesGroupInvoicesController;
 use App\Http\Controllers\Admin\ServicesGroupsController;
@@ -66,6 +69,11 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
     Route::put('update_user/{id}',[UsersController::class,'updateUser'])->name('users.updateUser');
     Route::resource('users', UsersController::class);
+
+    Route::resource('roles', RolesController::class);
+    Route::post('roles/attach-permission', AttachPermissionToRoleController::class)->name('roles.attach-permission');
+    Route::post('roles/detach-permission', DetachPermissionFromRoleController::class)->name('roles.detach-permission');
+
 
     Route::put('update_doctor/{id}',[DoctorsController::class,'updateDoctor'])->name('doctors.updateDoctor');
     Route::resource('doctors', DoctorsController::class)->parameters(['doctors' => 'user']);  // parameters to allow rout model binding in different controllers with one model and solve user request validation unique problems 'doctors' for the resource name  and 'user' for the model name

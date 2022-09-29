@@ -53,9 +53,12 @@ const showHideClass = computed(() => {
 const notificationsCount = ref();
 notificationsCount.value = parseInt(usePage().props.value.notificationsCount);
 
+const notifications = usePage().props.value.notifications;
+
 const showNewMessage = ref(false);
 const open = ref(false);
 const items = ref([]);
+const patientDetails= ref()
 
 const userId = usePage().props.value.user.id;
 
@@ -64,6 +67,9 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
     items.value.push(e);
     open.value = true;
     setTimeout(() => (open.value = false), 4000);
+    notificationsCount.value += 1
+    patientDetails.value = `/doctor/patient_details/${e.patient_id} `;
+    
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -575,18 +581,20 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
 
                                             <template #content>
                                                 <!-- Account Management -->
+                                                <div class=" flex justify-between">
                                                 <div
                                                     class="block px-4 py-2 text-xs text-gray-400"
                                                 >
                                                     Notifications
                                                 </div>
                                                 <div>
-                                                    <h1
+                                                    <h1 class=" block px-2 py-1 mx-4 my-2 text-xs text-gray-100 bg-red-600 rounded-full"
                                                         id="notifications-count"
                                                     >
                                                         {{ notificationsCount }}
                                                     </h1>
                                                 </div>
+                                            </div>
                                                 <div
                                                     class="border-t border-gray-200"
                                                 />
@@ -604,11 +612,7 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                     <div class="flex py-1">
                                                         <div
                                                             class="my-auto"
-                                                            :href="
-                                                                route(
-                                                                    'profile.show'
-                                                                )
-                                                            "
+                                                            
                                                         >
                                                             <img
                                                                 src="../../../public/admin/assets/img/team-2.jpg"
@@ -618,8 +622,8 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                         <div
                                                             class="flex flex-col justify-center"
                                                         >
-                                                            <a
-                                                                href="/doctor/patient_details/"
+                                                            <Link
+                                                            :href="patientDetails"
                                                             >
                                                                 <h4
                                                                     class="notification label mb-1"
@@ -642,45 +646,54 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                                         }}</i
                                                                     >
                                                                 </div>
-                                                            </a>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </JetDropdownLink>
                                                 <JetDropdownLink
-                                                    :href="
-                                                        route('profile.show')
-                                                    "
+                                                v-for="(
+                                                        item, index
+                                                    ) in notifications"
+                                                    :key="index"
+
+
+                                                
                                                 >
                                                     <!-- add show class on dropdown open js -->
 
                                                     <div class="flex py-1">
-                                                        <div class="my-auto">
-                                                            <img
-                                                                src="../../../public/admin/assets/img/team-2.jpg"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
-                                                            />
+                                                        <div class="my-auto rtl:ml-2 ltr:mr-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                                                                <path fill-rule="evenodd" d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z" clip-rule="evenodd" />
+                                                              </svg>
+                                                              
                                                         </div>
                                                         <div
                                                             class="flex flex-col justify-center"
                                                         >
-                                                            <h6
-                                                                class="mb-1 font-normal leading-normal text-size-sm"
+                                                            <Link
+                                                                :href=" route('doctor.patient_details', {id:item.patient_id})"
+                                                                
                                                             >
-                                                                <span
-                                                                    class="font-semibold"
-                                                                    >New
-                                                                    message</span
+                                                                <h4
+                                                                    class="notification label mb-1"
                                                                 >
-                                                                from Laur
-                                                            </h6>
-                                                            <p
-                                                                class="mb-0 leading-tight text-size-xs text-slate-400"
-                                                            >
-                                                                <i
-                                                                    class="mr-1 fa fa-clock"
-                                                                ></i>
-                                                                13 minutes ago
-                                                            </p>
+                                                                    {{
+                                                                        item.message
+                                                                    }}
+                                                                
+                                                                </h4>
+                                                                <div
+                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
+                                                                >
+                                                                    <i
+                                                                        class="mr-1 fa fa-clock"
+                                                                        >{{
+                                                                            item.created_at
+                                                                        }}</i
+                                                                    >
+                                                                </div>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </JetDropdownLink>

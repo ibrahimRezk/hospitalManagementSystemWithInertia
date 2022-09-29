@@ -3,10 +3,8 @@
 namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Support\Facades\Hash;
 
-
-class PasswordCast implements CastsAttributes
+class TimstampCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -19,13 +17,12 @@ class PasswordCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        return $value;
-    }
+        return \Carbon\Carbon::parse($value)->diffForHumans();    }
 
     /**
      * Prepare the given value for storage.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model 
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
@@ -33,6 +30,6 @@ class PasswordCast implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        return Hash::make($value);
+        return $value;
     }
 }

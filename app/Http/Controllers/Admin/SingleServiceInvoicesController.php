@@ -12,6 +12,7 @@ use App\Http\Resources\SectionResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\FundAccount;
 use App\Models\Invoice;
+use App\Models\Notification;
 use App\Models\PatientAccount;
 use App\Models\Section;
 use App\Models\Service;
@@ -201,22 +202,22 @@ class SingleServiceInvoicesController extends Controller
         }
         //////////////////////////////////////////////////////////////
         
-                //   ///////////////get patient name //////////////////
-                //   $patient = Patient::find($this->patient_id);
-                //   $this->patient_name = $patient->name;
-                //   //////////////////////////////////////////////////
+                  ///////////////get patient name //////////////////
+                  $patient = User::find($request->patient);
+                  $patient_name = $patient->name;
+                  //////////////////////////////////////////////////
 
-                //   ////////////// get doctor name ///////////////////
-                //   $doctor = Doctor::find($this->doctor_id);
-                //   $this->doctor_name = $doctor->name;
-                //   //////////////////////////////////////////////////
+                  ////////////// get doctor name ///////////////////
+                  $doctor = User::find($request->doctor);
+                  $doctor_name = $doctor->name;
+                  //////////////////////////////////////////////////
 
-                //   $notifications = new Notification(); 
+                  $notifications = new Notification(); 
 
-                //   $notifications->username = $this->doctor_name;
-                //   $notifications->message = "كشف جديد : " . $this->patient_name; 
-                //   $notifications->patient_id = $this->patient_id;  //////////// new added to the notification table ---> check the notification migration
-                //   $notifications->save();
+                  $notifications->username = $doctor_name;
+                  $notifications->message = "كشف جديد : " . $patient_name; 
+                  $notifications->patient_id = $patient->id;  //////////// new added to the notification table ---> check the notification migration
+                  $notifications->save();
 
                   $data = [
                       'doctor_id' => $request->doctor,  ///// new  for private channel 

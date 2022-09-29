@@ -38,6 +38,7 @@ class CreateInvoice  implements ShouldBroadcast
         $this->invoice_id = $data['invoice_id'];
         $this->message = "كشف جديد : ";
         $this->created_at =date('Y-m-d H:i:s');
+        $this->created_at = \Carbon\Carbon::parse(now())->diffForHumans();
     }
 
     /**

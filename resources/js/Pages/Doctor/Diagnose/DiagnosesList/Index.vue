@@ -63,6 +63,25 @@ const showScreenExeptSubmenu = ref(false);
 const routeResourceName =ref('');
 const editMode = ref(false);
 const invoice_status = ref()
+const notificationNumber = ref()
+
+onMounted(()=>{
+     notificationNumber.value = parseInt(document.getElementById('notifications-count').innerHTML) 
+    })
+    
+    
+
+
+/// to keep notification number only in positive number not negative
+watch(
+    ()=> notificationNumber.value,
+        (value , old) =>{
+            if(value < 1){
+                notificationNumber.value += 1
+            }
+        }
+)
+
 
 const fireShowDeleteModal = (item) => {
     showDeleteModal(item);
@@ -98,12 +117,7 @@ const form = useForm({
     review_date:  null,
 });
 
-// const fillForm = (item)=>{
 
-//         form.diagnose = '';
-//         form.medicine = '';
-//         form.review_date ='';
-//     }
 
 const fillForm = (item)=>{
     if(item.diagnose !== null){
@@ -121,6 +135,9 @@ const fillForm = (item)=>{
 
 
 const fireAddDiagnosisModal = (item) => {
+    notificationNumber.value -=1
+    document.getElementById('notifications-count').innerHTML =  notificationNumber.value;
+
     fillForm(item);
     invoice_status.value = 3;
     editMode.value == true ? method.value = "update" : 'store';
@@ -130,7 +147,12 @@ const fireAddDiagnosisModal = (item) => {
     return showDialogModal(item);
 };
 
+
+
 const fireAddReviewModal = (item) => {
+    notificationNumber.value -=1
+    document.getElementById('notifications-count').innerHTML =  notificationNumber.value;
+
     fillForm(item);
     invoice_status.value = 2;
     editMode.value == true ? method.value = "update" : 'store';

@@ -131,7 +131,7 @@ class LaboratoriesController extends Controller
                 'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
             'can' => [
-                'create' => $request->user()->can('create diagnose'),
+                'create' => $request->user()->can('create laboratory'),
             ],
             'method'=> 'index',
             ]);

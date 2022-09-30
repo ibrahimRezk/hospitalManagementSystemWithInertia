@@ -8,6 +8,7 @@ use App\Http\Requests\Doctor\DiagnosesRequest;
 use App\Http\Resources\InvoiceResource;
 use App\Models\Diagnose;
 use App\Models\Invoice;
+use App\Models\Notification;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,22 @@ class DiagnosesController extends Controller
         $diagnose->patient_id = $request['data']['patient']['id'];
         $diagnose->doctor_id = $request['data']['doctor']['id'];
         $diagnose->save();
+
+        // if we want to update status for the only the last invoice notification
+        $notification = Notification::where('patient_id' ,$diagnose->patient_id)->where('doctor_id', $request['data']['doctor']['id'])->where('read_status', 0)->first();
+        $notification?->update(['read_status' => 1]); // notify question mark -> if there is notification
+
+        // alternative long code 
+        // if($notification != null ){
+        //     $notification->update(['read_status' => 1]);
+        // }
+
+
+        //// if we want to update status for all invoices notifications for the same patient 
+        // $notifications = Notification::where('patient_id' ,$diagnose->patient_id)->get();
+        // foreach($notifications as $n){
+        //     $n->update(['read_status' => 1]);
+        // }
     }
 
     public function update(Request $request , $id){
@@ -63,6 +80,10 @@ class DiagnosesController extends Controller
         $diagnose->patient_id = $request['data']['patient']['id'];
         $diagnose->doctor_id = $request['data']['doctor']['id'];
         $diagnose->save();
+
+           // if we want to update status for the only the last invoice notification
+           $notification = Notification::where('patient_id' ,$diagnose->patient_id)->where('read_status', 0)->first();
+           $notification?->update(['read_status' => 1]); // notify question mark -> if there is notification
     }
 
 

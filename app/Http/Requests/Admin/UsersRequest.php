@@ -64,4 +64,12 @@ class UsersRequest extends FormRequest
 
         ];
     }
+
+    public function messages()
+    {
+        return[
+
+            'name.required' => 'هذا الحقل مطلوب ',
+        ];
+    }
 }

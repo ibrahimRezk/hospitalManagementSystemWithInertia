@@ -12,6 +12,7 @@ import JetDropdown from "../Components/Dropdown.vue";
 import JetDropdownLink from "@/components/DropdownLink.vue";
 import Translations from "@/Components/translations/Translations.vue";
 
+
 const current_lang = document
     .getElementsByTagName("html")[0]
     .getAttribute("lang");
@@ -49,10 +50,10 @@ const showHideClass = computed(() => {
     }
 });
 
+
 ///////////////////////////////////////// pusher notifications /////////////////////////////////////////////
 const notificationsCount = ref();
 notificationsCount.value = parseInt(usePage().props.value.notificationsCount);
-
 const notifications = usePage().props.value.notifications;
 
 const showNewMessage = ref(false);
@@ -526,11 +527,10 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                     </div>
                                 </div>
                             </li>
-                            <!-- //////////////////////////////////////////////////////////////////////////// -->
 
                             <!-- notifications -->
 
-                            <!-- //////////////////////////////////////////////////////////////// -->
+                    
                             <li
                                 class="relative flex items-center pr-2 dropdown-notifications show"
                             >
@@ -547,7 +547,7 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
+                                                        class="inline-flex items-center px-1 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-transparent hover:text-gray-700 focus:outline-none transition"
                                                     >
                                                         <svg
                                                             class="ml-2 -mr-0.5 h-4 w-4"
@@ -576,6 +576,13 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                             />
                                                         </svg>
                                                     </button>
+                                                    <div>
+                                                        <h1 class=" block px-1 py-0  my-2 text-xs text-gray-100 bg-red-600 rounded-full"
+                                                            id="notifications-count"
+                                                        >
+                                                            {{ notificationsCount }}
+                                                        </h1>
+                                                    </div>
                                                 </span>
                                             </template>
 
@@ -587,13 +594,7 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                 >
                                                     Notifications
                                                 </div>
-                                                <div>
-                                                    <h1 class=" block px-2 py-1 mx-4 my-2 text-xs text-gray-100 bg-red-600 rounded-full"
-                                                        id="notifications-count"
-                                                    >
-                                                        {{ notificationsCount }}
-                                                    </h1>
-                                                </div>
+                                                
                                             </div>
                                                 <div
                                                     class="border-t border-gray-200"
@@ -610,14 +611,11 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                                     <!-- add show class on dropdown open js -->
 
                                                     <div class="flex py-1">
-                                                        <div
-                                                            class="my-auto"
-                                                            
-                                                        >
-                                                            <img
-                                                                src="../../../public/admin/assets/img/team-2.jpg"
-                                                                class="inline-flex items-center justify-center ltr:mr-4 rtl:ml-4 text-white text-size-sm h-9 w-9 max-w-none rounded-xl"
-                                                            />
+                                                        <div class="my-auto rtl:ml-2 ltr:mr-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                                                                <path fill-rule="evenodd" d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z" clip-rule="evenodd" />
+                                                              </svg>
+                                                              
                                                         </div>
                                                         <div
                                                             class="flex flex-col justify-center"

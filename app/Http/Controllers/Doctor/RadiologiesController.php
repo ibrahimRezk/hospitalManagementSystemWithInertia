@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RadiologyResource;
 use App\Models\Radiology;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RadiologiesController extends Controller
+class RadiologiesController extends Controller 
 {
 
     public function __construct()
@@ -56,13 +57,16 @@ class RadiologiesController extends Controller
 
     public function show($id){
         $result = Radiology::findorFail($id);
+        $result->load('media');
+
         if($result->doctor_id !=auth()->user()->id){
             //abort(404);
             return redirect()->route('404');
         }
 
         return Inertia::render('Doctor/Patient/Result', [
-            'result'=> $result
+            'result'=> new RadiologyResource($result)
+
         ]);
     } 
 

@@ -27,7 +27,7 @@ class PatientDetailsController extends Controller
 
     public function index($id){ 
 
-        $patient = User::find($id);
+        $patient = User::find($id); 
         $patient_records = Diagnose::where('patient_id',$id)->latest()->get();
         $patient_radiologies = Radiology::where('patient_id',$id)->latest()->paginate(10);
         $patient_laboratories  = Laboratory::where('patient_id',$id)->latest()->paginate(10);

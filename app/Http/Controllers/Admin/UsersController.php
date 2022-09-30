@@ -107,6 +107,7 @@ class UsersController extends Controller
     {
         // dd($request);
         $data = $request->safe()->only(['email', 'password']);
+        // dd($data);
 
         $data["ar"]["name"] = $request->name_ar;
         $data["en"]["name"] = $request->name_en;

@@ -205,9 +205,13 @@ class HandleInertiaRequests extends Middleware
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
-// remains :  dashboard pages for every section , show validation errors   , notifications ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests
+// remains :  dashboard and profile pages for every section 
+// add radiology and laboratory to admin.patient details from doctor.patient details  
+// ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // remember to  add role middleware to invoke methods
-// add patient image to patient page in admin section
+// translate validation errors
+// reduce notification count when invoice finish on doctor page
+// add patient name in add diagnose and other items in nenu
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

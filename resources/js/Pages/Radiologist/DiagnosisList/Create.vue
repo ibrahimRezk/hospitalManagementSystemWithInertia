@@ -7,6 +7,7 @@ import Button from "@/Components/Button.vue";
 import InputGroup from "@/Components/InputGroup.vue";
 import SelectGroup from "@/Components/SelectGroup.vue";
 import CheckboxGroup from "@/Components/CheckboxGroup.vue";
+import ImageUpload from "@/Components/ImageUpload.vue"; 
 
 const props = defineProps({
     edit: {
@@ -29,12 +30,14 @@ const props = defineProps({
         required: true,
     },
 });
+const maxUploadImageCount = 10 ;
+
 
 const form = useForm({
-    id:props.item.id,
+    id: props.item.id,
     employee_id: props.item.employee_id ?? props.employee_id,
     employee_description: props.item.employee_description ?? "",
-    patient_id: props.item.patient_id
+    patient_id: props.item.patient_id,
 
     // name_ar: props.item.name_ar ?? "",
     // name_en: props.item.name_en ?? "",
@@ -47,7 +50,6 @@ const form = useForm({
     // appointments:props.item.appointments ?? "",
     // status: props.item.status ?? true,
 });
-
 const submit = () => {
     props.edit
         ? form.put(
@@ -140,9 +142,22 @@ const submit = () => {
                                     class="mt-1"
                                     :message="form.errors.employee_description"
                                 />
+
+                                <label
+                                    class="mt-3 mx-4 bg-red-200 px-5 rounded-lg shadow-md"
+                                    >images</label
+                                >
+                                <div class="col-span-2">
+                                    <ImageUpload
+                                        :item = "props.item"
+                                        model-type="App\Models\Radiology"
+                                        :model-id="item.id"
+                                        :maxFiles = "maxUploadImageCount - item.images.length"
+                                    />
+                                </div>
+
                             </div>
 
-                            <input type="file">
 
                             <hr class="mt-5 h-px bg-black" />
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('read_status')->default(false);
             $table->string('username');
             $table->integer('patient_id'); //////////////// new column added to the table
+            $table->integer('doctor_id'); //////////////// new column added to the table
             $table->text('message');
             $table->timestamps();
         });

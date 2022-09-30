@@ -675,6 +675,8 @@ const NetTotal = computed(() => {
                 </div>
 
                 <!-- /////////////////////////// statements end  //////////////////////////////////////// -->
+
+                
             </Card>
         </Container>
     </Layout>

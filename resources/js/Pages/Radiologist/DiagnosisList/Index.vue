@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, Link } from "@inertiajs/inertia-vue3";
+import { Head, useForm, Link } from "@inertiajs/inertia-vue3"; 
 import { onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import Layout from "@/Layouts/Authenticated.vue";

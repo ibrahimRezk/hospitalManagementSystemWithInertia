@@ -10,6 +10,7 @@ import ImageUpload from "@/Components/ImageUpload.vue";
 import { watch, ref, computed, onMounted } from "@vue/runtime-core";
 
 const props = defineProps({
+    errors: Object,
     edit: {
         type: Boolean,
         default: false,
@@ -113,15 +114,13 @@ const submit = () => {
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
-                                :error-message="form.errors.name"
-                                required
+                                :error-message="form.errors.name_ar"
                             />
 
                             <InputGroup
                                 label="Name en"
                                 v-model="form.name_en"
-                                :error-message="form.errors.name"
-                                required
+                                :error-message="form.errors.name_en"
                             />
 
                             <InputGroup
@@ -129,7 +128,7 @@ const submit = () => {
                                 label="Email"
                                 v-model="form.email"
                                 :error-message="form.errors.email"
-                                required
+                                
                             />
 
                             <SelectGroup
@@ -137,7 +136,7 @@ const submit = () => {
                                 v-model="form.roleId"
                                 :items="roles"
                                 :error-message="form.errors.roleId"
-                                required
+                                
                             />
 
                             <InputGroup
@@ -146,7 +145,6 @@ const submit = () => {
                                 label="Password"
                                 v-model="form.password"
                                 :error-message="form.errors.password"
-                                :required="!edit"
                             />
 
                             <InputGroup
@@ -157,7 +155,6 @@ const submit = () => {
                                 :error-message="
                                     form.errors.passwordConfirmation
                                 "
-                                :required="!edit"
                             />
 
                             <div class="">

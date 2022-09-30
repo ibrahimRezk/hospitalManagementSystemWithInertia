@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LaboratoryResource;
 use App\Models\Laboratory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -53,13 +54,14 @@ class LaboratoriesController extends Controller
 
     public function show($id){
         $result = Laboratory::findorFail($id);
+        $result->load('media');
         if($result->doctor_id !=auth()->user()->id){
             //abort(404);
             return redirect()->route('404');
         }
 
         return Inertia::render('Doctor/Patient/Result', [
-            'result'=> $result
+            'result'=> new LaboratoryResource($result)
         ]);
     }
 

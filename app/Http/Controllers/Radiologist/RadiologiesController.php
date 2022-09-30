@@ -59,7 +59,6 @@ class RadiologiesController extends Controller
             'status',
             'created_at',
             ])
-
             ->where('status',$status)
 
 
@@ -130,7 +129,7 @@ class RadiologiesController extends Controller
                 'filters' => (object) $request->all(),
             'routeResourceName' => $this->routeResourceName,
             'can' => [
-                'create' => $request->user()->can('create dadiology'),
+                'create' => $request->user()->can('create radiology'),
             ],
             'method'=> 'index',
             ]);
@@ -141,6 +140,8 @@ class RadiologiesController extends Controller
     public function create(Request $request){
         // dd($request);
         $radiology_details = Radiology::find($request->id);
+        $radiology_details->load('media');
+
 
         return Inertia::render('Radiologist/DiagnosisList/Create', [
             'item' => new RadiologyResource($radiology_details),

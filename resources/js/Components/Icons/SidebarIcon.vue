@@ -9,7 +9,7 @@ const props = defineProps({
         default: "",
     },
 
-    active: Boolean,
+    active: Boolean, 
     default : false,
 
 });

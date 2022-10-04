@@ -86,7 +86,7 @@
                     </template>
                 </AddNew>
     
-                <Card class="mt-4" :is-loading="isLoading" no-padding>
+                <Card class="mt-2" :is-loading="isLoading" no-padding>
                     <Table :headers="headers" :items="items">
                         <template #section>
                             <div

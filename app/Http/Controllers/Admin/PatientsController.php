@@ -148,6 +148,7 @@ class PatientsController extends Controller
                 'tax_value',
                 'total_with_tax',
                 'price',
+                'type',
                 'created_at',
             ])
             ->with('media')
@@ -175,8 +176,8 @@ class PatientsController extends Controller
             // 'title' => 'Patient Details',
 
             'patient'  => new PatientResource($user),
-            'payments' => PaymentResource::collection($patient_payments),
             'invoices' => InvoiceResource::collection($patient_invoices),
+            'payments' => PaymentResource::collection($patient_payments),
             'receipts' => ReceiptResource::collection($patient_receipts),
             'statement' => PatientAccountResource::collection($patient_account),
 

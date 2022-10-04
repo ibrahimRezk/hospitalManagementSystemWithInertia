@@ -214,8 +214,8 @@ class SingleServiceInvoicesController extends Controller
 
                   $notifications = new Notification(); 
 
-                  $notifications->doctor_id = $doctor->id;
-                  $notifications->username = $doctor_name;
+                //   $notifications->doctor_id = $doctor->id;
+                  $notifications->user_id = $doctor->id;
                   $notifications->message = "كشف جديد : " . $patient_name; 
                   $notifications->patient_id = $patient->id;  //////////// new added to the notification table ---> check the notification migration
                   $notifications->save();

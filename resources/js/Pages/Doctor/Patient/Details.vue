@@ -43,7 +43,7 @@ const props = defineProps({
     },
 });
 
-const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
+const currentImage = ref(props.patient.images?.[0]?.img ?? null);
 
 const patientInformationHeaders = ref([
     { label: "Name" },
@@ -145,7 +145,7 @@ const {
 
     <Layout>
         <Container>
-            <Card class="mt-4" :is-loading="isLoading" no-padding>
+            <Card class="mt-2" :is-loading="isLoading" no-padding>
                 <!-- //// main tabs ////// -->
                 <div class="border-b border-yellow-500">
                     <ul

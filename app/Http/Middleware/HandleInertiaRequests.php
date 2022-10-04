@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\App;
@@ -38,6 +39,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'notificationsCount' => Notification::CountNotification(auth()->user()->id)->count(),
+            'notifications' =>  Notification::where('user_id', auth()->user()->id)->where('read_status', 0)->latest()->take(5)->get() ,
             // 'auth' => [
             //     'user' => $request->user(),
             // ],
@@ -178,7 +181,7 @@ class HandleInertiaRequests extends Middleware
                             'isVisible' => $request->user()?->can('view invoices module'), 
                         ],
 
-                    ]
+                    ] 
 
                 ],
                 [
@@ -208,10 +211,12 @@ class HandleInertiaRequests extends Middleware
 // remains :  dashboard and profile pages for every section 
 // add radiology and laboratory to admin.patient details from doctor.patient details  
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
+// add patient name in add diagnose modal and other items in nenu
 // remember to  add role middleware to invoke methods
 // translate validation errors
-// reduce notification count when invoice finish on doctor page
-// add patient name in add diagnose and other items in nenu
+// disable two factor authentication need to be fixed
+// roles index page has no filters yet
+// add button to reset all filters
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -229,6 +234,18 @@ class HandleInertiaRequests extends Middleware
 // important review patient show   very interesting
 
 // // resource collection  is important to get meta field in props.patient_radiology
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// to deal with date in vue js file like difforhuman in laravel   we use'dayjs'
+// 1 -  npm install dayjs
+// 2 - <script setup>
+// import dayjs from 'dayjs';
+// import relativeTime from 'dayjs/plugin/relativeTime';
+// dayjs.extend(relativeTime);
+
+// 3 - in template
+// <small class="ml-2 text-sm text-gray-600">{{ dayjs(chirp.created_at).fromNow() }}</small>
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             ],
         ]);

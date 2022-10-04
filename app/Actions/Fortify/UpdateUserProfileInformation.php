@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -18,6 +19,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        // new two lines added 
+        $currentLocale =  session('lang');
+        app()->setLocale($currentLocale);
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -32,6 +37,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
+
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
@@ -48,7 +54,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser($user, array $input)
     {
+        // $currentLocale = app()->getLocale();
+        $currentLocale =  session('lang');
+
         $user->forceFill([
+            // $currentLocale['name'] => $input['name'],
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,

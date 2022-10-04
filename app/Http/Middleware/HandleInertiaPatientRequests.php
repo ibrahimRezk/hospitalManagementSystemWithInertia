@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\App;
@@ -38,6 +39,8 @@ class HandleInertiaPatientRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'notificationsCount' => Notification::CountNotification(auth()->user()->id)->count(),
+            'notifications' =>  Notification::where('user_id', auth()->user()->id)->where('read_status', 0)->latest()->take(5)->get() ,
             // 'auth' => [
             //     'user' => $request->user(),
             // ],

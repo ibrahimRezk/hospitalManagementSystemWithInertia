@@ -49,10 +49,11 @@ Route::get('/dashboard', function () {
     ? config('jetstream.auth_session')
     : null;
     
-    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware ]))], function () {
+    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware ])),'Lang'], function () {
+
     Route::get('/user/profile', [UserProfileController::class, 'show'])
                 ->name('profile.show')
-                ->middleware(['Lang' ]);
+                ->middleware('Lang' );
 });
 
 
@@ -69,6 +70,7 @@ Route::middleware(['auth', 'Lang'])->group(function () {
 
     Route::put('update_user/{id}',[UsersController::class,'updateUser'])->name('users.updateUser');
     Route::resource('users', UsersController::class);
+    // ->only(['index', 'store', 'update' , 'edit' , 'destroy' , 'show' , 'create']) ///////// we can specify only the methods we want to use 
 
     Route::resource('roles', RolesController::class);
     Route::post('roles/attach-permission', AttachPermissionToRoleController::class)->name('roles.attach-permission');

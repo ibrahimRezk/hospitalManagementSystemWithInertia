@@ -8,17 +8,26 @@ const props = defineProps({
         type: String,
         default: "",
     },
+  
+    active: Boolean, 
+    default : false,
 });
 
 const sidebarlabel = computed(() => {
     return trans(`mainMenu.` + props.label);
-
-
 });
+
+const colorClasses = computed(() => { 
+        return props.active ?  "text-slate-800 " :  ""
+
+}); 
+
+
+
 </script>
 
 <template>
-    <div class=" hover:text-gray-300 text-gray-600">
+    <div class=" group-hover:text-red-500"  :class="colorClasses" >
         {{ sidebarlabel }}
     </div>
 </template>

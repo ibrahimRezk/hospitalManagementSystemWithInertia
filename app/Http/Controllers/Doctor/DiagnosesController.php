@@ -49,7 +49,7 @@ class DiagnosesController extends Controller
         $diagnose->save();
 
         // if we want to update status for the only the last invoice notification
-        $notification = Notification::where('patient_id' ,$diagnose->patient_id)->where('doctor_id', $request['data']['doctor']['id'])->where('read_status', 0)->first();
+        $notification = Notification::where('patient_id' ,$diagnose->patient_id)->where('user_id', $request['data']['doctor']['id'])->where('read_status', 0)->first();
         $notification?->update(['read_status' => 1]); // notify question mark -> if there is notification
 
         // alternative long code 

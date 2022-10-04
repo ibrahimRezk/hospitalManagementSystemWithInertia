@@ -14,9 +14,9 @@ class Notification extends Model
     protected $fillable = ['read_status','username','patient_id','message'];
 
 
-    public function scopeCountNotification($query,$username)
+    public function scopeCountNotification($query,$user_id)
     {
-        $query->where('username',$username)->where('read_status',0);
+        $query->where('user_id',$user_id)->where('read_status',0);
     }
 
     protected $casts = [

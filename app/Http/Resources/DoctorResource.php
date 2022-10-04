@@ -30,6 +30,7 @@ class DoctorResource extends JsonResource
             'phone' => $this->when($this->phone, $this->phone),
             'status' => $this->when($this->status, $this->status),
             'appointments' => AppointmentResource::collection( $this->whenLoaded('doctors_appointments')),     
+            // 'created_at' => $this->when($this->created_at ,$this->created_at),
             'created_at_formatted' => $this->when($this->created_at, function () {
                 return $this->created_at->toDayDateTimeString();
             }),
@@ -39,7 +40,7 @@ class DoctorResource extends JsonResource
                     fn ($media) => [
                         'id' => $media->id,
                         'html' => $media->toHtml(),
-                        'img' => $media,
+                        'img' => $media->original_url,
                     ]
                 )
             ),

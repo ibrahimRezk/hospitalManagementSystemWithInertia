@@ -13,13 +13,13 @@ const props = defineProps({
     },
     color: {
         type: String,
-        default: "black",
+        default: "blue",
     },
     small: {
         type: Boolean,
         default: false,
     },
-});
+}); 
 
 const colorClasses = computed(() => { 
     return {

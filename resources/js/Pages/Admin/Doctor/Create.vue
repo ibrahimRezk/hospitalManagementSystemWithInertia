@@ -39,7 +39,8 @@ const props = defineProps({
     },
 });
 const maxUploadImageCount = 1;
-const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
+// const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
+const currentImage = ref(props.item.images?.[0]?.img ?? null);
 
 
 
@@ -80,6 +81,9 @@ var loadFile = function (event) {
     };
 };
 
+
+// re reset form after sending data if the form in the same page we use form in blade like this :
+// <form @submit.prevent="form.post(route('chirps.store'), { onSuccess: () => form.reset() })">
 
 
 const submit = () => {

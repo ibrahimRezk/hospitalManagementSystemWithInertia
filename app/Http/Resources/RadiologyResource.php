@@ -38,7 +38,7 @@ class RadiologyResource extends JsonResource
                     fn ($media) => [
                         'id' => $media->id,
                         'html' => $media->toHtml(),
-                        'img' => $media,
+                        'img' => $media->original_url,
                     ]
                 )
             ),

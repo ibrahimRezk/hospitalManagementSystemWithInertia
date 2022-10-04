@@ -76,7 +76,7 @@
             </template>
             <Container>
                 <AddNew :show="isFilled">
-                    <Button
+                    <Button color="blue"
                         v-if="can.create"
                         :href="route(`admin.${routeResourceName}.create`)"
                         >Add New</Button
@@ -87,7 +87,7 @@
                     </template>
                 </AddNew>
     
-                <Card class="mt-4" :is-loading="isLoading" no-padding>
+                <Card class="mt-2" :is-loading="isLoading" no-padding>
                     <Table :headers="headers" :items="items">
                         <template #section>
                             <div

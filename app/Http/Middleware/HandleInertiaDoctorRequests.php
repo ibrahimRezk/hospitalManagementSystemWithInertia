@@ -40,8 +40,8 @@ class HandleInertiaDoctorRequests extends Middleware
     {
         return array_merge(parent::share($request), [
 
-            'notificationsCount' => Notification::CountNotification(auth()->user()->name)->count(),
-            'notifications' =>  Notification::where('username', auth()->user()->name)->where('read_status', 0)->latest()->take(5)->get() ,
+            'notificationsCount' => Notification::CountNotification(auth()->user()->id)->count(),
+            'notifications' =>  Notification::where('user_id', auth()->user()->id)->where('read_status', 0)->latest()->take(5)->get() ,
             
             // 'auth' => [
             //     'user' => $request->user(),

@@ -80,7 +80,8 @@ dictRemoveFile : "حذف",
                 this.emit("addedfile", mock);
                 
                 // images.img comming from laboratory resourcey
-                this.options.thumbnail.call(this, mock, image.img.original_url);   // this will get the original image 
+                // this.options.thumbnail.call(this, mock, image.img.original_url);   // this will get the original image 
+                this.options.thumbnail.call(this, mock, image.img);   // this will get the original image 
                 
                 let dzProgress = document.getElementsByClassName('dz-progress');
                 dzProgress[0].classList.remove('dz-progress')    

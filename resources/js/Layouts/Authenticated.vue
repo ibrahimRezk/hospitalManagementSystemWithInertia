@@ -1,4 +1,4 @@
-<script setup>
+<script setup> 
 import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted, ref, watch, computed } from "vue";
@@ -74,13 +74,18 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+const sidebarMenuTextColor = computed(()=>{
+    return  "text-slate-400  hover:text-slate-600"
+})
+    
+
 // important
 // z-990 in class in template down can cause apperance of sidebar items in white above all items
 </script>
 
 <template>
     <body
-        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500"
+        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500 "
     >
         <div
             v-show="showHideSidebar"
@@ -92,20 +97,23 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
 
         <!-- sidenav  -->
         <aside
-            class1=" max-w-62.5 ease-nav-brand fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent ps"
+     
             :class="showHideClass"
-            class="rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:ml-4 ltr:xl:left-0 max-w-62.5 ease-nav-brand fixed inset-y-0 my-4 rtl:mr-4 block w-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent ps"
-            classhhhhhhhhhhh="rtl:xl:translate-x-0 rtl:translate-x-full ltr:xl:translate-x-0 ltr:-translate-x-0 ltr:ml-4 ltr:xl:left-0 max-w-62.5 ease-nav-brand fixed inset-y-0 my-4 rtl:mr-4 block w-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent ps"
-            classltr="ml-4     ltr:xl:translate-x-0 ltr:-translate-x-full     xl:left-0      "
-            classrtl="mr-4       rtl:xl:translate-x-0  rtl:translate-x-full    xl:right-0"
+            class="  rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0  ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 my-4 ltr:ml-0 rtl:mr-0   block   flex-wrap items-center justify-between overflow-y-auto border border-slate-300  bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent ps"
+
         >
-            <div class="h-30 mb-2">
+            
+
+            <div
+                class="h-full  items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl  "
+            >
+            <div class="h-30  bg-white   ">
                 <i
                     class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
                     sidenav-close
                 ></i>
                 <a
-                    class="block px-8 py-6 m-0 text-size-sm whitespace-nowrap text-slate-700"
+                    class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700"
                     href="#"
                 >
                     <img
@@ -124,13 +132,9 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
             </div>
 
             <hr class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark" />
-
-            <div
-                class="items-center block w-auto max-h-screen overflow-auto grow basis-full"
-            >
-                <ul class="flex flex-col pl-0 mb-0">
+                <ul class="flex flex-col pl-0 mb-0 ">
                     <!-- sidebar links -->
-                    <li class="mt-0.5 w-full">
+                    <li class="mt-0.5 w-full ">
                         <div
                             v-show="menu.isVisible"
                             v-for="menu in $page.props.menus"
@@ -138,13 +142,14 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                             :active="menu.isActive"
                         >
                             <!-- //////////////////////////////////////////////////menus with sub menu/////////////////////////////////////////// -->
-                            <div v-if="menu.hasSubmenu">
+                            <div v-if="menu.hasSubmenu" >
+                                <div :class="sidebarMenuTextColor">
                                 <button
-                                    class="w-56 flex items-center justify-between rounded-md hover:bg-slate-200"
+                                    class=" w-56 flex items-center justify-between rounded-md hover:bg-slate-200 "
                                     @click="menu.open = !menu.open"
                                     :class="
                                         menu.isActive
-                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
+                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white  px-4 font-semibold text-slate-700 transition-colors'
                                             : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
                                     "
                                 >
@@ -153,12 +158,13 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                         :icon="menu.label"
                                     />
                                     <span
-                                        class="w-full flex items-center justify-between"
+                                        class="w-full flex items-center justify-between "
                                     >
                                         <span
-                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
+                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft first-line:  "
                                         >
-                                            <Translations :label="menu.label" />
+                                        <!-- Test -->
+                                        <Translations  :label="menu.label"/>
                                         </span>
 
                                         <span>
@@ -194,9 +200,10 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                         </span>
                                     </span>
                                 </button>
+                            </div>
 
                                 <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
-                                <div
+                                <div :class="sidebarMenuTextColor"
                                     v-show="menu.open"
                                     v-for="submenu in menu.subMenus"
                                     :key="submenu.label"
@@ -204,11 +211,11 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                     id="filter-section-mobile-1"
                                 >
                                     <Link
-                                        class="hover:bg-slate-200 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
+                                        class="hover:bg-slate-100 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
                                         :class="
                                             submenu.isActive
-                                                ? ' shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-white font-semibold text-slate-700 transition-colors'
-                                                : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-50 '
+                                                ? ' shadow-soft-xl m-0 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-slate-200 font-semibold text-slate-700 transition-colors'
+                                                : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-slate-700 '
                                         "
                                         :href="submenu.url"
                                     >
@@ -222,9 +229,7 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                                             <span
                                                 class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
                                             >
-                                                <Translations
-                                                    :label="submenu.label"
-                                                />
+                                            <Translations :label="menu.label" :active="submenu.isActive" />
                                             </span>
                                         </span>
                                     </Link>
@@ -238,37 +243,41 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
                             </div>
 
                             <!-- //////////////////////////////////////////////////menus without sub menu /////////////////////////////////////////// -->
-                            <div v-else>
+                            <div v-else :class="sidebarMenuTextColor">
                                 <Link
-                                    class="w-56 flex items-center justify-between rounded-md hover:bg-slate-200"
+                                    class="w-56 flex items-center justify-between rounded-md  hover:bg-slate-100"
                                     :class="
                                         menu.isActive
-                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors'
-                                            : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
+                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-slate-200 px-4 font-semibold text-slate-700 transition-colors'
+                                            : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors '
                                     "
                                     :href="menu.url"
-                                >
+                                    >
                                     <SidebarIcon
                                         :active="menu.isActive"
                                         :icon="menu.label"
                                     />
                                     <span
-                                        class="w-full flex items-center justify-between"
+                                        class="w-full flex items-center justify-between "
                                     >
                                         <span
-                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
+                                            class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft "
                                         >
-                                            <Translations :label="menu.label" />
+                                        <!-- test -->
+                                        <Translations class=" hover:text-red-500"  :label="menu.label" :active="menu.isActive" />
                                         </span>
                                     </span>
                                 </Link>
+                                <hr
+                                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                />
                             </div>
                             <hr
-                                class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
-                            />
+                                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                />
                         </div>
                     </li>
-
+                    
                     <li class="xl:hidden"></li>
                 </ul>
             </div>

@@ -17,7 +17,7 @@ class InvoiceTypeCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        return $value == 1 ? 'cash' : 'later';
+        return  $value == 1 ? 'cash' : 'later';
     }
 
     /**

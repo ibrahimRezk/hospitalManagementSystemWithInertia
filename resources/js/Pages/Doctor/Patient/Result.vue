@@ -35,7 +35,7 @@
     
         <Layout>
             <Container>
-                <Card class="mt-4" :is-loading="isLoading" no-padding>
+                <Card class="mt-2" :is-loading="isLoading" no-padding>
 
                     <div>
                         <label
@@ -55,7 +55,7 @@
                         <hr class="mt-5 h-px bg-black" />
                         
                     </div>
-                    <Card class="mt-4 bg-white px-2 py-2 rounded-xl shadow-xl" :is-loading="isLoading" no-padding>
+                    <Card class="mt-2 bg-white px-2 py-2 rounded-xl shadow-xl" :is-loading="isLoading" no-padding>
 
                     <div>
                         <label

@@ -102,7 +102,7 @@ const doctorAppointments = (doctor)=>{
                 </template>
             </AddNew>
 
-            <Card class="mt-4" :is-loading="isLoading" no-padding>
+            <Card class="mt-2" :is-loading="isLoading" no-padding>
                 <Table :headers="headers" :items="items">
                     <template #section>
                         <div
@@ -159,6 +159,7 @@ const doctorAppointments = (doctor)=>{
                         </Td>
                         <Td>
                             {{ item.created_at_formatted }}
+                            <!-- {{  new Date(item.created_at).toLocaleString() }} -->
                         </Td>
                         <Td>
                             <Actions

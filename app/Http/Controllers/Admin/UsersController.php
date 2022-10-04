@@ -141,6 +141,7 @@ class UsersController extends Controller
 
     public function updateUser(UsersRequest $request,  $id)
     {
+        // dd($request);
         // review samir gamal method to make password nullable on update and update userRequest file
         $user = User::find($id);
 

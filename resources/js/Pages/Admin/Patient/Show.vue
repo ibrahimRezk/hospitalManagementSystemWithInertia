@@ -51,7 +51,7 @@ const props = defineProps({
     },
 });
 
-const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
+const currentImage = ref(props.patient.images?.[0]?.img ?? null);
 
 
 
@@ -677,7 +677,7 @@ const NetTotal = computed(() => {
                 <!-- /////////////////////////// statements end  //////////////////////////////////////// -->
 
                 
-            </Card>
+            </Card> 
         </Container>
     </Layout>
 </template>

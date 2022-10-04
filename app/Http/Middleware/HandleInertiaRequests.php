@@ -217,6 +217,8 @@ class HandleInertiaRequests extends Middleware
 // disable two factor authentication need to be fixed
 // roles index page has no filters yet
 // add button to reset all filters
+// add service type " single or group " of the current invoice in doctor diagnoses page
+// add filters in pages in doctor section completed incoices and index and review pages
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

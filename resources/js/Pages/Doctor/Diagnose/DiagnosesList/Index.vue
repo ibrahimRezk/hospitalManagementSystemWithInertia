@@ -270,7 +270,7 @@ const color = (item) => {
                         </Td>
                         <Td>
                             <Button color="blue" small>
-                                {{ item.service.name }}
+                                {{ item.service?.name ?? item.group?.name }}
                             </Button>
                         </Td>
 

@@ -205,8 +205,8 @@ const sidebarMenuTextColor = computed(()=>{
                                 <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
                                 <div :class="sidebarMenuTextColor"
                                     v-show="menu.open"
-                                    v-for="submenu in menu.subMenus"
-                                    :key="submenu.label"
+                                    v-for="(submenu , index) in menu.subMenus"
+                                    :key="index"
                                     class="px-4"
                                     id="filter-section-mobile-1"
                                 >
@@ -221,15 +221,16 @@ const sidebarMenuTextColor = computed(()=>{
                                     >
                                         <SidebarIcon
                                             :active="submenu.isActive"
-                                            :icon="submenu.label"
+                                            :icon="submenu"
                                         />
+                                    
                                         <span
                                             class="w-full flex items-center justify-between"
                                         >
                                             <span
                                                 class="mr-1 duration-300 opacity-100 pointer-events-none ease-soft"
                                             >
-                                            <Translations :label="menu.label" :active="submenu.isActive" />
+                                            <Translations :label="submenu.label" :active="submenu.isActive" />
                                             </span>
                                         </span>
                                     </Link>
@@ -719,7 +720,7 @@ const sidebarMenuTextColor = computed(()=>{
                             </li>
                             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-                            <li class="flex items-center">
+                            <li class="flex items-center"> 
                                 <Link
                                     :href="route('logout')"
                                     method="post"

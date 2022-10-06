@@ -53,13 +53,13 @@ class HandleInertiaDoctorRequests extends Middleware
             'locale' => App::getLocale(),
 
             'menus' => [
-                [
-                    'label' => 'Dashboard',
-                    'url' => route('doctor.dashboard'),
-                    'isActive' => $request->routeIs('doctor.dashboard'),
-                    'isVisible' => true,
-                    'hasSubmenu' => false,
-                ],
+                // [
+                //     'label' => 'Dashboard',
+                //     'url' => route('doctor.dashboard'),
+                //     'isActive' => $request->routeIs('doctor.dashboard'),
+                //     'isVisible' => true,
+                //     'hasSubmenu' => false,
+                // ],
                 [
                     'label' => 'Profile',
                     'url' => route('doctor.profile.show'),
@@ -69,22 +69,22 @@ class HandleInertiaDoctorRequests extends Middleware
 
                 ],
                 [
-                    'label' => 'Doctor diagnoses',
-                    'isActive' => $request->routeIs('doctor.invoices.*'),
+                    'label' => 'Doctor_diagnoses',
+                    // 'isActive' => $request->routeIs('doctor.invoices.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),
                     'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
                     'hasSubmenu' => true,
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'diagnoses List',
+                            'label' => 'diagnoses_List',
                             'url' => route('doctor.invoices.index'),
                             'isActive' => $request->routeIs('doctor.invoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                         [
-                            'label' => 'completed diagnoses List',
+                            'label' => 'completed_diagnoses_List',
                             'url' => route('doctor.completedInvoices'),
                             'isActive' => $request->routeIs('doctor.completedInvoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
@@ -92,7 +92,7 @@ class HandleInertiaDoctorRequests extends Middleware
                         ],
                     
                         [
-                            'label' => 'Review diagnoses List',
+                            'label' => 'Review_diagnoses_List',
                             'url' => route('doctor.reviewInvoices'),
                             'isActive' => $request->routeIs('doctor.reviewInvoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
@@ -100,16 +100,7 @@ class HandleInertiaDoctorRequests extends Middleware
                         ],
                     ],
                 ],
-               
-                // [
-                //     'label' => 'Profile',
-                //     'url' => route('admin.profile.show'),
-                //     'isActive' => $request->routeIs('admin.profile.show'),    // check if it is work
-                //     'isVisible' => true,
-                //     'hasSubmenu' => false,
 
-                // ],
-                
 
 
             ],

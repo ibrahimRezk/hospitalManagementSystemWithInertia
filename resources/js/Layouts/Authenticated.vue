@@ -77,7 +77,9 @@ const sidebarMenuTextColor = computed(() => {
 
 ////// to open submenu and close other submenus in the same time use this /////////////////////////
 /////////////////remember to add function openCloseSubMenu(menu) in template /////////////////////
+
 const openCloseSubMenu = (menu) => {
+    // console.log(menu.open)
     const submenuValu = ref(menu.open);
 
     usePage().props.value.menus.forEach((menu) => {
@@ -93,6 +95,20 @@ const openCloseSubMenu = (menu) => {
 //// otherwise just use onClick = "menu.open != menu.open" in template
 ////////////////////////////////////////////////////////////////
 
+
+// to keep menu opend when submenu is active
+onMounted(() => {
+    usePage().props.value.menus.forEach((menu) => {
+        if (menu.hasSubmenu) {
+            menu.subMenus.forEach((submenu) => {
+                if (submenu.isActive) {
+                    return openCloseSubMenu(menu);
+                }
+            });
+        }
+    });
+});
+
 // important
 // z-990 in class in template down can cause apperance of sidebar items in white above all items
 </script>
@@ -101,35 +117,6 @@ const openCloseSubMenu = (menu) => {
 .default-header {
     background-color: rgb(26, 49, 75);
     text-transform: uppercase;
-}
-
-/* base */
-.fade {
-    backface-visibility: hidden;
-    z-index: 1;
-}
-
-/* moving */
-.fade-move {
-    transition: all 600ms ease-in-out 20ms;
-}
-
-/* appearing */
-.fade-enter-active {
-    transition: all 400ms ease-out;
-}
-
-/* disappearing */
-.fade-leave-active {
-    transition: all 200ms ease-in;
-    position: absolute;
-    z-index: 0;
-}
-
-/* appear at / disappear to */
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
 }
 </style>
 
@@ -210,6 +197,7 @@ const openCloseSubMenu = (menu) => {
                                                 :active="menu.isActive"
                                                 :icon="menu.label"
                                             />
+
                                             <span
                                                 class="w-full flex items-center justify-between"
                                             >
@@ -280,7 +268,7 @@ const openCloseSubMenu = (menu) => {
                                             >
                                                 <SidebarIcon
                                                     :active="submenu.isActive"
-                                                    :icon="submenu"
+                                                    :icon="submenu.label"
                                                 />
 
                                                 <span
@@ -323,7 +311,7 @@ const openCloseSubMenu = (menu) => {
                                     :href="menu.url"
                                 >
                                     <SidebarIcon
-                                        :active="menu.isActive"
+                                        :active="menu.isActive" 
                                         :icon="menu.label"
                                     />
                                     <span

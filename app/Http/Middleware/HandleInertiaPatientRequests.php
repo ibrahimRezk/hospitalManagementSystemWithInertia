@@ -67,7 +67,7 @@ class HandleInertiaPatientRequests extends Middleware
 
                 ],
                 [
-                    'label' => 'Patient List',
+                    'label' => 'Patient_List',
                     'isActive' => $request->routeIs('patient.patients.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),
                     'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
@@ -75,7 +75,7 @@ class HandleInertiaPatientRequests extends Middleware
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'Invoices List',
+                            'label' => 'Invoices_List',
                             'url' => route('patient.invoices'),
                             'isActive' => $request->routeIs('patient.invoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
@@ -99,16 +99,6 @@ class HandleInertiaPatientRequests extends Middleware
                     
                     ],
                 ],
-               
-                // [
-                //     'label' => 'Profile',
-                //     'url' => route('admin.profile.show'),
-                //     'isActive' => $request->routeIs('admin.profile.show'),    // check if it is work
-                //     'isVisible' => true,
-                //     'hasSubmenu' => false,
-
-                // ],
-                
 
 
             ],

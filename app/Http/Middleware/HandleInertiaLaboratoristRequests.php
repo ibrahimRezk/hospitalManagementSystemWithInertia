@@ -68,7 +68,7 @@ class HandleInertiaLaboratoristRequests extends Middleware
 
                 ],
                 [
-                    'label' => 'Laboratories list',
+                    'label' => 'Laboratories_list',
                     'isActive' => $request->routeIs('laboratorist.laboratories.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),
                     'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
@@ -76,14 +76,14 @@ class HandleInertiaLaboratoristRequests extends Middleware
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'diagnoses List',
+                            'label' => 'diagnoses_List',
                             'url' => route('laboratorist.laboratories.index'),
                             'isActive' => $request->routeIs('laboratorist.laboratories*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                         [
-                            'label' => 'completed diagnoses List',
+                            'label' => 'completed_diagnoses_List',
                             'url' => route('laboratorist.completedInvoices'),
                             'isActive' => $request->routeIs('laboratorist.completedInvoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),

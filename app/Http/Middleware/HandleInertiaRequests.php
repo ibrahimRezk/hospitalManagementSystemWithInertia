@@ -133,19 +133,19 @@ class HandleInertiaRequests extends Middleware
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'Single Services',
+                            'label' => 'Single_Services',
                             'url' => route('admin.singleServices.index'),
                             'isActive' => $request->routeIs('admin.singleService*'),
                             'isVisible' => $request->user()?->can('view services module'),
                         ],
                         [
-                            'label' => 'Group Services',
+                            'label' => 'Group_Services',
                             'url' => route('admin.servicesGroups.index'),
                             'isActive' => $request->routeIs('admin.servicesGroups*'),
                             'isVisible' => $request->user()?->can('view services module'),
                         ],
                         [
-                            'label' => 'Insurance Companies',
+                            'label' => 'Insurance_Companies',
                             'url' => route('admin.insurances.index'),
                             'isActive' => $request->routeIs('admin.insurances*'),
                             'isVisible' => $request->user()?->can('view insurances module'),
@@ -169,13 +169,13 @@ class HandleInertiaRequests extends Middleware
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'Single Invoice',
+                            'label' => 'Single_Invoice',
                             'url' => route('admin.singleInvoices.index'),
                             'isActive' => $request->routeIs('admin.singleInvoices*'),
                             'isVisible' => $request->user()?->can('view invoices module'),
                         ],
                         [
-                            'label' => 'Group Invoices',
+                            'label' => 'Group_Invoices',
                             'url' => route('admin.servicesGroupInvoices.index'),
                             'isActive' => $request->routeIs('admin.servicesGroupInvoices*'),
                             'isVisible' => $request->user()?->can('view invoices module'), 
@@ -208,7 +208,7 @@ class HandleInertiaRequests extends Middleware
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
-// remains :  dashboard and profile pages for every section 
+// remains :  dashboard  pages for every section 
 // add radiology and laboratory to admin.patient details from doctor.patient details  
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // add patient name in add diagnose modal and other items in nenu

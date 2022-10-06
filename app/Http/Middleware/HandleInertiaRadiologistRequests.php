@@ -67,7 +67,7 @@ class HandleInertiaRadiologistRequests extends Middleware
 
                 ],
                 [
-                    'label' => 'Radiologies list',
+                    'label' => 'Radiologies_list',
                     'isActive' => $request->routeIs('radiologist.radiologies.*'),
                     // 'isVisible' => $request->user()?->can('view diagnoses module'),
                     'isVisible' => true,  // to be changed after assign role to doctor in admin dashboard
@@ -75,14 +75,14 @@ class HandleInertiaRadiologistRequests extends Middleware
                     'open'=>false,
                     'subMenus' => [
                         [
-                            'label' => 'diagnoses List',
+                            'label' => 'diagnoses_List',
                             'url' => route('radiologist.radiologies.index'),
                             'isActive' => $request->routeIs('radiologist.radiologies*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                         [
-                            'label' => 'completed diagnoses List',
+                            'label' => 'completed_diagnoses_List',
                             'url' => route('radiologist.completedInvoices'),
                             'isActive' => $request->routeIs('radiologist.completedInvoices*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),

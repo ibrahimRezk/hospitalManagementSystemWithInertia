@@ -93,7 +93,7 @@ import Layout from '@/Layouts/Authenticated.vue'
                 <div class="flex flex-row justify-between -mx-3">
                   <div class="flex-none max-w-full px-3">
                     <div>
-                      <p class="mb-0 font-sans font-semibold leading-normal text-size-sm">Radiology and Laboratory employees count</p>
+                      <p class="mb-0 font-sans font-semibold leading-normal text-size-sm">Radiology and Laboratory  count</p>
                       <h5 class="mb-0 font-bold">
                         {{  }}
                         <span class="leading-normal text-red-600 text-size-sm font-weight-bolder">12</span>

@@ -1,7 +1,8 @@
 import "./bootstrap";
-// import '../css/app.css';
-import "../../public/admin/assets/css/styles.css";
+// import "../../public/admin/assets/css/styles.css";
 import "../css/admin/app.css";
+
+
 
 // remember to remove all extra files from assets when project completed
 

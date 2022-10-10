@@ -53,13 +53,13 @@ class HandleInertiaDoctorRequests extends Middleware
             'locale' => App::getLocale(),
 
             'menus' => [
-                // [
-                //     'label' => 'Dashboard',
-                //     'url' => route('doctor.dashboard'),
-                //     'isActive' => $request->routeIs('doctor.dashboard'),
-                //     'isVisible' => true,
-                //     'hasSubmenu' => false,
-                // ],
+                [
+                    'label' => 'Dashboard',
+                    'url' => route('doctor.dashboard'),
+                    'isActive' => $request->routeIs('doctor.dashboard'),
+                    'isVisible' => true,
+                    'hasSubmenu' => false,
+                ],
                 [
                     'label' => 'Profile',
                     'url' => route('doctor.profile.show'),

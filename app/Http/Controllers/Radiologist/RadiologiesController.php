@@ -67,7 +67,7 @@ class RadiologiesController extends Controller
 
             // ->when( 
             //     $request->patient_id,
-            //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id)
+            //     fn (Builder $builder, $patient_id) =>  $builder->where( 'patient_id', $patient_id) 
             //     )
 
             // ->when( 

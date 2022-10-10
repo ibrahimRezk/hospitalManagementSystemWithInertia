@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted, ref, watch, computed } from "vue";
 import { trans } from "laravel-vue-i18n";
-import { getActiveLanguage, isLoaded } from "laravel-vue-i18n";
+import { getActiveLanguage, isLoaded } from "laravel-vue-i18n"; 
 import { usePage } from "@inertiajs/inertia-vue3";
 import { loadLanguageAsync } from "laravel-vue-i18n";
 import SidebarIcon from "../Components/Icons/SidebarIcon.vue";

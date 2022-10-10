@@ -204,12 +204,11 @@ class HandleInertiaRequests extends Middleware
                             'isVisible' => $request->user()?->can('view payments module'),
                         ],
                     ]
-                ],
+                ], 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
-// remains :  dashboard  pages for every section 
-// add radiology and laboratory to admin.patient details from doctor.patient details  
+// remains : 
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // add patient name in add diagnose modal and other items in nenu
 // remember to  add role middleware to invoke methods

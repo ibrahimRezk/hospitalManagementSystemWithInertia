@@ -15,7 +15,7 @@
     import Input from "@/Components/Input.vue";
     import AddNew from "@/Components/AddNew.vue";
     
-    import useDeleteItem from "@/Composables/useDeleteItem.js"; 
+    import useDeleteItem from "@/Composables/useDeleteItem.js";  
     
     const props = defineProps({
         result: {

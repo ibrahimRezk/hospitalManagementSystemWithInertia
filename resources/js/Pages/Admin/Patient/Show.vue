@@ -13,7 +13,7 @@ import Modal from "@/Components/ConfirmationModal.vue";
 
 import Label from "@/Components/Label.vue";
 import Input from "@/Components/Input.vue";
-import AddNew from "@/Components/AddNew.vue";
+import AddNew from "@/Components/AddNew.vue"; 
 import Filters from "./Filters.vue";
 
 import useDeleteItem from "@/Composables/useDeleteItem.js";
@@ -41,6 +41,15 @@ const props = defineProps({
         default: () => ({}),
     },
     receipts: {
+        type: Array,
+        default: () => [],
+    },
+
+    patient_radiologies: {
+        type: Array,
+        default: () => [],
+    },
+    patient_laboratories: {
         type: Array,
         default: () => [],
     },
@@ -77,6 +86,22 @@ const statementHeaders = ref([
     { label: "Credit" },
 ]);
 
+const patientRadiologiesHeaders = ref([
+    { label: "#" },
+    { label: "Description" },
+    { label: "Doctor Name" },
+    { label: "Employee Name" },
+    { label: "Status" },
+]);
+
+
+const patientLaboratoriesHeaders = ref([
+    { label: "#" },
+    { label: "Description" },
+    { label: "Doctor Name" },
+    { label: "Employee Name" },
+    { label: "Status" },
+]);
 /////// to show tabs with it's number so easy way ////////
 const activeTab = (num) => {
     return (tab.value = num);
@@ -84,6 +109,11 @@ const activeTab = (num) => {
 const tab = ref(1);
 ////////////////////
 
+
+const color = (item) => {
+    return item.status == "completed" ? "green" : "red";
+};
+ 
 // get invoices total invoices amount with tax///////
 const InvoicesTotalWithTax = computed(() => {
     let sum = 0;
@@ -675,6 +705,73 @@ const NetTotal = computed(() => {
                 </div>
 
                 <!-- /////////////////////////// statements end  //////////////////////////////////////// -->
+
+
+
+                <!-- /////////////////////////// radiology   //////////////////////////////////////// -->
+
+                <div class="mt-2" v-show="tab === 6"> 
+                    <Table
+                        :headers="patientRadiologiesHeaders"
+                        :items="patient_radiologies"
+                    >
+                        <template v-slot="{ item }">
+                            <Td>
+                                {{ item.id }}
+                            </Td>
+                            <Td>
+                                {{ item.description }}
+                            </Td>
+                            <Td>
+                                {{ item.doctor.name }}
+                            </Td>
+
+                            <Td>
+                                {{ item.employee.name ?? "--" }}
+                            </Td>
+                            <Td>
+                                <Button small :color="color(item)">
+                                    {{ item.status }}
+                                </Button>
+                            </Td>
+                        
+                        </template>
+                    </Table>
+                </div>
+
+                <!-- ///////////////////////////////////////////////////////////////////////////////// -->
+                <!-- ///////////////////////////////////////////////////////////////////////////////// -->
+                <!-- ////////////////////////////////////laboratory///////////////////////////////////////////// -->
+                <div class="mt-2" v-show="tab === 7">
+                    <Table
+                        :headers="patientLaboratoriesHeaders"
+                        :items="patient_laboratories"
+                    >
+                        <template v-slot="{ item }">
+                            <Td>
+                                {{ item.id }}
+                            </Td>
+                            <Td>
+                                {{ item.description }}
+                            </Td>
+                            <Td>
+                                {{ item.doctor.name }}
+                            </Td>
+
+                            <Td>
+                                {{ item.employee.name ?? "--" }}
+                            </Td>
+                            <Td>
+                                <Button small :color="color(item)">
+                                    {{ item.status }}
+                                </Button>
+                            </Td>
+                        
+                        </template>
+                    </Table>
+                </div>
+
+
 
                 
             </Card> 

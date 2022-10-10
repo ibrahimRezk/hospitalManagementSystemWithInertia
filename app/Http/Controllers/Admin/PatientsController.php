@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsersRequest;
 use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\LaboratoryResource;
 use App\Http\Resources\PatientAccountResource;
 use App\Http\Resources\PatientResource;
 use App\Http\Resources\PaymentResource;
+use App\Http\Resources\RadiologyResource;
 use App\Http\Resources\ReceiptResource;
 use App\Http\Resources\UserResource;
 use App\Models\Invoice;
+use App\Models\Laboratory;
 use App\Models\PatientAccount;
 use App\Models\Payment;
+use App\Models\Radiology;
 use App\Models\Receipt;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -133,7 +137,7 @@ class PatientsController extends Controller
 
 
     public function show(User $user)
-    {
+    { 
 
         $patient_invoices = Invoice::where('patient_id', '=', $user->id)
             ->select([
@@ -161,6 +165,9 @@ class PatientsController extends Controller
             ->select('id', 'patient_id', 'invoice_id', 'receipt_id', 'payment_id', 'Debit', 'credit', 'created_at')
             ->latest()->paginate(1000);
 
+            $patient_radiologies = Radiology::where('patient_id',$user->id)->latest()->paginate(10);
+            $patient_laboratories  = Laboratory::where('patient_id',$user->id)->latest()->paginate(10);
+
 
 
         $patient_invoices->load(['service']);
@@ -180,6 +187,8 @@ class PatientsController extends Controller
             'payments' => PaymentResource::collection($patient_payments),
             'receipts' => ReceiptResource::collection($patient_receipts),
             'statement' => PatientAccountResource::collection($patient_account),
+            'patient_radiologies' =>  RadiologyResource::collection($patient_radiologies),  // resource collection here is important to get meta field in props.patient_radiology
+            'patient_laboratories' => LaboratoryResource::collection($patient_laboratories) ,
 
             'headers' => [
                 [

@@ -15,7 +15,7 @@ class RadiologistsController extends Controller
     private string $routeResourceName = 'radiologists';
     private string $role = 'Radiologist';
 
-    public function __construct()
+    public function __construct() 
     {
         $this->middleware('can:view radiologists list')->only('index');
         $this->middleware('can:create radiologist')->only(['create', 'store']);

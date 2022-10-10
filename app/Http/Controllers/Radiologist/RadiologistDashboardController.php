@@ -45,9 +45,9 @@ class RadiologistDashboardController extends Controller
             ->paginate(5);
 
         return Inertia::render('Radiologist/Dashboard', [
-            'total_number'=> $radiologies->count(),
-            'total_underProccessing'=> Radiology::where('status',0)->count(),
-            'total_completed'=> Radiology::where('status',1)->count(),
+            'total_number'=> Radiology::where('employee_id' , auth()->user()->id)->count(),
+            'total_underProccessing'=> Radiology::where('status',0)->where('employee_id' , auth()->user()->id)->count(),
+            'total_completed'=> Radiology::where('status',1)->where('employee_id' , auth()->user()->id)->count(),
 
             'title'=> 'latest invoices on system',
             'items' => RadiologyResource::collection($radiologies),

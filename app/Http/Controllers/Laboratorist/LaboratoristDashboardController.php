@@ -46,9 +46,9 @@ class LaboratoristDashboardController extends Controller
 
         return Inertia::render('Laboratorist/Dashboard', [
 
-            'total_number'=> $laboratories->count(),
-            'total_underProccessing'=> Laboratory::where('status',0)->count(),
-            'total_completed'=> Laboratory::where('status',1)->count(),
+            'total_number'=> Laboratory::where('employee_id' , auth()->user()->id)->count(),
+            'total_underProccessing'=> Laboratory::where('status',0)->where('employee_id' , auth()->user()->id)->count(),
+            'total_completed'=> Laboratory::where('status',1)->where('employee_id' , auth()->user()->id)->count(),
             
             'title'=> 'latest invoices on system',
 

@@ -28,9 +28,9 @@ use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 
 
 
-Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+// Route::get('/dashboard', function () {
+//         return Inertia::render('Dashboard');
+//     })->name('dashboard');
     
     
     // model with multiple controllers 

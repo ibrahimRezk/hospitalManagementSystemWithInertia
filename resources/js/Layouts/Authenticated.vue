@@ -43,7 +43,7 @@ const showHideSidebar = ref(false);
 
 const showHideClass = computed(() => {
     if (showHideSidebar.value) {
-        return "ltr:-translate-x-0 rtl:translate-x-0 shadow-soft-xl  z-990";
+        return "ltr:-translate-x-5 rtl:translate-x-5 shadow-soft-xl  z-990";
     } else {
         return "";
     }
@@ -125,7 +125,7 @@ onMounted(() => {
 
 <template>
     <body
-        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500"
+        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500 "
     >
         <div
             v-show="showHideSidebar"
@@ -138,18 +138,18 @@ onMounted(() => {
         <!-- sidenav  -->
         <aside
             :class="showHideClass"
-            class="rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent ps"
+            class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
         >
             <div
-                class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl"
+                class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl "
             >
-                <div class="h-30 bg-white">
+                <div class="h-30 bg-white ">
                     <i
                         class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
                         sidenav-close
                     ></i>
                     <a
-                        class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700"
+                        class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700 "
                         href="#"
                     >
                         <img
@@ -170,7 +170,7 @@ onMounted(() => {
                 <hr
                     class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
                 />
-                <ul class="flex flex-col pl-0 mb-0">
+                <ul class="flex flex-col pl-0 mb-0 ">
                     <!-- sidebar links -->
                     <li class="mt-0.5 w-full">
                         <div
@@ -348,14 +348,14 @@ onMounted(() => {
         </aside>
 
         <main
-            class1="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200"
-            class="ltr:xl:ml-64 rtl:xl:mr-64 ease-soft-in-out relative h-full max-h-screen rounded-xl transition-all duration-200"
+            class1="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 "
+            class="ltr:xl:ml-64 rtl:xl:mr-64 ease-soft-in-out relative h-full max-h-screen rounded-xl transition-all duration-200 "
             classltr="xl:ml-64"
             classrtl="xl:mr-64 "
         >
             <!-- Navbar -->
             <nav
-                class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start"
+                class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start "
                 navbar-main
                 navbar-scroll="true"
             >
@@ -390,7 +390,7 @@ onMounted(() => {
                         class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto"
                     >
                         <div class="flex items-center md:ml-auto md:pr-4">
-                            <div
+                            <!-- <div
                                 class="relative flex justify-end flex-wrap items-stretch w-full transition-all rounded-lg ease-soft"
                             >
                                 <span
@@ -403,7 +403,7 @@ onMounted(() => {
                                     class="pl-8.75 text-size-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
                                     placeholder="Type here..."
                                 />
-                            </div>
+                            </div> -->
                         </div>
                         <ul
                             class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full"
@@ -726,11 +726,11 @@ onMounted(() => {
                                                                     class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
                                                                 >
                                                                     <i
-                                                                        class="mr-1 fa fa-clock"
-                                                                        >{{
+                                                                        class="mx-1 fa fa-clock"
+                                                                        ></i>
+                                                                        {{
                                                                             item.created_at
-                                                                        }}</i
-                                                                    >
+                                                                        }}
                                                                 </div>
                                                             </Link>
                                                         </div>
@@ -785,11 +785,11 @@ onMounted(() => {
                                                                     class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
                                                                 >
                                                                     <i
-                                                                        class="mr-1 fa fa-clock"
-                                                                        >{{
+                                                                        class="mr-1 fa fa-clock"></i>
+                                                                        {{
                                                                             item.created_at
-                                                                        }}</i
-                                                                    >
+                                                                        }}
+                                                                   
                                                                 </div>
                                                             </Link>
                                                         </div>

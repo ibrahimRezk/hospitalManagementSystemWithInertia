@@ -145,8 +145,8 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="grid grid-cols-2 col-span-2 gap-6">
+                    <div class="md:grid grid-cols-3 gap-4">
+                        <div class="md:grid grid-cols-2 col-span-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
@@ -202,7 +202,7 @@ const submit = () => {
                                 :error-message="form.errors.section"
                                 required
                             />
-                            <div class=" mt-7 mx-3 grid grid-cols-2  gap-6">
+                            <div class=" mt-7 mx-3 md:grid grid-cols-2  gap-6">
                                 <div class="">
                                     <CheckboxGroup
                                     class=" bg-gray-100 rounded-md py-2 px-5  shadow-md"
@@ -211,8 +211,9 @@ const submit = () => {
                                     />
                                 </div>
 
-                                <div class="">
+                                <div class="mt-1 ">
                                     <input
+                                    class=" w-60"
                                         type="file"
                                         @input="
                                             form.image = $event.target.files[0]
@@ -229,7 +230,7 @@ const submit = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="md:grid grid-cols-2 gap-6">
 
                             <div class="rtl:mr-7 ltr:ml-7  ">
                             <label 

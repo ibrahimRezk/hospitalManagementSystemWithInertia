@@ -1,8 +1,9 @@
 import "./bootstrap";
 // import "../../public/admin/assets/css/styles.css";
+import "../../public/admin/assets/css/perfect-scrollbar.css";
 import "../css/admin/app.css";
 
-
+// admin/assets/css/perfect-scrollbar.css
 
 // remember to remove all extra files from assets when project completed
 

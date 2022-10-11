@@ -63,17 +63,17 @@
                             >description :                     
                             </label
                         >
-                        <div class="  mt-3 px-3 py-3 bg-red-50 rounded-md shadow-lg font-bold text-red-700 mb-3">
+                        <div class="  mt-3 px-3 py-3 outline-double outline-1 outline-red-200 bg-red-50 mx-3  rounded-md shadow-lg font-bold text-red-700 mb-5">
                             {{ props.result.employee_description }}
                         </div>
 
-                        <div
+                        <div class=""
                         v-for="image in result.images"
                         :key="image.id">
 
                         <div
                                             v-html="image.html"
-                                            class="[&_img]:h-full [&_img]:w-full [&_img]:object-contain"
+                                            class="[&_img]:h-full [&_img]:w-full [&_img]:object-contain mx-3 my-3 px-8 py-8 outline-double outline-1 bg-red-100 rounded-lg outline-red-300"
                                         >
                                         </div>
                                         </div>

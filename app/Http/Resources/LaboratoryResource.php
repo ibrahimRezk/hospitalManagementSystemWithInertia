@@ -37,7 +37,7 @@ class LaboratoryResource extends JsonResource
                     fn ($media) => [
                         'id' => $media->id,
                         'html' => $media->toHtml(),
-                        'img' => $media->original_url,
+                        'img' => $media,
                     ]
                 )
             ),

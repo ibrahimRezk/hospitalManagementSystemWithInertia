@@ -49,7 +49,7 @@ use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
     ? config('jetstream.auth_session')
     : null;
     
-    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware ])),'Lang'], function () {
+    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware ]))], function () {
 
     Route::get('/user/profile', [UserProfileController::class, 'show'])
                 ->name('profile.show')

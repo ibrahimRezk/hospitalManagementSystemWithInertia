@@ -94,7 +94,7 @@
                 <Card>
 
                     <form @submit.prevent="submit">
-                        <div class="grid grid-cols-1 gap-6">
+                        <div class="grid md:grid-cols-1 gap-6">
 
                             <SelectGroup
                             label="Patient"

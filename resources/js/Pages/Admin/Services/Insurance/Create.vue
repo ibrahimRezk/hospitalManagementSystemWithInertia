@@ -104,7 +104,7 @@
             <Container>
                 <Card>
                     <form @submit.prevent="submit">
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="grid md:grid-cols-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
@@ -118,7 +118,7 @@
                                 required
                             />
                         </div>
-                        <div class="grid grid-cols-3 gap-6">
+                        <div class="grid md:grid-cols-3 gap-6">
                             
                             <InputGroup
                             label="insurance code"
@@ -142,7 +142,7 @@
                             />
                             
                             </div>
-                            <div class="grid grid-cols-1 gap-6">
+                            <div class="grid md:grid-cols-1 gap-6">
 
 
                             <InputGroup

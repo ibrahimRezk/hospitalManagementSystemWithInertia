@@ -1,6 +1,6 @@
 import "./bootstrap";
 // import "../../public/admin/assets/css/styles.css";
-import "../../public/admin/assets/css/perfect-scrollbar.css";
+import "../../public/admin/assets/css/perfect-scrollbar.css"
 import "../css/admin/app.css";
 
 // admin/assets/css/perfect-scrollbar.css

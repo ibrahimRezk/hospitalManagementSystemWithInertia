@@ -109,7 +109,7 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
+               sm:flex-none
                 xl:mb-0 xl:w-1/3
               "
             >
@@ -187,7 +187,7 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
+                sm:flex-none
                 xl:mb-0 xl:w-1/3
               "
             >
@@ -265,7 +265,7 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
+                sm:flex-none
                 xl:mb-0 xl:w-1/3
               "
             >

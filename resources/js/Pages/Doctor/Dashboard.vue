@@ -113,8 +113,8 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
-                xl:mb-0 xl:w-1/4
+                md:w-1/2 sm:flex-none
+                xl:my-1 2xl:w-1/4
               "
             >
               <div
@@ -191,8 +191,8 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
-                xl:mb-0 xl:w-1/4
+                md:w-1/2 sm:flex-none
+                xl:my-1 2xl:w-1/4
               "
             >
               <div
@@ -269,8 +269,8 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
-                xl:mb-0 xl:w-1/4
+                md:w-1/2 sm:flex-none
+                xl:my-1 2xl:w-1/4
               "
             >
               <div
@@ -346,8 +346,8 @@ const color = (item) => {
                 max-w-full
                 px-3
                 mb-6
-                sm:w-1/2 sm:flex-none
-                xl:mb-0 xl:w-1/4
+                md:w-1/2 sm:flex-none
+                xl:my-1 2xl:w-1/4 
               "
             >
               <div

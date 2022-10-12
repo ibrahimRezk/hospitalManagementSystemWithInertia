@@ -178,7 +178,7 @@ console.log(group)
             <Container>
                 <Card>
                     <form @submit.prevent="submit">
-                        <div class="grid grid-cols-4 gap-6">
+                        <div class="grid md:grid-cols-4 gap-6">
                             <SelectGroup
                                 label="Patient"
                                 v-model="form.patient"
@@ -211,7 +211,7 @@ console.log(group)
     
                         <hr class="h-px mt-12 bg-slate-700" />
     
-                        <div class="grid grid-cols-6 gap-6 mt-10">
+                        <div class="grid md:grid-cols-6 gap-6 mt-10">
                             <SelectGroup
                                 withoutSelect
                                 label="Services Groups"

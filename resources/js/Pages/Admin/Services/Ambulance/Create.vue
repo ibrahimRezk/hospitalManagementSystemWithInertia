@@ -40,7 +40,7 @@
         car_year_made: props.item.car_year_made ?? "",
         driver_license_number: props.item.driver_license_number ?? "",
         driver_phone: props.item.driver_phone ?? "",
-        is_available: props.item.is_available ?? "",
+        is_available: props.item.is_available ?? true,
         car_type: props.item.car_type ?? "",
 
     
@@ -98,7 +98,7 @@
                 <Card>
 
                     <form @submit.prevent="submit">
-                        <div class="grid grid-cols-4 gap-6">
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             <InputGroup
                             label="car number"
                             v-model="form.car_number"
@@ -124,7 +124,7 @@
                             />
 
                             </div>
-                            <div class="grid grid-cols-2 gap-6">
+                            <div class="grid md:grid-cols-2 gap-6">
 
                             <InputGroup
                                 label="Driver Name ar"
@@ -139,7 +139,7 @@
                                 required
                             />
                         </div>
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="grid md:grid-cols-2 gap-6">
                             
 
                             

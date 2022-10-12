@@ -145,8 +145,8 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="md:grid grid-cols-3 gap-4">
-                        <div class="md:grid grid-cols-2 col-span-2 gap-6">
+                    <div class="grid lg:grid-cols-3 gap-4">
+                        <div class="grid lg:grid-cols-2 col-span-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"

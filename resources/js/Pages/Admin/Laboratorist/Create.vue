@@ -107,8 +107,8 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="grid grid-cols-2 col-span-2 gap-6">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="grid md:grid-cols-2 col-span-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
@@ -157,8 +157,9 @@ const submit = () => {
                                 :required="!edit"
                             />
 
-                            <div class="">
                                 <input
+                                class=" w-60"
+
                                     type="file"
                                     @input="form.image = $event.target.files[0]"
                                     @change="loadFile($event)"
@@ -171,17 +172,16 @@ const submit = () => {
                                     {{ form.progress.percentage }}%
                                 </progress>
                             </div>
+                            <div class="mx-auto">
+                                <img
+                                    style="border-radius: 10%"
+                                    width="300"
+                                    id="output"
+                                    :src="currentImage"
+                                    class="shadow-lg rounded p-1"
+                                />
+                            </div>
                         </div>
-                        <div class="mx-auto">
-                            <img
-                                style="border-radius: 10%"
-                                width="300"
-                                id="output"
-                                :src="currentImage"
-                                class="shadow-lg rounded p-1"
-                            />
-                        </div>
-                    </div>
 
                     <div class="mt-6">
                         <Button :disabled="form.processing">

@@ -61,38 +61,39 @@ const submit = () => {
               route(`admin.${props.routeResourceName}.updateUser`, {
                   _method: "put", // we use it like this and modify route to be post not put and re enter _mothod :put because when uploading files like images it is not supported in inetia  ,, remember to create new put route in routes
                   id: props.item.id,
-              }),{
-                onSuccess: ()=>{
-                    Toast.fire({
-                        icon: "success",
-                        title: "User Updated successfully",
-                        iconColor: 'white',
-                        color:'black',  // text color
-                        background: '#1cac78        ', // green
-                        // background: '#00a877       ', // green
-                        // background: '#39ff14   ', // lime
-                        // background: '#dc143c    ', // red
-                    });
-                  }
+              }),
+              {
+                  onSuccess: () => {
+                      Toast.fire({
+                          icon: "success",
+                          title: "User Updated successfully",
+                          iconColor: "white",
+                          color: "black", // text color
+                          background: "#1cac78        ", // green
+                          // background: '#00a877       ', // green
+                          // background: '#39ff14   ', // lime
+                          // background: '#dc143c    ', // red
+                      });
+                  },
               },
               {
                   preserveState: true,
               }
           )
-        : form.post(route(`admin.${props.routeResourceName}.store`),{
-            onSuccess: ()=>{
-                    Toast.fire({
-                        icon: "success",
-                        title: "User Created successfully",
-                        iconColor: 'white',
-                        color:'black',  // text color
-                        background: '#1cac78        ', // green
-                        // background: '#00a877       ', // green
-                        // background: '#39ff14   ', // lime
-                        // background: '#dc143c    ', // red
-                    });
-                  }
-        });
+        : form.post(route(`admin.${props.routeResourceName}.store`), {
+              onSuccess: () => {
+                  Toast.fire({
+                      icon: "success",
+                      title: "User Created successfully",
+                      iconColor: "white",
+                      color: "black", // text color
+                      background: "#1cac78        ", // green
+                      // background: '#00a877       ', // green
+                      // background: '#39ff14   ', // lime
+                      // background: '#dc143c    ', // red
+                  });
+              },
+          });
 };
 </script>
 
@@ -109,8 +110,8 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="grid grid-cols-2 col-span-2 gap-6">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="grid md:grid-cols-2 col-span-2 gap-6">
                             <InputGroup
                                 label="Name ar"
                                 v-model="form.name_ar"
@@ -128,7 +129,6 @@ const submit = () => {
                                 label="Email"
                                 v-model="form.email"
                                 :error-message="form.errors.email"
-                                
                             />
 
                             <SelectGroup
@@ -136,7 +136,6 @@ const submit = () => {
                                 v-model="form.roleId"
                                 :items="roles"
                                 :error-message="form.errors.roleId"
-                                
                             />
 
                             <InputGroup
@@ -157,10 +156,10 @@ const submit = () => {
                                 "
                             />
 
-                            <div class="">
-                                <label for="" class=" mb-1">Image</label>
-                                <div>
+                            <label for="" class="mb-1">Image</label>
+                            <div>
                                 <input
+                                    class="w-60"
                                     type="file"
                                     @input="form.image = $event.target.files[0]"
                                     @change="loadFile($event)"
@@ -174,7 +173,6 @@ const submit = () => {
                                 </progress>
                             </div>
                             </div>
-                        </div>
                             <div class="mx-auto">
                                 <img
                                     style="border-radius: 10%"
@@ -183,7 +181,7 @@ const submit = () => {
                                     :src="currentImage"
                                     class="shadow-lg rounded p-1"
                                 />
-                        </div>
+                            </div>
                     </div>
                     <div class="mt-6">
                         <Button :disabled="form.processing">

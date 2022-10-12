@@ -89,7 +89,7 @@ const submit = () => {
         <Container>
             <Card>
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-2 gap-6 mb-6"> 
+                    <div class="grid md:grid-cols-2 gap-6 mb-6"> 
                         <InputGroup
                             label="Name ar"
                             v-model="form.name_ar"
@@ -103,7 +103,7 @@ const submit = () => {
                             required
                         />
                         </div>
-                    <div class="grid grid-cols-1 gap-6">
+                    <div class="grid md:grid-cols-1 gap-6">
 
                         <InputGroup
                             label="description ar"

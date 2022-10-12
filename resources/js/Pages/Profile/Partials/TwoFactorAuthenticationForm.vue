@@ -91,10 +91,11 @@ const regenerateRecoveryCodes = () => {
         .then(() => showRecoveryCodes());
 };
 
-const disableTwoFactorAuthentication = () => {
+const disableTwoFactorAuthentication = () => { 
     disabling.value = true;
 
-    Inertia.delete('/user/two-factor-authentication', {
+    // Inertia.delete('/user/two-factor-authentication', {
+    Inertia.delete(route('two-factor.disable'), {
         preserveScroll: true,
         onSuccess: () => {
             disabling.value = false;

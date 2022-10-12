@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // \App\Http\Middleware\HandleInertiaRequests::class,
+            \App\Http\Middleware\HandleInertiaRequests::class,  // keep it here becase deleting it makes problem in two factor auth disable function
         ],
 
         'api' => [
@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'inertia' =>  \App\Http\Middleware\HandleInertiaRequests::class,
+        'inertiaAdmin' =>  \App\Http\Middleware\HandleInertiaAdminRequests::class,
         'inertiaDoctor' =>  \App\Http\Middleware\HandleInertiaDoctorRequests::class,
         'inertiaRadiologist' =>  \App\Http\Middleware\HandleInertiaRadiologistRequests::class,
         'inertiaLaboratorist' =>  \App\Http\Middleware\HandleInertiaLaboratoristRequests::class,

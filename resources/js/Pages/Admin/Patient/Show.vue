@@ -259,7 +259,7 @@ const NetTotal = computed(() => {
                                 {{ $t("tables.Payments") }}
                             </a>
                         </li>
-                        <li class="mr-2">
+                        <li class="mr-2"> 
                             <a
                                 @click="activeTab(4)"
                                 href="#"
@@ -390,7 +390,7 @@ const NetTotal = computed(() => {
                 <!-- //// main tabs  end ////// -->
 
                 <!-- /////// patient information ///////////////// -->
-                <div class="flex flex-row" v-show="tab === 1">
+                <div class="md:flex flex-row" v-show="tab === 1">
                     <div>
                         <table
                             class="flex rtl:justify-right ltr:justify-left items-center w-full align-top border-gray-200 text-slate-500 my-6"

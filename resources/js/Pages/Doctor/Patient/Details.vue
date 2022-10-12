@@ -466,7 +466,7 @@ const {
                 >
                     <div class="container bg-gray-200 mx-auto w-full h-full">
                         <div class="relative wrap overflow-hidden p-10 h-full">
-                             <!-- First timeline -->
+                            <!-- First timeline -->
                             <div
                                 class="mb-8 flex justify-between items-center w-full"
                             >
@@ -490,7 +490,7 @@ const {
                                     </div>
                                 </div>
                                 <div
-                                    class="order-1 bg-gray-300 rounded-lg shadow-xl w-5/12 px-6 py-4"
+                                    class="order-1 bg-gray-300 rounded-lg shadow-xl sm:w-9/12 px-6 py-4"
                                 >
                                     <div class="flex flex-row">
                                         Date : {{ patient_record.date }}
@@ -541,7 +541,7 @@ const {
             </div>
           </div> -->
 
-                         <!-- you can add more time line from here :) -->
+                            <!-- you can add more time line from here :) -->
                         </div>
                     </div>
                 </div>
@@ -550,7 +550,7 @@ const {
                 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
                 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 
-                <div class="mt-2" v-show="tab === 3"> 
+                <div class="mt-2" v-show="tab === 3">
                     <Table
                         :headers="patientRadiologiesHeaders"
                         :items="patient_radiologies"

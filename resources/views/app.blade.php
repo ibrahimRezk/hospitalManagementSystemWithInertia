@@ -12,12 +12,17 @@
         
         {{-- //////////////////// theme files///////////////////////////////////// --}}
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-        <link href="{{ asset('admin/assets/css/styles.css') }}" rel="stylesheet" />
+
+        {{-- the only important file  --}}
+        <link href="{{ asset('admin/assets/css/styles.css') }}" rel="stylesheet" />   
+
+
         <link href="{{ asset('admin/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
         <link href="{{ asset('admin/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
         <link href="{{ asset('admin/assets/css/tooltips.css') }}" rel="stylesheet" />
+
         <link href="{{ asset('admin/assets/css/soft-ui-dashboard-tailwind.min.css?v=1.0.4" rel="stylesheet') }}" />
-        
+          
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script async defer src="https://buttons.github.io/buttons.js"></script>

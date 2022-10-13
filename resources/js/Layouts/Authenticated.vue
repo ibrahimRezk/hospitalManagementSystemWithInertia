@@ -43,7 +43,7 @@ const showHideSidebar = ref(false);
 
 const showHideClass = computed(() => {
     if (showHideSidebar.value) {
-        return "ltr:-translate-x-5 rtl:translate-x-5 shadow-soft-xl  z-990";
+        return "ltr:-translate-x-6 rtl:translate-x-6 shadow-soft-xl  z-990";
     } else {
         return "";
     }
@@ -142,34 +142,32 @@ onMounted(() => {
             :class="showHideClass"
             class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
         >
-            <div
-                class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl "
+        <div
+        class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl "
+        >
+        
+        <perfect-scrollbar>
+            <i
+            class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden "
+            sidenav-close
+            ></i>
+            <a
+            class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700  bg-white"
+            href="#"
             >
-            <perfect-scrollbar>
-
-                <div class="h-30 bg-white ">
-                    <i
-                        class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
-                        sidenav-close
-                    ></i>
-                    <a
-                        class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700 "
-                        href="#"
-                    >
-                        <img
-                            src="../../../public/admin/assets/img/logo-ct.png"
+            <img
+                            src="../../../public/admin/assets/img/logo-ct.png "
                             class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24"
                             alt="main_logo"
-                        />
-                        <!-- <span
-                            class1="rtl:ml-1 ltr:mr-1 font-semibold transition-all duration-200 ease-nav-brand"
-                            class="mr-1 font-semibold transition-all duration-200 ease-nav-brand"
+                            />
+                            <!-- <span
+                                class1="rtl:ml-1 ltr:mr-1 font-semibold transition-all duration-200 ease-nav-brand"
+                                class="mr-1 font-semibold transition-all duration-200 ease-nav-brand"
                             classrtl="mr-1"
                             classltr="ml-1">
                             >Soft UI Dashboard</span 
-                        > -->
-                    </a>
-                </div>
+                            > -->
+                        </a>
 
                 <hr
                     class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
@@ -350,7 +348,7 @@ onMounted(() => {
                     <li class="xl:hidden"></li>
                 </ul>
             </perfect-scrollbar>
-
+                
             </div>
         </aside>
 

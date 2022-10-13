@@ -1,10 +1,5 @@
 import "./bootstrap";
-// import "../../public/admin/assets/css/styles.css";
-import "../../public/admin/assets/css/perfect-scrollbar.css"
 import "../css/admin/app.css";
-
-// admin/assets/css/perfect-scrollbar.css
-
 // remember to remove all extra files from assets when project completed
 
 import { createApp, h } from "vue";
@@ -14,11 +9,12 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { i18nVue } from "laravel-vue-i18n";
 import Swal from "sweetalert2";
+import PerfectScrollbar from "vue3-perfect-scrollbar";
+import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
 
 window.Toast = Swal.mixin({
     toast: true,
     position: "top-end",
-    
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
@@ -28,10 +24,7 @@ window.Toast = Swal.mixin({
     },
 });
 
-
-
-const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
+const appName = window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -50,10 +43,9 @@ createInertiaApp({
                 },
             })
             .use(ZiggyVue, Ziggy)
+            .use(PerfectScrollbar)
             .mount(el);
     },
 });
 
 InertiaProgress.init({ color: "red" });
-
-

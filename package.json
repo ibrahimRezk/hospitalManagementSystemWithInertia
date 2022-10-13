@@ -27,6 +27,7 @@
         "pusher-js": "^7.4.0",
         "sweetalert2": "^11.4.34",
         "tailwindcss-transforms": "^2.2.0",
-        "tw-elements": "^1.0.0-alpha12"
+        "tw-elements": "^1.0.0-alpha12",
+        "vue3-perfect-scrollbar": "^1.6.0"
     }
 }

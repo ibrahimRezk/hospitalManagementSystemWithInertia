@@ -136,6 +136,8 @@ onMounted(() => {
         </div>
 
         <!-- sidenav  -->
+
+
         <aside
             :class="showHideClass"
             class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
@@ -143,6 +145,8 @@ onMounted(() => {
             <div
                 class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl "
             >
+            <perfect-scrollbar>
+
                 <div class="h-30 bg-white ">
                     <i
                         class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
@@ -170,6 +174,7 @@ onMounted(() => {
                 <hr
                     class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
                 />
+
                 <ul class="flex flex-col pl-0 mb-0 ">
                     <!-- sidebar links -->
                     <li class="mt-0.5 w-full">
@@ -344,8 +349,11 @@ onMounted(() => {
 
                     <li class="xl:hidden"></li>
                 </ul>
+            </perfect-scrollbar>
+
             </div>
         </aside>
+
 
         <main
             class1="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 "
@@ -835,3 +843,11 @@ onMounted(() => {
         </main>
     </body>
 </template>
+
+<style scooped>
+
+.ps {
+    height: 98vh;
+  }
+
+</style>

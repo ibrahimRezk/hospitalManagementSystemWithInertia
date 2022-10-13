@@ -87,6 +87,13 @@ class HandleInertiaRequests extends Middleware
 // <small class="ml-2 text-sm text-gray-600">{{ dayjs(chirp.created_at).fromNow() }}</small>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/// very important package for perfect scrolling
+// https://github.com/mercs600/vue3-perfect-scrollbar
+
+
+// perfect tailwind css resource
+// https://github.com/mdbootstrap/Tailwind-Elements
+
         ]);
     }
 }

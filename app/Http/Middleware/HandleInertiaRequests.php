@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
 // remains : 
+// pagination problem
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // add patient name in add diagnose modal and other items in nenu
 // remember to  add role middleware to invoke methods

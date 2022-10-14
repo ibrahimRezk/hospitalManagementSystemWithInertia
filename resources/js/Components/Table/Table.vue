@@ -22,7 +22,7 @@ defineProps({
                >
                <slot name="section"/>
                 <div class="flex-auto px-0 pt-0 pb-2 ">
-                <div class="p-0 overflow-x-auto">
+                <div class="p-0 overflow-x-auto ">
                 <!-- <div class="p-0 "> -->
                 <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500  ">
                     <thead class="align-bottom bg-gray-600 ">
@@ -37,8 +37,8 @@ defineProps({
                             </Th>
                         </tr>
                     </thead>
-                    <tbody > 
-                        <tr class=" hover:bg-zinc-200 "
+                    <tbody class=""> 
+                        <tr class=" hover:bg-zinc-200  "
                         
                             v-for="item in items.data"
                             :key="item.id">
@@ -56,17 +56,12 @@ defineProps({
                         </tr>
                     </tbody>
                 </table>
+                <div v-if="items.meta.links.length > 3" class="  items-center justify-center flex py-2">
+                <Pagination :links="items.meta.links"/>
+                </div>
             </div>
         </div>
-        <div v-if="items.meta.links.length > 3" class=" py-2">
-
-
-        <Pagination :links="items.meta.links"/>
-
-
-
-        </div>
     </div>
-    </div>
-    </div>
+</div>
+</div>
 </template>

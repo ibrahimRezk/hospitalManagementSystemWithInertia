@@ -13,7 +13,7 @@
         {{-- //////////////////// theme files///////////////////////////////////// --}}
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 
-        {{-- the only important file  --}}
+        {{-- the most important file  --}}
         <link href="{{ asset('admin/assets/css/styles.css') }}" rel="stylesheet" />   
 
 

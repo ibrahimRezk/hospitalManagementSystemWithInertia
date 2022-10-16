@@ -118,7 +118,7 @@ onMounted(() => {
 
 <style scoped>
 .default-header {
-    background-color: rgb(26, 49, 75);
+    background-color: rgb(16, 21, 27);
     text-transform: uppercase;
 }
 </style>
@@ -143,7 +143,7 @@ onMounted(() => {
             class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
         >
         <div
-        class="h-full items-center block w-auto overflow-auto grow basis-full bg-slate-900 2xl shadow-xl "
+        class="h-full items-center block w-auto overflow-auto grow basis-full bg-gray-800 2xl shadow-xl "
         >
         
         <perfect-scrollbar>
@@ -170,7 +170,7 @@ onMounted(() => {
                         </a>
 
                 <hr
-                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                    class="h-px mt-0 bg-black bg-gradient-horizontal-dark "
                 />
 
                 <ul class="flex flex-col pl-0 mb-0 ">
@@ -268,7 +268,7 @@ onMounted(() => {
                                                 :class="
                                                     submenu.isActive
                                                         ? ' shadow-soft-xl m-0 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-slate-200 font-semibold text-slate-700 transition-colors'
-                                                        : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-slate-700 '
+                                                        : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-700 '
                                                 "
                                                 :href="submenu.url"
                                             >
@@ -295,13 +295,13 @@ onMounted(() => {
                                                 </span>
                                             </Link>
                                             <hr
-                                                class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                                class="h-px mt-0 bg-black bg-gradient-horizontal-dark"
                                             />
                                         </div>
                                     </div>
                                 </transition-group>
                                 <hr
-                                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                    class="h-px mt-0 bg-black bg-gradient-horizontal-dark"
                                 />
                             </div>
 
@@ -336,12 +336,12 @@ onMounted(() => {
                                     </span>
                                 </Link>
                                 <hr
-                                    class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
+                                    class="h-px mt-0 bg-black bg-gradient-horizontal-dark"
                                 />
                             </div>
-                            <hr
-                                class="h-px mt-0 bg-transparent bg-gradient-horizontal-dark"
-                            />
+                            <!-- <hr
+                                class="h-px mt-0 bg-black bg-gradient-horizontal-dark"
+                            /> -->
                         </div>
                     </li>
 

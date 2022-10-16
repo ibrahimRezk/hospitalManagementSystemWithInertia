@@ -121,7 +121,7 @@ const submit = () => {
                         title: "Invoice Updated successfully",
                         iconColor: 'white',
                         color:'black',  // text color
-                        background: '#1cac78        ', // green
+                        background: '#6699ff', // blue
                         // background: '#00a877       ', // green
                         // background: '#39ff14   ', // lime
                         // background: '#dc143c    ', // red
@@ -136,7 +136,7 @@ const submit = () => {
                         title: "Invoice Created successfully",
                         iconColor: 'white',
                         color:'black',  // text color
-                        background: '#1cac78        ', // green
+                        background: '#6699ff', // blue
                         // background: '#00a877       ', // green
                         // background: '#39ff14   ', // lime
                         // background: '#dc143c    ', // red

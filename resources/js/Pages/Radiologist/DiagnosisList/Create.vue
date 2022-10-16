@@ -63,7 +63,7 @@ const submit = () => {
                         title: "Item Updated successfully",
                         iconColor: 'white',
                         color:'black',  // text color
-                        background: '#1cac78        ', // green
+                        background: '#6699ff        ', // 
                         // background: '#00a877       ', // green
                         // background: '#39ff14   ', // lime
                         // background: '#dc143c    ', // red
@@ -79,7 +79,7 @@ const submit = () => {
                         title: "Item Created successfully",
                         iconColor: 'white',
                         color:'black',  // text color
-                        background: '#1cac78        ', // green
+                        background: '#6699ff        ', // 
                         // background: '#00a877       ', // green
                         // background: '#39ff14   ', // lime
                         // background: '#dc143c    ', // red

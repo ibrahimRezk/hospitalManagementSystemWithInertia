@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
 // remains : 
+// add roles to all dashboards to prevent unauthorized access to it
 // pagination problem
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // add patient name in add diagnose modal and other items in nenu

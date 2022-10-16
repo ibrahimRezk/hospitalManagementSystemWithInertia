@@ -45,7 +45,7 @@ class PatientResource extends JsonResource
                     fn ($media) => [
                         'id' => $media->id,
                         'html' => $media->toHtml(),
-                        'img' => $media->original_url,
+                        'img' => $media,
                     ]
                 )
             ),

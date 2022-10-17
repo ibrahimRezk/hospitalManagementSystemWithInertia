@@ -18,7 +18,7 @@ const sidebarlabel = computed(() => {
 });
 
 const colorClasses = computed(() => { 
-        return props.active ?  "text-slate-800 " :  ""
+        return props.active ?  "text-yellow-50  " :  ""
 
 }); 
 

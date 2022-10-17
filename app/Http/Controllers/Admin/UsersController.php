@@ -61,6 +61,7 @@ class UsersController extends Controller
             'title' => 'Users',
             'items' => UserResource::collection($users), 
             'headers' => [
+                
                 [
                     'label' => 'Name',
                     'name' => 'name',

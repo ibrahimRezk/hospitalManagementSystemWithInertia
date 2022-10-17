@@ -130,8 +130,11 @@ const doctorAppointments = (doctor)=>{
                                 {{ item.email }}
                             </template>
                         </Td>
-                        <Td>
+                        <Td 
+                        >
                         <Button v-if="item.section" 
+                        class=" rounded-xl"
+
                                 color="blue"
                                 small
                             >
@@ -143,6 +146,7 @@ const doctorAppointments = (doctor)=>{
                     
                         <Td>
                         <Button
+                        class=" w-36 flex justify-center rounded-xl"
                                 color="red"
                                 small
                             >
@@ -150,8 +154,15 @@ const doctorAppointments = (doctor)=>{
                             </Button>
                         </Td>
                         <Td >
+                            <Button
+                            class=" rounded-xl"
+                                color="black"
+                                small
+                            >
                             {{ doctorAppointments(item) }}
                             <!-- {{ allAppointments }} -->
+                        </Button>
+
                         </Td>
                         <Td>
                             <YesNoLabel :active="item.status" />

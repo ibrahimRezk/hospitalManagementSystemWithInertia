@@ -43,7 +43,7 @@ const showHideSidebar = ref(false);
 
 const showHideClass = computed(() => {
     if (showHideSidebar.value) {
-        return "ltr:-translate-x-5 rtl:translate-x-5 shadow-soft-xl  z-990";
+        return "ltr:-translate-x-3 rtl:translate-x-3 shadow-soft-xl  z-990";
     } else {
         return "";
     }
@@ -72,7 +72,7 @@ Echo.private(`create-invoice.${userId}`).listen(".create-invoice", (e) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const sidebarMenuTextColor = computed(() => {
-    return "text-slate-400  hover:text-slate-600";
+    return "text-gray-400  hover:text-gray-600";
 });
 
 ////// to open submenu and close other submenus in the same time use this /////////////////////////
@@ -125,7 +125,7 @@ onMounted(() => {
 
 <template>
     <body
-        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-slate-500 "
+        class="m-0 font-sans antialiased font-normal text-size-base leading-default text-gray-500 "
     >
         <div
             v-show="showHideSidebar"
@@ -140,7 +140,7 @@ onMounted(() => {
 
         <aside
             :class="showHideClass"
-            class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-slate-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
+            class=" rtl:translate-x-full ltr:-translate-x-full rtl:xl:translate-x-0 ltr:xl:-translate-x-0 ltr:xl:left-0 w-64 ease-nav-brand fixed inset-y-0 mt-1 ltr:ml-0 rtl:mr-0 block flex-wrap items-center justify-between overflow-y-auto border border-gray-300 bg-white p-0 antialiased shadow-none transition-transform duration-200 rtl:xl:right-0 xl:translate-x-0 xl:bg-transparent "
         >
         <div
         class="h-full items-center block w-auto overflow-auto grow basis-full bg-gray-800 2xl shadow-xl "
@@ -148,11 +148,11 @@ onMounted(() => {
         
         <perfect-scrollbar>
             <i
-            class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden "
+            class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-gray-400 xl:hidden "
             sidenav-close
             ></i>
             <a
-            class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-slate-700  bg-white"
+            class="block px-8 py-1 m-0 text-size-sm whitespace-nowrap text-gray-700  bg-white"
             href="#"
             >
             <img
@@ -191,12 +191,12 @@ onMounted(() => {
                                     >
                                         <button
                                             :ref="'header-' + menu.label"
-                                            class="w-56 flex items-center justify-between rounded-md hover:bg-slate-200 === ion-padding default-header ======"
+                                            class="w-full flex items-center justify-between rounded-md hover:bg-gray-200 === ion-padding default-header ======"
                                             @click="openCloseSubMenu(menu)"
                                             :class="
                                                 menu.isActive
-                                                    ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white  px-4 font-semibold text-slate-700 transition-colors'
-                                                    : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors'
+                                                    ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0  flex items-center whitespace-nowrap rounded-lg bg-white  px-4 font-semibold text-gray-700 transition-colors'
+                                                    : 'py-2.7 text-size-sm ease-nav-brand my-0  flex   items-center whitespace-nowrap px-4 transition-colors'
                                             "
                                         >
                                             <SidebarIcon
@@ -264,10 +264,10 @@ onMounted(() => {
                                             id="filter-section-mobile-1"
                                         >
                                             <Link
-                                                class="hover:bg-slate-100 rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
+                                                class="hover:bg-gray-600 hover:text-white rounded-xl rtl:pr-6 ltr:pl-6 mt-2 py-1"
                                                 :class="
                                                     submenu.isActive
-                                                        ? ' shadow-soft-xl m-0 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-slate-200 font-semibold text-slate-700 transition-colors'
+                                                        ? ' shadow-soft-xl m-0 text-size-sm ease-nav-brand my-0  flex justify-between whitespace-nowrap  bg-gray-500  text-gray-700 transition-colors'
                                                         : ' text-size-sm ease-nav-brand my-0  flex  justify-between  whitespace-nowrap transition-colors bg-gray-700 '
                                                 "
                                                 :href="submenu.url"
@@ -308,11 +308,11 @@ onMounted(() => {
                             <!-- //////////////////////////////////////////////////menus without sub menu /////////////////////////////////////////// -->
                             <div v-else :class="sidebarMenuTextColor">
                                 <Link
-                                    class="w-56 flex items-center justify-between rounded-md hover:bg-slate-100"
+                                    class="w-full flex items-center justify-between rounded-md hover:bg-gray-700 hover:text-white"
                                     :class="
                                         menu.isActive
-                                            ? ' py-2.7 shadow-soft-xl m-2 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-slate-200 px-4 font-semibold text-slate-700 transition-colors'
-                                            : 'py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex   items-center whitespace-nowrap px-4 transition-colors '
+                                            ? '  py-2.7 shadow-soft-xl  text-size-sm ease-nav-brand my-0 flex items-center whitespace-nowrap rounded-lg bg-gray-500 px-4  text-gray-700 transition-colors'
+                                            : 'py-2.7 text-size-sm ease-nav-brand my-0  flex   items-center whitespace-nowrap px-4 transition-colors '
                                     "
                                     :href="menu.url"
                                 >
@@ -328,7 +328,6 @@ onMounted(() => {
                                         >
                                             <!-- test -->
                                             <Translations
-                                                class="hover:text-red-500"
                                                 :label="menu.label"
                                                 :active="menu.isActive"
                                             />
@@ -375,14 +374,14 @@ onMounted(() => {
                         >
                             <li class="leading-normal text-size-sm">
                                 <a
-                                    class="opacity-50 text-slate-700"
+                                    class="opacity-50 text-gray-700"
                                     href="javascript:;"
                                     >Pages</a
                                 >
                             </li>
                             <li
-                                class1="text-size-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-1 pl-1 before:text-gray-600 before:content-['/']"
-                                class="text-size-sm pl-2 capitalize leading-normal text-slate-700 ltr:before:float-left rtl:before:float-right before:pl-1 pr-1 before:text-gray-600 before:content-['/']"
+                                class1="text-size-sm pl-2 capitalize leading-normal text-gray-700 before:float-left before:pr-1 pl-1 before:text-gray-600 before:content-['/']"
+                                class="text-size-sm pl-2 capitalize leading-normal text-gray-700 ltr:before:float-left rtl:before:float-right before:pl-1 pr-1 before:text-gray-600 before:content-['/']"
                                 classltr="before:float-left"
                                 classrtl="before:float-right"
                                 aria-current="page"
@@ -401,7 +400,7 @@ onMounted(() => {
                                 class="relative flex justify-end flex-wrap items-stretch w-full transition-all rounded-lg ease-soft"
                             >
                                 <span
-                                    class="text-size-sm ease-soft leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    class="text-size-sm ease-soft leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-gray-500 transition-all"
                                 >
                                     <i class="fas fa-search"></i>
                                 </span>
@@ -430,17 +429,17 @@ onMounted(() => {
                                 @click="showHideSidebar = !showHideSidebar"
                             >
                                 <a
-                                    class="block p-0 transition-all ease-nav-brand text-size-sm text-slate-500"
+                                    class="block p-0 transition-all ease-nav-brand text-size-sm text-gray-500"
                                 >
                                     <div class="w-4.5 overflow-hidden">
                                         <i
-                                            class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"
+                                            class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-gray-500 transition-all"
                                         ></i>
                                         <i
-                                            class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"
+                                            class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-gray-500 transition-all"
                                         ></i>
                                         <i
-                                            class="ease-soft relative block h-0.5 rounded-sm bg-slate-500 transition-all"
+                                            class="ease-soft relative block h-0.5 rounded-sm bg-gray-500 transition-all"
                                         ></i>
                                     </div>
                                 </a>
@@ -448,7 +447,7 @@ onMounted(() => {
                             <!-- <li class="flex items-center px-4">
                                     <a
                                         href="javascript:;"
-                                        class="p-0 transition-all text-size-sm ease-nav-brand text-slate-500"
+                                        class="p-0 transition-all text-size-sm ease-nav-brand text-gray-500"
                                     >
                                         <i
                                             fixed-plugin-button-nav
@@ -730,7 +729,7 @@ onMounted(() => {
                                                                     }}
                                                                 </h4>
                                                                 <div
-                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
+                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-gray-400"
                                                                 >
                                                                     <i
                                                                         class="mx-1 fa fa-clock"
@@ -789,7 +788,7 @@ onMounted(() => {
                                                                     }}
                                                                 </h4>
                                                                 <div
-                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-slate-400"
+                                                                    class="notification-subtext mb-0 leading-tight text-size-xs text-gray-400"
                                                                 >
                                                                     <i
                                                                         class="mr-1 fa fa-clock"></i>
@@ -821,7 +820,7 @@ onMounted(() => {
                                 <Link
                                     :href="route('logout')"
                                     method="post"
-                                    class="block rtl:mr-8 ltr:ml-8 px-4 py-2 font-semibold transition-all ease-nav-brand text-size-sm text-slate-500"
+                                    class="block rtl:mr-8 ltr:ml-8 px-4 py-2 font-semibold transition-all ease-nav-brand text-size-sm text-gray-500"
                                     as="button"
                                 >
                                     <i class="fa fa-user sm:mr-1"></i>

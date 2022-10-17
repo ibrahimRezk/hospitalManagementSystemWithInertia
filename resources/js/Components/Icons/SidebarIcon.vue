@@ -176,7 +176,8 @@ const itemIcon_heroicon3 = computed(() => {
 
 const colorClasses = computed(() => {
     if (props.active) {
-        return "bg-gradient-orange ";
+        // return "bg-gradient-orange ";
+        return "bg-gradient-to-r from-green-400 to-blue-700 ";
     }
 });
 
@@ -186,7 +187,7 @@ const iconClasses = computed(() => {
     }
 });
 
-const classes = ` ltr:mr-2 rtl:ml-2 shadow-soft-2xl  flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5  ${colorClasses.value}`;
+const classes = ` ltr:mr-2 rtl:ml-2 shadow-soft-2xl  flex h-8 w-8 items-center justify-center rounded-lg bg-blue-300 bg-center stroke-0 text-center xl:p-2.5  ${colorClasses.value}`;
 
 // classrtl="mr-2"
 // classrtl="ml-2"

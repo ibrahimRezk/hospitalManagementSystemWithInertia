@@ -100,7 +100,7 @@ const { filters, isLoading, isFilled } = useFilters({
                     <template v-slot="{ item }">
                         <Td>
                             <template #image>
-                                <div class="w-8 h-8  rtl:ml-1 ltr:mr-1">
+                                <div class="w-10 h-10   rtl:ml-1 ltr:mr-1  ">
 
 
                                     <div

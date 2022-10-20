@@ -148,7 +148,7 @@ class SingleServiceInvoicesController extends Controller
     }
 
 
-    public function create()
+    public function create() 
     {
 
         $doctors = User::query()->select('id','section_id')->with('section')->role('Doctor')->get();    // to get only doctors from users table
@@ -169,6 +169,7 @@ class SingleServiceInvoicesController extends Controller
 
     public function store(SingleInvoicesRequest $request)
     {
+        // dd($request->type);
         $invoice = $request->only('type','discount_value','price','tax_rate','tax_value','total_with_tax');
         $invoice['invoice_type'] = 1;
         $invoice['invoice_status'] = 1;
@@ -185,8 +186,8 @@ class SingleServiceInvoicesController extends Controller
             $fund_accounts->date = date('Y-m-d');
             $fund_accounts->invoice_id = $singleInvoice->id;
 
-            $fund_accounts->Debit = $singleInvoice->total_with_tax;
-            $fund_accounts->credit = 0.00;
+            $fund_accounts->Debit =0.00;
+            $fund_accounts->credit =  $singleInvoice->total_with_tax;
             $fund_accounts->save();
         } else {
 
@@ -196,8 +197,8 @@ class SingleServiceInvoicesController extends Controller
 
             $patient_accounts->patient_id = $singleInvoice->patient_id;
 
-            $patient_accounts->Debit = $singleInvoice->total_with_tax;
-            $patient_accounts->credit = 0.00;
+            $patient_accounts->Debit = 00;
+            $patient_accounts->credit =$singleInvoice->total_with_tax;
             $patient_accounts->save();
         }
         //////////////////////////////////////////////////////////////
@@ -258,7 +259,7 @@ class SingleServiceInvoicesController extends Controller
     public function update(SingleInvoicesRequest $request, Invoice $invoice)
     {
 
-        // dd($request);
+        // dd($request->type);
         
         $data = $request->only('type','discount_value','price','tax_rate','tax_value','total_with_tax');
         $data['invoice_type'] = 1;
@@ -273,23 +274,53 @@ class SingleServiceInvoicesController extends Controller
 
         
         if ($invoice->type == 1) {
-            $fund_accounts = FundAccount::where('invoice_id', $invoice->id)->first();
-            $fund_accounts->date = date('Y-m-d');
-            $fund_accounts->invoice_id = $invoice->id;
 
-            $fund_accounts->Debit = $invoice->total_with_tax;
-            $fund_accounts->credit = 0.00;
-            $fund_accounts->save();
+            $fund_accounts = FundAccount::where('invoice_id', $invoice->id)->first();
+            if($fund_accounts !== null){
+
+                $fund_accounts->date = date('Y-m-d');
+                $fund_accounts->invoice_id = $invoice->id;
+    
+                $fund_accounts->Debit = 0.00;
+                $fund_accounts->credit = $invoice->total_with_tax;
+                $fund_accounts->save();
+            }else{
+                $fund_accounts = new  FundAccount();
+                $fund_accounts->date = date('Y-m-d');
+                $fund_accounts->invoice_id = $invoice->id;
+    
+                $fund_accounts->Debit =0.00;
+                $fund_accounts->credit = $invoice->total_with_tax;
+                $fund_accounts->save();
+            }
+            $patientAccount = PatientAccount::where('invoice_id', $invoice->id)->first(); 
+            if($patientAccount !== null) $patientAccount->delete();
+
         } else {
             $patient_accounts = PatientAccount::where('invoice_id', $invoice->id)->first();
-            $patient_accounts->date = date('Y-m-d');
-            $patient_accounts->invoice_id = $invoice->id;
+            if($patient_accounts !== null){
 
-            $patient_accounts->patient_id = $invoice->patient_id;
-
-            $patient_accounts->Debit = 0.00;
-            $patient_accounts->credit = $invoice->total_with_tax;
-            $patient_accounts->save();
+                $patient_accounts->date = date('Y-m-d');
+                $patient_accounts->invoice_id = $invoice->id;
+    
+                $patient_accounts->patient_id = $invoice->patient_id;
+    
+                $patient_accounts->Debit = 0.00;
+                $patient_accounts->credit = $invoice->total_with_tax;
+                $patient_accounts->save();
+            }else{
+                $patient_accounts = new PatientAccount();
+                $patient_accounts->date = date('Y-m-d');
+                $patient_accounts->invoice_id = $invoice->id;
+    
+                $patient_accounts->patient_id = $invoice->patient_id;
+    
+                $patient_accounts->Debit = 0.00;
+                $patient_accounts->credit = $invoice->total_with_tax;
+                $patient_accounts->save();
+            }
+            $fundAccount = FundAccount::where('invoice_id', $invoice->id)->first();
+            if($fundAccount !== null) $fundAccount->delete();
         }
 
         // $invoice->update($request->saveData());

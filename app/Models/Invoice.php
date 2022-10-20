@@ -19,7 +19,7 @@ class Invoice extends Model implements HasMedia
     protected $fillable = ['invoice_status'];
 
     protected $casts = [
-        'type'=> InvoiceTypeCast::class,
+        // 'type'=> InvoiceTypeCast::class, /// no need
         'invoice_status'=> InvoiceTypeStatusCast::class
     ];
     protected $with =['group','service' , 'patient' ,'doctor' ,'section'];

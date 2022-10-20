@@ -117,8 +117,8 @@ class PaymentsController extends Controller
         $fund_accounts = new FundAccount();
         $fund_accounts->date =date('y-m-d');
         $fund_accounts->Payment_id = $payment->id;
-        $fund_accounts->credit = $request->amount;
-        $fund_accounts->Debit = 0.00;
+        $fund_accounts->Debit = $request->amount;
+        $fund_accounts->credit = 0.00;
         $fund_accounts->save();
 
         // store patient_accounts
@@ -126,8 +126,8 @@ class PaymentsController extends Controller
         $patient_accounts->date =date('y-m-d');
         $patient_accounts->patient_id = $request->patient_id;
         $patient_accounts->Payment_id = $payment->id;
-        $patient_accounts->Debit = $request->amount;
-        $patient_accounts->credit = 0.00;
+        $patient_accounts->Debit =0.00;
+        $patient_accounts->credit =$request->amount;
         $patient_accounts->save();
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User created successfully.');
@@ -163,8 +163,8 @@ class PaymentsController extends Controller
         $fund_accounts = FundAccount::where('Payment_id',$payment->id)->first();  /// modify Payment to be in small letters
         $fund_accounts->date =date('y-m-d');
         $fund_accounts->Payment_id = $payment->id;     /// modify Payment to be in small letters
-        $fund_accounts->credit = $request->amount;
-        $fund_accounts->Debit = 0.00;  /// modify Debit to be in small letters
+        $fund_accounts->Debit = $request->amount;  /// modify Debit to be in small letters
+        $fund_accounts->credit =0.00;
         $fund_accounts->save();
 
         // update patient_accounts
@@ -172,8 +172,8 @@ class PaymentsController extends Controller
         $patient_accounts->date =date('y-m-d');
         $patient_accounts->patient_id = $request->patient_id;
         $patient_accounts->payment_id = $payment->id;
-        $patient_accounts->Debit = $request->amount;
-        $patient_accounts->credit = 0.00;
+        $patient_accounts->Debit =0.00 ;
+        $patient_accounts->credit =$request->amount;
         $patient_accounts->save();
 
         return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'User updated successfully.');

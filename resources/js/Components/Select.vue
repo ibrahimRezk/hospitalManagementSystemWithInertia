@@ -47,7 +47,8 @@ onMounted(() => {
         <option v-for="item in options" class=" text-slate-900"
                 :key="item[itemValue]"
                 :value="item[itemValue]">
-            {{ item[itemText] }}
+            {{ item[itemText] }}  
+            <!-- this line above has a response of showing option name in menu and selected one witch come from database -->
         </option>
     </select> 
 </template>

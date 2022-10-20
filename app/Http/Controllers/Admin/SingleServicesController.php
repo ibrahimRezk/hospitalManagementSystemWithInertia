@@ -128,6 +128,8 @@ class SingleServicesController extends Controller
 
     public function update(SingleServiceRequest $request, Service $service)
     {
+        // dd($service->translate('en')->id);
+
         $service->update($request->saveData());
 
 

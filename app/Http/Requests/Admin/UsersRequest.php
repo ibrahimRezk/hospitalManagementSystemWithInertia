@@ -37,7 +37,7 @@ class UsersRequest extends FormRequest
         $passwordRule = $model ? ['nullable'] : ['required'];
 
         return [
-            'name_ar' => ['bail', 'required', 'string', 'max:255'],
+            'name_ar' => ['bail', 'required', 'string', 'max:255'], 
             'name_en' => ['bail', 'required', 'string', 'max:255'], 
             'address_ar' => ['bail', 'nullable', 'string', 'max:255'],
             'address_en' => ['bail', 'nullable', 'string', 'max:255'],

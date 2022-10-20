@@ -111,16 +111,16 @@ class ReceiptsController extends Controller
                   $fund_accounts = new FundAccount();
                   $fund_accounts->date =date('y-m-d');
                   $fund_accounts->receipt_id = $receipt->id;
-                  $fund_accounts->Debit = $request->amount;
-                  $fund_accounts->credit = 0.00;
+                  $fund_accounts->Debit = 0.00;
+                  $fund_accounts->credit =  $request->amount;
                   $fund_accounts->save();
                   // store patient_accounts
                   $patient_accounts = new PatientAccount();
                   $patient_accounts->date =date('y-m-d');
                   $patient_accounts->patient_id = $request->patient_id;
                   $patient_accounts->receipt_id = $receipt->id;
-                  $patient_accounts->Debit = 0.00;
-                  $patient_accounts->credit =$request->amount;
+                  $patient_accounts->Debit =  $request->amount;
+                  $patient_accounts->credit =0.00;
                   $patient_accounts->save();
       
 
@@ -150,16 +150,16 @@ class ReceiptsController extends Controller
         $fund_accounts = FundAccount::where('receipt_id',$receipt->id)->first();
         $fund_accounts->date =date('y-m-d');
         $fund_accounts->receipt_id = $receipt->id;
-        $fund_accounts->Debit = $request->amount;
-        $fund_accounts->credit = 0.00;
+        $fund_accounts->Debit =0.00 ;
+        $fund_accounts->credit = $request->amount;
         $fund_accounts->save();
         // store patient_accounts
         $patient_accounts = PatientAccount::where('receipt_id',$receipt->id)->first();
         $patient_accounts->date =date('y-m-d');
         $patient_accounts->patient_id = $request->patient_id;
         $patient_accounts->receipt_id = $receipt->id;
-        $patient_accounts->Debit = 0.00;
-        $patient_accounts->credit =$request->amount;
+        $patient_accounts->Debit = $request->amount;
+        $patient_accounts->credit =0.00;
         $patient_accounts->save();
 
 

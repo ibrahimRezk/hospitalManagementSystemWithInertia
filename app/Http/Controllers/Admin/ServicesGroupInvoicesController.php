@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ServicesGroupInvoicesRequest;
+use App\Http\Requests\Admin\ServicesGroupInvoicesRequest; 
 use App\Http\Requests\Admin\servicesGroupsRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\InvoiceResource;
@@ -184,8 +184,8 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
             $fund_accounts->date = date('Y-m-d');
             $fund_accounts->invoice_id = $groupInvoice->id;
 
-            $fund_accounts->Debit = $groupInvoice->total_with_tax;
-            $fund_accounts->credit = 0.00;
+            $fund_accounts->Debit =0.00;
+            $fund_accounts->credit =  $groupInvoice->total_with_tax;
             $fund_accounts->save();
         } else {
 
@@ -195,8 +195,8 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
 
             $patient_accounts->patient_id = $groupInvoice->patient_id;
 
-            $patient_accounts->Debit = $groupInvoice->total_with_tax;
-            $patient_accounts->credit = 0.00;
+            $patient_accounts->Debit =0.00;
+            $patient_accounts->credit =  $groupInvoice->total_with_tax;
             $patient_accounts->save();
         }
 
@@ -244,14 +244,28 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
 
         if ($invoice->type == 1) {
             $fund_accounts = FundAccount::where('invoice_id', $invoice->id)->first();
+            if($fund_accounts !== null){
             $fund_accounts->date = date('Y-m-d');
             $fund_accounts->invoice_id = $invoice->id;
 
-            $fund_accounts->Debit = $invoice->total_with_tax;
-            $fund_accounts->credit = 0.00;
+            $fund_accounts->Debit = 0.00;
+            $fund_accounts->credit = $invoice->total_with_tax;
             $fund_accounts->save();
+        }else{
+            $fund_accounts = new  FundAccount();
+            $fund_accounts->date = date('Y-m-d');
+            $fund_accounts->invoice_id = $invoice->id;
+
+            $fund_accounts->Debit =0.00;
+            $fund_accounts->credit = $invoice->total_with_tax;
+            $fund_accounts->save();
+        }
+        $patientAccount = PatientAccount::where('invoice_id', $invoice->id)->first(); 
+            if($patientAccount !== null) $patientAccount->delete();
+
         } else {
             $patient_accounts = PatientAccount::where('invoice_id', $invoice->id)->first();
+            if($patient_accounts !== null){
             $patient_accounts->date = date('Y-m-d');
             $patient_accounts->invoice_id = $invoice->id;
 
@@ -260,6 +274,19 @@ $query->when($request->service_name, fn (Builder $builder, $name) => $builder->w
             $patient_accounts->Debit = 0.00;
             $patient_accounts->credit = $invoice->total_with_tax;
             $patient_accounts->save();
+        }else{
+            $patient_accounts = new PatientAccount();
+            $patient_accounts->date = date('Y-m-d');
+            $patient_accounts->invoice_id = $invoice->id;
+
+            $patient_accounts->patient_id = $invoice->patient_id;
+
+            $patient_accounts->Debit = 0.00;
+            $patient_accounts->credit = $invoice->total_with_tax;
+            $patient_accounts->save();
+        }
+        $fundAccount = FundAccount::where('invoice_id', $invoice->id)->first();
+        if($fundAccount !== null) $fundAccount->delete();
         }
 
 

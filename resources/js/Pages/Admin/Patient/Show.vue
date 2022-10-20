@@ -60,7 +60,7 @@ const props = defineProps({
     },
 });
 
-const currentImage = ref(props.patient.images?.[0]?.img ?? null);
+const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
 
 
 
@@ -154,7 +154,8 @@ const NetTotal = computed(() => {
     statement.data.forEach((item) => {
         Debit += parseInt(item.Debit);
         credit += parseInt(item.credit);
-        sum = Debit - credit;
+        // sum = Debit - credit;
+        sum = credit - Debit;
     });
     return sum;
 });
@@ -579,7 +580,7 @@ const NetTotal = computed(() => {
                                 {{ item.total_with_tax }}
                             </Td>
                             <Td>
-                                {{ item.type }}
+                                {{ item.type == 1 ? 'cash' : 'later' }}
                             </Td>
 
                             <tr></tr>

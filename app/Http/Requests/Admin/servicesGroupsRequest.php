@@ -28,8 +28,11 @@ class servicesGroupsRequest extends FormRequest
     {
         // this is very important to ignore some thing in translations 
         //in create we don't have id but in edit we have  so we start in condition that we asume we have id witch is $this->section->id   if not we jump to other choice witch is $this->id witch we don't have yet so it will jump to the last section witch is null :)
-        $group_ar = (($this->group->id ?? $this->id) ?  $this->group->translate('ar')->id  : null);
-        $group_en = (($this->group->id ?? $this->id) ?  $this->group->translate('en')->id  : null);
+        // $group_ar = (($this->group->id ?? $this->id) ?  $this->group->translate('ar')->id  : null);
+        // $group_en = (($this->group->id ?? $this->id) ?  $this->group->translate('en')->id  : null);
+
+        $group_ar = $this->group?->translate('ar')->id   ;
+        $group_en =  $this->group?->translate('en')->id  ;
         return [
 
             'name_ar'        => ['bail', 'required', 'string', 'max:255', Rule::unique(GroupTranslation::class, 'name')->ignore($group_ar)],

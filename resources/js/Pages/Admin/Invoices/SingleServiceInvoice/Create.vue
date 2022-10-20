@@ -51,7 +51,7 @@ const form = useForm({
     patient: props.item.patient?.id ?? "", 
     doctor: props.item.doctor?.id ?? "",
     section: props.item.section?.id ?? "",
-    type: props.item.type ?? "",
+    type: props.item.type ?? "", 
     service: props.item.service?.id ?? "", 
 
     discount_value: props.item.discount_value ?? 0,

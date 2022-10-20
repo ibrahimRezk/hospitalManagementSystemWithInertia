@@ -28,8 +28,10 @@ class SingleServiceRequest extends FormRequest
     {
 // this is very important to ignore some thing in translations 
         //in create we don't have id but in edit we have  so we start in condition that we asume we have id witch is $this->section->id   if not we jump to other choice witch is $this->id witch we don't have yet so it will jump to the last section witch is null :)
-        $service_ar =( ($this->service->id ?? $this->id ) ?  $this->service->translate('ar')->id  : null) ;
-        $service_en =( ($this->service->id ?? $this->id ) ?  $this->service->translate('en')->id  : null) ;
+        // $service_ar =( ($this->service->id ?? $this->id ) ?  $this->service->translate('ar')->id  : null) ;
+        // $service_en =( ($this->service->id ?? $this->id ) ?  $this->service->translate('en')->id  : null) ;
+        $service_ar = $this->service?->translate('ar')->id   ;
+        $service_en =  $this->service?->translate('en')->id  ;
        return [
            
            'name_ar'        => ['bail', 'required', 'string', 'max:255' ,Rule::unique(ServiceTranslation::class,'name' )->ignore( $service_ar )],

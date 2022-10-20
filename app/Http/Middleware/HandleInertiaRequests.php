@@ -47,13 +47,12 @@ class HandleInertiaRequests extends Middleware
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
 // remains : 
+// UPDATE all requests to ignor translatios like in single service request like this  $service_ar = $this->service?->translate('ar')->id   ;
 // add roles to all dashboards to prevent unauthorized access to it
-// pagination problem
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation
 // add patient name in add diagnose modal and other items in nenu
 // remember to  add role middleware to invoke methods
 // translate validation errors
-// disable two factor authentication need to be fixed
 // roles index page has no filters yet
 // add button to reset all filters
 // add service type " single or group " of the current invoice in doctor diagnoses page

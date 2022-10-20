@@ -39,8 +39,7 @@ const props = defineProps({
     },
 });
 const maxUploadImageCount = 1;
-// const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
-const currentImage = ref(props.item.images?.[0]?.img ?? null);
+const currentImage = ref(props.item.images?.[0]?.img.original_url ?? null);
 
 
 

@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////// 
 // remains : 
+// dropzone problem
 // UPDATE all requests to ignor translatios like in single service request like this  $service_ar = $this->service?->translate('ar')->id   ;
 // add roles to all dashboards to prevent unauthorized access to it
 // ,,,,,,,,,,,,,,,,, other enhancements like beginTransactions resource , requests , doctor modal request validation

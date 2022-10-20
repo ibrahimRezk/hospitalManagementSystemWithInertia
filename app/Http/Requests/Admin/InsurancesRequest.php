@@ -26,8 +26,10 @@ class InsurancesRequest extends FormRequest
      */
     public function rules()
     {
-        $insurance_ar = (($this->insurance->id ?? $this->id) ?  $this->insurance->translate('ar')->id  : null);
-        $insurance_en = (($this->insurance->id ?? $this->id) ?  $this->insurance->translate('en')->id  : null);
+        
+        $insurance_ar = $this->insurance?->translate('ar')->id   ;
+        $insurance_en =  $this->insurance?->translate('en')->id  ;
+       
         return [
 
             'name_ar'        => ['bail', 'required', 'string', 'max:255', Rule::unique(InsuranceTranslation::class, 'name')->ignore($insurance_ar)],

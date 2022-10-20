@@ -76,7 +76,7 @@
             </template>
             <Container>
                 <AddNew :show="isFilled">
-                    <Button
+                    <Button  color="blue"
                         v-if="can.create"
                         :href="route(`admin.${routeResourceName}.create`)"
                         >Add New</Button
@@ -143,7 +143,7 @@
                 Are you sure you want to delete this item?
             </template>
             <template #footer>
-                <Button @click="handleDeleteItem" :disabled="isDeleting">
+                <Button  @click="handleDeleteItem" :disabled="isDeleting">
                     <span v-if="isDeleting">Deleting</span>
                     <span v-else>Delete</span>
                 </Button>

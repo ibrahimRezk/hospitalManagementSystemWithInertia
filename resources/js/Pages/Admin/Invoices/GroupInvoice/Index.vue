@@ -75,7 +75,7 @@
             </template>
             <Container>
                 <AddNew :show="isFilled">
-                    <Button
+                    <Button  color="blue"
                         v-if="can.create"
                         :href="route(`admin.${routeResourceName}.create`)"
                         >Add New</Button

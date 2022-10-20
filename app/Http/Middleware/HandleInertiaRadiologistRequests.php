@@ -15,7 +15,7 @@ class HandleInertiaRadiologistRequests extends Middleware
      * @see https://inertiajs.com/server-side-setup#root-template
      * @var string
      */
-    protected $rootView = 'app';
+    // protected $rootView = 'app';
 
     /**
      * Determines the current asset version.
@@ -41,9 +41,10 @@ class HandleInertiaRadiologistRequests extends Middleware
         return array_merge(parent::share($request), [
             'notificationsCount' => Notification::CountNotification(auth()->user()->id)->count(),
             'notifications' =>  Notification::where('user_id', auth()->user()->id)->where('read_status', 0)->latest()->take(5)->get() ,
-            // 'auth' => [
-            //     'user' => $request->user(),
-            // ],
+            'auth' => [
+                // 'user' => $request->user(),
+                'token' => csrf_token(),
+            ],
             'flash' => [
                 'success' => $request->session()->get('success'),
             ],

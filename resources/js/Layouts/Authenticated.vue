@@ -43,7 +43,7 @@ const showHideSidebar = ref(false);
 
 const showHideClass = computed(() => {
     if (showHideSidebar.value) {
-        return "ltr:-translate-x-3 rtl:translate-x-3 shadow-soft-xl  z-990";
+        return "ltr:-translate-x-2 rtl:translate-x-2 shadow-soft-xl  z-990";
     } else {
         return "";
     }

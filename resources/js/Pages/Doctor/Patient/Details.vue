@@ -43,7 +43,7 @@ const props = defineProps({
     },
 });
 
-const currentImage = ref(props.patient.images?.[0]?.img ?? null);
+const currentImage = ref(props.patient.images?.[0]?.img.original_url ?? null);
 
 const patientInformationHeaders = ref([
     { label: "Name" },

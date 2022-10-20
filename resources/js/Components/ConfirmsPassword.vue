@@ -104,7 +104,7 @@ const closeModal = () => {
                 </JetSecondaryButton>
 
                 <JetButton
-                    class="ml-3"
+                    class="mx-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     @click="confirmPassword"

@@ -42,9 +42,10 @@ class HandleInertiaLaboratoristRequests extends Middleware
 
             'notificationsCount' => Notification::CountNotification(auth()->user()->id)->count(),
             'notifications' =>  Notification::where('user_id', auth()->user()->id)->where('read_status', 0)->latest()->take(5)->get() ,
-            // 'auth' => [
-            //     'user' => $request->user(),
-            // ],
+            'auth' => [
+                // 'user' => $request->user(),
+                'token' => csrf_token(),
+            ],
             'flash' => [
                 'success' => $request->session()->get('success'),
             ],

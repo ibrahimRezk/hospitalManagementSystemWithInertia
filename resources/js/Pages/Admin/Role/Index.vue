@@ -10,6 +10,8 @@
     import Actions from "@/Components/Table/Actions.vue";
     import Button from "@/Components/Button.vue";
     import Modal from '@/Components/ConfirmationModal.vue'
+    // import Modal from '@/Components/DialogModal.vue'
+
     
     import Label from "@/Components/Label.vue";
     import Input from "@/Components/Input.vue";
@@ -75,7 +77,7 @@
     
             <Container>
                 <AddNew>
-                    <Button
+                    <Button  color="blue"
                         v-if="can.create"
                         :href="route(`admin.${routeResourceName}.create`)"
                         >Add New</Button
@@ -133,7 +135,7 @@
                 Are you sure you want to delete this item?
             </template>
             <template #footer>
-                <Button @click="handleDeleteItem" :disabled="isDeleting">
+                <Button color="red" @click="handleDeleteItem" :disabled="isDeleting">
                     <span v-if="isDeleting">Deleting</span>
                     <span v-else>Delete</span>
                 </Button>

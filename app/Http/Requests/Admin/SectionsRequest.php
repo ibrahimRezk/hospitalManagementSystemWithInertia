@@ -33,7 +33,7 @@ class SectionsRequest extends FormRequest
         // this is very important to ignore some thing in translations 
         //in create we don't have id but in edit we have  so we start in condition that we asume we have id witch is $this->section->id   if not we jump to other choice witch is $this->id witch we don't have yet so it will jump to the last section witch is null :)
        
-         $section_ar = $this->section?->translate('ar')->id   ;
+         $section_ar = $this->section?->translate('ar')->id   ; 
         $section_en =  $this->section?->translate('en')->id  ;
         return [
             

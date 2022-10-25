@@ -101,7 +101,7 @@ import axios from "axios";
                     <template v-slot="{ item }">
                             <Td>
                                 <Button color="blue" small>
-                                    {{ item.created_at }}
+                                    {{ item.created_at_formatted }}
                                 </Button>
                             </Td>
                         
@@ -125,7 +125,7 @@ import axios from "axios";
                             </Td>
                             <Td>
                                 <Link :href="
-                                        route(`patient.labResult`, {
+                                        route(`patient.labResult`, { 
                                             id: item.id,
                                         })
                                     ">

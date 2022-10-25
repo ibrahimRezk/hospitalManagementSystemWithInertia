@@ -172,6 +172,7 @@ const submit = () => {
                             />
                             <InputGroup
                                 label="phone"
+                                type="number"
                                 v-model="form.phone"
                                 :error-message="form.errors.phone"
                                 :required="!edit"

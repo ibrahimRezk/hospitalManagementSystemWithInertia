@@ -101,6 +101,7 @@ class SectionsController extends Controller
 
     public function store(SectionsRequest $request)
     {
+        // dd($request->section?->translate('ar')->id);
 
 
         Section::create($request->saveData());
@@ -121,6 +122,8 @@ class SectionsController extends Controller
 
     public function update(SectionsRequest $request, Section $section)
     {
+        dd($request);
+
 
         $section->update($request->saveData());
 

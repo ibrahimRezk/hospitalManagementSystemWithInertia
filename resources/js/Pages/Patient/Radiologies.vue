@@ -101,7 +101,7 @@ import axios from "axios";
                     <template v-slot="{ item }">
                             <Td>
                                 <Button color="blue" small>
-                                    {{ item.created_at }}
+                                    {{ item.created_at_formatted }}
                                 </Button>
                             </Td>
                         

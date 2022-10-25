@@ -238,6 +238,9 @@ class PatientsController extends Controller
     {
         // dd($id);
         $labResult = Laboratory::find($id);
+        $labResult->load('media');
+
+        // dd($labResult);
 
         return Inertia::render('Patient/Result', [
             // 'title' => 'Patient Details',
@@ -341,6 +344,8 @@ class PatientsController extends Controller
     {
         // dd($id);
         $radiology_result = Radiology::find($id);
+        $radiology_result->load('media');
+
 
         return Inertia::render('Patient/Result', [
             // 'title' => 'Patient Details',

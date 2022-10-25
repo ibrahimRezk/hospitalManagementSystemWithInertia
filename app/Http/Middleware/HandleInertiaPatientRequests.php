@@ -82,7 +82,7 @@ class HandleInertiaPatientRequests extends Middleware
                             'isVisible' =>true , // to be changed after assign role to doctor in admin dashboard
                         ],
                         [
-                            'label' => 'Laboratory',
+                            'label' => 'Lab_results',
                             'url' => route('patient.laboratories'),
                             'isActive' => $request->routeIs('patient.laboratories*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),
@@ -90,7 +90,7 @@ class HandleInertiaPatientRequests extends Middleware
                         ],
                     
                         [
-                            'label' => 'Radiology',
+                            'label' => 'Radio_results',
                             'url' => route('patient.radiologies'),
                             'isActive' => $request->routeIs('patient.radiologies*'),
                             // 'isVisible' => $request->user()?->can('view diagnoses module'),

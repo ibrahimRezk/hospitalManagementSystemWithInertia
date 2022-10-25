@@ -96,6 +96,36 @@ class HandleInertiaRequests extends Middleware
 // perfect tailwind css resource
 // https://github.com/mdbootstrap/Tailwind-Elements
 
+
+
+
+//// to use background image in tailwind 
+
+// <script setup>
+
+// import { watch, ref, computed, onMounted } from "@vue/runtime-core";
+
+// import imagePath from '../../../../public/frontend/images/bg_1.jpg'
+
+
+
+// </script>
+
+// <template>
+    
+
+//     <div :style="{ backgroundImage: `url(${imagePath} )` }">
+//         <img src="#" width="500" height="600" alt="">
+//     </div>
+
+// alternative way
+
+// <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 bg-[url('../../../public/frontend/images/bg/banner.jpg')]"
+//     >
+  
+
+//   </template>
+
         ]);
     }
 }

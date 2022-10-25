@@ -101,6 +101,8 @@
                         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             <InputGroup
                             label="car number"
+                            type='number'
+                            min="55555"
                             v-model="form.car_number"
                             :error-message="form.errors.car_number"
                             required
@@ -120,6 +122,7 @@
                             <InputGroup
                             label="car type"
                             v-model="form.car_type"
+                            type='number'
                             :error-message="form.errors.car_type"
                             />
 

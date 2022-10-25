@@ -22,7 +22,7 @@ return [
     'Receipts'  => 'Receipts',
     'Payments'  => 'Payments',
     'Radiologists'  => 'Radiologists',
-    'Laboratorists'  => 'Laboratorists',
+    'Lab_Specialists'  => 'Lab Specialists',
     'Doctor_diagnoses'  => 'Doctor diagnoses',
     'diagnoses_List'  => 'diagnoses List',
     'completed_diagnoses_List'  => 'completed diagnoses List',
@@ -33,6 +33,8 @@ return [
     'Invoices_List' => 'Invoices List',
     'Laboratory' => 'Laboratory',
     'Radiology' => 'Radiology',
+    'Lab_results' => 'Lab results',
+    'Radio_results'=> 'Radio results'
 
 
 

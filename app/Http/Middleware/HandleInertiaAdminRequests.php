@@ -117,7 +117,7 @@ class HandleInertiaAdminRequests extends Middleware
                     'hasSubmenu' => false,
                 ],
                 [
-                    'label' => 'Laboratorists',
+                    'label' => 'Lab_Specialists',
                     'url' => route('admin.laboratorists.index'),
                     'isActive' => $request->routeIs('admin.laboratorists.*'),
                     'isVisible' => $request->user()?->can('view laboratorists module'),

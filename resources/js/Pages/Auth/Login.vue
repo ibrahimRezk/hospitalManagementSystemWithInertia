@@ -8,6 +8,11 @@ import JetInputError from '@/Components/InputError.vue';
 import JetCheckbox from '@/Components/Checkbox.vue';
 import JetLabel from '@/Components/Label.vue';
 
+import { watch, ref, computed, onMounted } from "@vue/runtime-core";
+
+import imagePath from '../../../../public/frontend/images/bg/banner.jpg'
+
+
 defineProps({
     canResetPassword: Boolean,
     status: String,
@@ -30,9 +35,20 @@ const submit = () => {
 </script>
 
 <template>
+    
     <Head title="Log in" />
 
     <JetAuthenticationCard>
+       
+
+<template>
+    
+
+ 
+  
+
+  </template>
+
         <template #logo>
             <JetAuthenticationCardLogo />
         </template>
@@ -80,7 +96,7 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <JetButton color="blue" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </JetButton>
             </div>

@@ -1,5 +1,15 @@
+<script setup>
+// import imagePath from '../../../public/frontend/images/bg/banner.jpg'
+
+</script>
+
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <!-- <div :style="{ backgroundImage: `url(${imagePath} )` }">
+        <img src="#" width="500" height="600" alt="">
+    </div> -->
+
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-no-repeat bg-cover bg-gray-100 bg-[url('../../../public/frontend/images/bg/banner.jpg')]"
+    >
         <div>
             <slot name="logo" />
         </div>

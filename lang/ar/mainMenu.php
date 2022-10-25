@@ -23,7 +23,7 @@ return [
     'Receipts'  => 'سندات القبض',
     'Payments'  => 'سندات الصرف',
     'Radiologists'  => 'أخصائيي الآشعة',
-    'Laboratorists'  => 'أخصائيي المختبر',
+    'Lab_Specialists'  => 'أخصائيي المختبر',
     'Doctor_diagnoses'=> 'كشوفات الدكتور' ,
     'diagnoses_List'=> 'قائمة الكشوفات' ,
     'completed_diagnoses_List'=> ' قائمة الكشوفات المكتملة' ,
@@ -34,6 +34,8 @@ return [
     'Invoices_List' => 'قائمة الفواتير' ,
     'Laboratory' => 'المختبر' ,
     'Radiology' => 'المعمل' ,
+    'Lab_results'=> 'نتائج المعمل',
+    'Radio_results'=> 'نتائج الآشعة',
 
 
 

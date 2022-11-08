@@ -79,7 +79,7 @@ class DoctorsController extends Controller
 
             // down here we are looking for section_id column depending on sectionId witch comming from request
             ->when( 
-                $request->sectionId,
+                $request->sectionId, 
                 fn (Builder $builder, $sectionId) =>  $builder->where( 'section_id', $sectionId)
                 )
             

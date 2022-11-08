@@ -85,9 +85,10 @@ const openCloseSubMenu = (menu) => {
     usePage().props.value.menus.forEach((menu) => {
         if (menu.hasSubmenu) {
             menu.open = false;
-            submenuValu.value = !submenuValu.value;
+            // submenuValu.value = !submenuValu.value;
         }
     });
+    submenuValu.value = !submenuValu.value;   /// location changed from above two lines to here
     return submenuValu.value ? (menu.open = true) : (menu.open = false);
 
 };
@@ -117,6 +118,27 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.collapsableDiv {
+    overflow: hidden;
+    transform-origin: top;
+
+}
+.collapse-enter-active {
+    animation: collapse reverse 400ms ease;
+}
+.collapse-leave-active {
+    animation: collapse 400ms ease ;
+}
+@keyframes collapse {
+    from {
+        max-height: 400px;
+    }
+    to {
+        max-height: 0px;
+    }
+}
+
 .default-header {
     background-color: rgb(16, 21, 27);
     text-transform: capitalize;
@@ -184,7 +206,6 @@ onMounted(() => {
                         >
                             <!-- //////////////////////////////////////////////////menus with sub menu/////////////////////////////////////////// -->
                             <div v-if="menu.hasSubmenu">
-                                <transition-group duration="550" name="fade">
                                     <div
                                         :class="sidebarMenuTextColor"
                                         class="transition"
@@ -252,10 +273,13 @@ onMounted(() => {
 
                                     <!-- //////////////////////////////////////////////////submenus/////////////////////////////////////////// -->
 
-                                    <div class="translation-action">
+                                    <Transition name="collapse">
                                         <div
-                                            :class="sidebarMenuTextColor"
+                                            class="collapsableDiv"
                                             v-show="menu.open"
+                                        >
+                                            <div
+                                            :class="sidebarMenuTextColor"
                                             v-for="(
                                                 submenu, index
                                             ) in menu.subMenus"
@@ -299,7 +323,8 @@ onMounted(() => {
                                             />
                                         </div>
                                     </div>
-                                </transition-group>
+                                </Transition>
+
                                 <hr
                                     class="h-px mt-0 bg-black bg-gradient-horizontal-dark"
                                 />

@@ -7,7 +7,7 @@ import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
-import { i18nVue } from "laravel-vue-i18n";
+import { i18nVue } from "laravel-vue-i18n"; 
 import Swal from "sweetalert2";
 import PerfectScrollbar from "vue3-perfect-scrollbar";
 import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
